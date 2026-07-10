@@ -42,6 +42,8 @@ npm run preview
 - [设计理念](docs/DESIGN.md)
 - [品牌规范](docs/BRAND.md)
 - [Design Tokens](docs/TOKENS.md)
+- [色彩系统](docs/COLORS.md)
+- [排版系统](docs/TYPOGRAPHY.md)
 - [组件系统](docs/COMPONENTS.md)
 - [页面模式](docs/PAGES.md)
 - [Keycloak Theme 映射](docs/KEYCLOAK_THEME.md)
@@ -99,6 +101,8 @@ AuthInk 不使用厚重国潮堆砌。水墨负责氛围，表单负责效率，
 - [x] Brand foundation
 - [x] Design philosophy
 - [x] Design tokens documentation
+- [x] Color system
+- [x] Typography system
 - [x] Component specification
 - [x] Page patterns
 - [x] Keycloak page mapping
