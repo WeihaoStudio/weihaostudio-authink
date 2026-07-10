@@ -1,0 +1,337 @@
+@import "./tokens.css";
+@import "./components.css";
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--authink-color-text);
+  background: var(--authink-color-page);
+  font-family: var(--authink-font-body);
+  font-size: var(--authink-font-size-base);
+  line-height: var(--authink-line-height-normal);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.authink-page {
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: var(--authink-color-page);
+}
+
+.authink-page__landscape {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.authink-page__landscape::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent 0 48%, color-mix(in srgb, var(--authink-color-page) 65%, transparent) 72%, var(--authink-color-page) 100%),
+    linear-gradient(180deg, color-mix(in srgb, var(--authink-color-page) 8%, transparent), var(--authink-color-page));
+}
+
+.authink-page__landscape-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.92;
+  filter: saturate(0.72) contrast(0.94);
+}
+
+:root[data-theme="dark"] .authink-page__landscape-image {
+  opacity: 0.78;
+  filter: saturate(0.82) contrast(1.04) brightness(0.76);
+}
+
+.authink-layout {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  width: min(100%, var(--authink-content-max));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(27.5rem, 2fr);
+}
+
+.authink-layout__brand {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--authink-page-gutter);
+}
+
+.authink-brand-lockup {
+  width: min(26rem, 58%);
+}
+
+.authink-brand-lockup img,
+.authink-brand-lockup svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.authink-brand-copy {
+  max-width: 30rem;
+  margin-bottom: clamp(2rem, 8vh, 7rem);
+}
+
+.authink-brand-copy__eyebrow {
+  margin: 0 0 var(--authink-space-3);
+  color: var(--authink-color-seal);
+  font-size: var(--authink-font-size-sm);
+  font-weight: var(--authink-font-weight-semibold);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.authink-brand-copy__title {
+  margin: 0;
+  font-family: var(--authink-font-display);
+  font-size: clamp(2.25rem, 5vw, 5.25rem);
+  font-weight: var(--authink-font-weight-regular);
+  line-height: 1.08;
+  letter-spacing: 0.01em;
+}
+
+.authink-brand-copy__description {
+  max-width: 32rem;
+  margin: var(--authink-space-5) 0 0;
+  color: var(--authink-color-text-muted);
+  font-size: var(--authink-font-size-lg);
+  line-height: var(--authink-line-height-relaxed);
+}
+
+.authink-layout__auth {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: clamp(1.5rem, 3.2vw, 4rem);
+  background: color-mix(in srgb, var(--authink-color-page) 78%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.authink-toolbar {
+  min-height: var(--authink-touch-target);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--authink-space-2);
+}
+
+.authink-toolbar__control {
+  min-height: var(--authink-touch-target);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--authink-space-2);
+  padding: 0 var(--authink-space-3);
+  border: var(--authink-border-width) solid transparent;
+  border-radius: var(--authink-radius-md);
+  color: var(--authink-color-text-muted);
+  background: transparent;
+  cursor: pointer;
+}
+
+.authink-toolbar__control:hover {
+  color: var(--authink-color-text);
+  background: var(--authink-color-surface-muted);
+}
+
+.authink-auth-stage {
+  display: grid;
+  place-items: center;
+  padding: var(--authink-space-8) 0;
+}
+
+.authink-page-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--authink-space-3) var(--authink-space-6);
+  color: var(--authink-color-text-subtle);
+  font-size: var(--authink-font-size-xs);
+}
+
+.authink-page-footer__links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--authink-space-4);
+}
+
+.authink-oauth-list {
+  display: grid;
+  gap: var(--authink-space-3);
+}
+
+.authink-secondary-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--authink-space-4);
+  margin-top: var(--authink-space-5);
+  font-size: var(--authink-font-size-md);
+}
+
+.authink-totp-section {
+  display: grid;
+  gap: var(--authink-space-5);
+}
+
+.authink-trust-device {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--authink-space-3);
+}
+
+.authink-help-card {
+  margin-top: var(--authink-space-6);
+  padding: var(--authink-space-4);
+  border-left: 2px solid var(--authink-color-seal);
+  color: var(--authink-color-text-muted);
+  background: color-mix(in srgb, var(--authink-color-surface-muted) 72%, transparent);
+  border-radius: 0 var(--authink-radius-lg) var(--authink-radius-lg) 0;
+  font-size: var(--authink-font-size-sm);
+  line-height: var(--authink-line-height-relaxed);
+}
+
+/* Tablet */
+@media (min-width: 48rem) and (max-width: 74.9375rem) {
+  .authink-layout {
+    grid-template-columns: minmax(17rem, 2fr) minmax(26rem, 3fr);
+  }
+
+  .authink-layout__brand,
+  .authink-layout__auth {
+    padding: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .authink-brand-lockup {
+    width: min(20rem, 76%);
+  }
+
+  .authink-brand-copy__description {
+    font-size: var(--authink-font-size-base);
+  }
+}
+
+/* Mobile */
+@media (max-width: 47.9375rem) {
+  .authink-page {
+    overflow: visible;
+  }
+
+  .authink-page__landscape::after {
+    background: linear-gradient(180deg, transparent 0 6rem, var(--authink-color-page) 19rem, var(--authink-color-page) 100%);
+  }
+
+  .authink-page__landscape-image {
+    height: 20rem;
+    object-position: 44% top;
+    opacity: 0.48;
+  }
+
+  .authink-layout {
+    display: block;
+    width: 100%;
+  }
+
+  .authink-layout__brand {
+    min-height: 9.5rem;
+    padding: var(--authink-space-5) var(--authink-page-gutter) 0;
+    justify-content: flex-start;
+  }
+
+  .authink-brand-lockup {
+    width: min(13rem, 64vw);
+  }
+
+  .authink-brand-copy {
+    display: none;
+  }
+
+  .authink-layout__auth {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100dvh - 9.5rem);
+    padding: 0 var(--authink-page-gutter) var(--authink-space-5);
+    background: transparent;
+    backdrop-filter: none;
+  }
+
+  .authink-toolbar {
+    position: absolute;
+    top: var(--authink-space-3);
+    right: var(--authink-space-3);
+  }
+
+  .authink-auth-stage {
+    display: block;
+    flex: 1;
+    padding: 0;
+  }
+
+  .authink-page-footer {
+    margin-top: var(--authink-space-6);
+    justify-content: center;
+    text-align: center;
+  }
+
+  .authink-page-footer__links {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .authink-secondary-actions {
+    flex-direction: column;
+    gap: var(--authink-space-2);
+  }
+}
+
+/* Wide screens */
+@media (min-width: 100rem) {
+  .authink-layout {
+    min-height: min(100dvh, 75rem);
+  }
+
+  .authink-layout__auth {
+    border-left: 1px solid color-mix(in srgb, var(--authink-color-border) 60%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .authink-page__landscape-image {
+    transform: none !important;
+  }
+}
