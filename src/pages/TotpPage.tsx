@@ -5,19 +5,32 @@ import { TotpInput } from "../components/TotpInput";
 type TotpPageProps = {
   theme: "light" | "dark";
   onThemeChange: () => void;
+  actionUrl?: string;
+  recoveryUrl?: string;
+  loginUrl?: string;
+  errorMessage?: string;
 };
 
-export function TotpPage({ theme, onThemeChange }: TotpPageProps) {
+export function TotpPage({
+  theme,
+  onThemeChange,
+  actionUrl,
+  recoveryUrl = "/?page=recovery",
+  loginUrl = "/?page=login",
+  errorMessage,
+}: TotpPageProps) {
   const [code, setCode] = useState("");
-  const [invalid, setInvalid] = useState(false);
+  const [invalid, setInvalid] = useState(Boolean(errorMessage));
   const [submitting, setSubmitting] = useState(false);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
     if (code.length !== 6) {
+      event.preventDefault();
       setInvalid(true);
       return;
     }
+    if (actionUrl) return;
+    event.preventDefault();
     setInvalid(false);
     setSubmitting(true);
     window.setTimeout(() => setSubmitting(false), 900);
@@ -38,15 +51,29 @@ export function TotpPage({ theme, onThemeChange }: TotpPageProps) {
           <p className="authink-card__description">请输入身份验证器 App 中的 6 位动态验证码</p>
         </header>
 
-        <form className="authink-form authink-totp-section" onSubmit={handleSubmit}>
-          <TotpInput invalid={invalid} onComplete={value => { setCode(value); setInvalid(false); }} />
-          {invalid ? (
+        {errorMessage ? (
+          <div className="authink-alert authink-alert--error" role="alert">
+            <span aria-hidden="true">!</span>
+            <span>{errorMessage}</span>
+          </div>
+        ) : null}
+
+        <form className="authink-form authink-totp-section" action={actionUrl} method="post" onSubmit={handleSubmit}>
+          <input type="hidden" name="otp" value={code} />
+          <TotpInput
+            invalid={invalid}
+            onChange={value => {
+              setCode(value);
+              if (value.length === 6) setInvalid(false);
+            }}
+          />
+          {invalid && !errorMessage ? (
             <p className="authink-field__error authink-totp-error" role="alert">请输入完整的 6 位动态验证码</p>
           ) : null}
 
           <div className="authink-trust-device">
             <label className="authink-checkbox">
-              <input className="authink-checkbox__control" type="checkbox" name="trustDevice" />
+              <input className="authink-checkbox__control" type="checkbox" name="trustDevice" value="on" />
               <span>信任此设备 30 天</span>
             </label>
             <button className="authink-help-trigger" type="button" aria-label="了解信任设备">?</button>
@@ -63,8 +90,8 @@ export function TotpPage({ theme, onThemeChange }: TotpPageProps) {
         </form>
 
         <div className="authink-secondary-actions">
-          <a className="authink-link" href="#recovery-code">使用恢复码登录</a>
-          <a className="authink-link" href="/?page=login">返回登录</a>
+          <a className="authink-link" href={recoveryUrl}>使用恢复码登录</a>
+          <a className="authink-link" href={loginUrl}>返回登录</a>
         </div>
 
         <aside className="authink-help-card">
