@@ -5,12 +5,22 @@ import { Field } from "../components/Field";
 type ResetPasswordPageProps = {
   theme: "light" | "dark";
   onThemeChange: () => void;
+  actionUrl?: string;
+  loginUrl?: string;
+  errorMessage?: string;
 };
 
-export function ResetPasswordPage({ theme, onThemeChange }: ResetPasswordPageProps) {
+export function ResetPasswordPage({
+  theme,
+  onThemeChange,
+  actionUrl,
+  loginUrl = "/?page=login",
+  errorMessage,
+}: ResetPasswordPageProps) {
   const [sent, setSent] = useState(false);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    if (actionUrl) return;
     event.preventDefault();
     setSent(true);
   }
@@ -31,7 +41,7 @@ export function ResetPasswordPage({ theme, onThemeChange }: ResetPasswordPagePro
             <p className="authink-card__description">
               我们已向您的邮箱发送密码重置链接，请在有效期内完成操作。
             </p>
-            <a className="authink-button authink-button--secondary authink-button--full" href="/?page=login">
+            <a className="authink-button authink-button--secondary authink-button--full" href={loginUrl}>
               返回登录
             </a>
           </div>
@@ -45,10 +55,17 @@ export function ResetPasswordPage({ theme, onThemeChange }: ResetPasswordPagePro
               </p>
             </header>
 
-            <form className="authink-form" onSubmit={handleSubmit}>
+            {errorMessage ? (
+              <div className="authink-alert authink-alert--error" role="alert">
+                <span aria-hidden="true">!</span>
+                <span>{errorMessage}</span>
+              </div>
+            ) : null}
+
+            <form className="authink-form" action={actionUrl} method="post" onSubmit={handleSubmit}>
               <Field
                 label="邮箱"
-                name="email"
+                name="username"
                 type="email"
                 placeholder="请输入您的邮箱"
                 autoComplete="email"
@@ -59,7 +76,7 @@ export function ResetPasswordPage({ theme, onThemeChange }: ResetPasswordPagePro
             </form>
 
             <div className="authink-secondary-actions">
-              <a className="authink-link" href="/?page=login">返回登录</a>
+              <a className="authink-link" href={loginUrl}>返回登录</a>
             </div>
           </>
         )}
