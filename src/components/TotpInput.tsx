@@ -2,23 +2,29 @@ import { ClipboardEvent, KeyboardEvent, useMemo, useRef, useState } from "react"
 
 type TotpInputProps = {
   invalid?: boolean;
+  onChange?: (code: string) => void;
   onComplete?: (code: string) => void;
 };
 
-export function TotpInput({ invalid = false, onComplete }: TotpInputProps) {
+export function TotpInput({ invalid = false, onChange, onComplete }: TotpInputProps) {
   const [digits, setDigits] = useState<string[]>(["", "", "", "", "", ""]);
   const refs = useRef<Array<HTMLInputElement | null>>([]);
   const code = useMemo(() => digits.join(""), [digits]);
+
+  function commit(next: string[]) {
+    const nextCode = next.join("");
+    setDigits(next);
+    onChange?.(nextCode);
+    if (nextCode.length === 6) onComplete?.(nextCode);
+  }
 
   function updateDigit(index: number, value: string) {
     const digit = value.replace(/\D/g, "").slice(-1);
     const next = [...digits];
     next[index] = digit;
-    setDigits(next);
+    commit(next);
 
     if (digit && index < 5) refs.current[index + 1]?.focus();
-    const completed = next.join("");
-    if (completed.length === 6) onComplete?.(completed);
   }
 
   function handleKeyDown(index: number, event: KeyboardEvent<HTMLInputElement>) {
@@ -34,9 +40,8 @@ export function TotpInput({ invalid = false, onComplete }: TotpInputProps) {
     if (!pasted) return;
     event.preventDefault();
     const next = Array.from({ length: 6 }, (_, index) => pasted[index] ?? "");
-    setDigits(next);
+    commit(next);
     refs.current[Math.min(pasted.length, 5)]?.focus();
-    if (pasted.length === 6) onComplete?.(pasted);
   }
 
   return (
