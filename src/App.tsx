@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react";
 import { LoginPage } from "./pages/LoginPage";
 import { TotpPage } from "./pages/TotpPage";
+import { ResetPasswordPage } from "./pages/ResetPasswordPage";
+import { RecoveryCodePage } from "./pages/RecoveryCodePage";
+import { InfoPage } from "./pages/InfoPage";
 
-type PreviewPage = "login" | "totp";
+type PreviewPage = "login" | "login-error" | "totp" | "reset" | "recovery" | "success";
 type Theme = "light" | "dark";
 
+const supportedPages = new Set<PreviewPage>([
+  "login",
+  "login-error",
+  "totp",
+  "reset",
+  "recovery",
+  "success",
+]);
+
 function readInitialPage(): PreviewPage {
-  return new URLSearchParams(window.location.search).get("page") === "totp" ? "totp" : "login";
+  const requested = new URLSearchParams(window.location.search).get("page") as PreviewPage | null;
+  return requested && supportedPages.has(requested) ? requested : "login";
 }
 
 function readInitialTheme(): Theme {
@@ -30,25 +43,58 @@ export function App() {
     onThemeChange: () => setTheme(current => (current === "light" ? "dark" : "light")),
   } as const;
 
+  let content;
+  switch (page) {
+    case "login-error":
+      content = <LoginPage {...commonProps} username="user@example.com" errorMessage="用户名或密码错误，请重试。" />;
+      break;
+    case "totp":
+      content = <TotpPage {...commonProps} />;
+      break;
+    case "reset":
+      content = <ResetPasswordPage {...commonProps} />;
+      break;
+    case "recovery":
+      content = <RecoveryCodePage {...commonProps} />;
+      break;
+    case "success":
+      content = (
+        <InfoPage
+          {...commonProps}
+          tone="success"
+          title="身份验证成功"
+          description="您的身份已经确认，正在安全返回应用。"
+          actionLabel="返回登录预览"
+        />
+      );
+      break;
+    default:
+      content = <LoginPage {...commonProps} />;
+  }
+
+  const tabs: Array<{ page: PreviewPage; label: string }> = [
+    { page: "login", label: "登录" },
+    { page: "login-error", label: "错误" },
+    { page: "totp", label: "TOTP" },
+    { page: "reset", label: "重置" },
+    { page: "recovery", label: "恢复码" },
+  ];
+
   return (
     <>
       <nav className="authink-preview-nav" aria-label="原型页面切换">
-        <button
-          className={page === "login" ? "is-active" : ""}
-          type="button"
-          onClick={() => setPage("login")}
-        >
-          登录页
-        </button>
-        <button
-          className={page === "totp" ? "is-active" : ""}
-          type="button"
-          onClick={() => setPage("totp")}
-        >
-          TOTP 验证
-        </button>
+        {tabs.map(tab => (
+          <button
+            className={page === tab.page ? "is-active" : ""}
+            type="button"
+            onClick={() => setPage(tab.page)}
+            key={tab.page}
+          >
+            {tab.label}
+          </button>
+        ))}
       </nav>
-      {page === "login" ? <LoginPage {...commonProps} /> : <TotpPage {...commonProps} />}
+      {content}
     </>
   );
 }
