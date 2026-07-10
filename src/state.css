@@ -1,0 +1,77 @@
+.authink-card > .authink-alert {
+  margin: calc(var(--authink-space-3) * -1) 0 var(--authink-space-5);
+}
+
+.authink-result {
+  display: grid;
+  justify-items: center;
+  gap: var(--authink-space-5);
+  text-align: center;
+}
+
+.authink-result .authink-card__description {
+  max-width: 25rem;
+  margin: 0 0 var(--authink-space-3);
+}
+
+.authink-result__icon {
+  width: 4rem;
+  height: 4rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--authink-color-border);
+  border-radius: var(--authink-radius-full);
+  font-family: var(--authink-font-display);
+  font-size: var(--authink-font-size-2xl);
+  background: var(--authink-color-surface-muted);
+}
+
+.authink-result__icon--success {
+  color: var(--authink-success-700);
+  border-color: color-mix(in srgb, var(--authink-success-600) 32%, transparent);
+  background: var(--authink-success-100);
+}
+
+.authink-result__icon--error {
+  color: var(--authink-error-700);
+  border-color: color-mix(in srgb, var(--authink-error-600) 32%, transparent);
+  background: var(--authink-error-100);
+}
+
+.authink-result__icon--info {
+  color: var(--authink-info-700);
+  border-color: color-mix(in srgb, var(--authink-info-600) 32%, transparent);
+  background: var(--authink-info-100);
+}
+
+.authink-inline-help {
+  width: fit-content;
+  margin-top: calc(var(--authink-space-2) * -1);
+  font-size: var(--authink-font-size-sm);
+}
+
+.authink-provider-fallback {
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 0.75rem;
+}
+
+@media (max-width: 47.9375rem) {
+  .authink-preview-nav {
+    width: calc(100% - 1rem);
+    max-width: max-content;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .authink-preview-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .authink-preview-nav button {
+    flex: 0 0 auto;
+    padding-inline: 0.8rem;
+  }
+}
