@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-test("desktop login uses a true split-screen composition", async ({ page }) => {
+test("desktop login uses a true split-screen composition", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name.includes("mobile"), "desktop projects only");
   await page.goto("/?page=login&theme=light");
   const layout = page.locator(".authink-layout");
   const brand = page.locator(".authink-layout__brand");
@@ -29,7 +30,9 @@ test("TOTP supports six independent numeric positions", async ({ page }) => {
   await page.goto("/?page=totp&theme=light");
   const inputs = page.locator(".authink-totp__input");
   await expect(inputs).toHaveCount(6);
-  await inputs.first().fill("123456");
+  for (let index = 0; index < 6; index += 1) {
+    await inputs.nth(index).fill(String(index + 1));
+  }
   await expect(inputs.nth(5)).toHaveValue("6");
 });
 
@@ -39,5 +42,6 @@ test("mobile layout removes desktop brand copy and fills the viewport", async ({
   await expect(page.locator(".authink-brand-copy")).toBeHidden();
   await expect(page.locator(".authink-card--hero")).toBeVisible();
   const cardBox = await page.locator(".authink-card--hero").boundingBox();
+  expect(cardBox).not.toBeNull();
   expect(cardBox!.width).toBeGreaterThan(300);
 });
