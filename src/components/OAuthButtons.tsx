@@ -1,3 +1,9 @@
+type OAuthProvider = {
+  alias: string;
+  displayName: string;
+  loginUrl?: string;
+};
+
 function GoogleIcon() {
   return (
     <svg className="authink-button__icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -17,17 +23,49 @@ function GitHubIcon() {
   );
 }
 
-export function OAuthButtons() {
+function ProviderIcon({ alias }: { alias: string }) {
+  const normalized = alias.toLowerCase();
+  if (normalized.includes("google")) return <GoogleIcon />;
+  if (normalized.includes("github")) return <GitHubIcon />;
+  return <span className="authink-button__icon authink-provider-fallback" aria-hidden="true">◌</span>;
+}
+
+const defaultProviders: OAuthProvider[] = [
+  { alias: "google", displayName: "Google" },
+  { alias: "github", displayName: "GitHub" },
+];
+
+export function OAuthButtons({ providers = defaultProviders }: { providers?: OAuthProvider[] }) {
   return (
     <div className="authink-oauth-list" aria-label="第三方登录">
-      <button className="authink-button authink-button--oauth authink-button--full" type="button">
-        <GoogleIcon />
-        <span>使用 Google 登录</span>
-      </button>
-      <button className="authink-button authink-button--oauth authink-button--full" type="button">
-        <GitHubIcon />
-        <span>使用 GitHub 登录</span>
-      </button>
+      {providers.map(provider => {
+        const content = (
+          <>
+            <ProviderIcon alias={provider.alias} />
+            <span>使用 {provider.displayName} 登录</span>
+          </>
+        );
+
+        return provider.loginUrl ? (
+          <a
+            className="authink-button authink-button--oauth authink-button--full"
+            href={provider.loginUrl}
+            key={provider.alias}
+          >
+            {content}
+          </a>
+        ) : (
+          <button
+            className="authink-button authink-button--oauth authink-button--full"
+            type="button"
+            key={provider.alias}
+          >
+            {content}
+          </button>
+        );
+      })}
     </div>
   );
 }
+
+export type { OAuthProvider };
