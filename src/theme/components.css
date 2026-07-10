@@ -1,0 +1,388 @@
+@import "./tokens.css";
+
+/* Core controls */
+.authink-button {
+  appearance: none;
+  min-height: var(--authink-control-height);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--authink-space-2);
+  padding: 0 var(--authink-space-5);
+  border: var(--authink-border-width) solid transparent;
+  border-radius: var(--authink-radius-md);
+  font-family: var(--authink-font-body);
+  font-size: var(--authink-font-size-md);
+  font-weight: var(--authink-font-weight-semibold);
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--authink-duration-normal) var(--authink-ease-standard),
+    border-color var(--authink-duration-normal) var(--authink-ease-standard),
+    color var(--authink-duration-normal) var(--authink-ease-standard),
+    transform var(--authink-duration-fast) var(--authink-ease-standard),
+    box-shadow var(--authink-duration-normal) var(--authink-ease-standard);
+}
+
+.authink-button:focus-visible,
+.authink-input:focus-visible,
+.authink-checkbox__control:focus-visible,
+.authink-link:focus-visible {
+  outline: var(--authink-focus-width) solid var(--authink-color-focus);
+  outline-offset: var(--authink-focus-offset);
+}
+
+.authink-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.authink-button:disabled,
+.authink-button[aria-disabled="true"] {
+  opacity: 0.48;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.authink-button--full {
+  width: 100%;
+}
+
+.authink-button--primary {
+  position: relative;
+  overflow: hidden;
+  color: var(--authink-color-on-primary);
+  background: var(--authink-color-primary);
+  box-shadow: var(--authink-shadow-xs);
+}
+
+.authink-button--primary:hover:not(:disabled) {
+  box-shadow: var(--authink-shadow-sm);
+}
+
+.authink-button--primary::after {
+  content: "";
+  position: absolute;
+  inset: auto -10% -65% 20%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, rgb(255 255 255 / 0.12), transparent 68%);
+  pointer-events: none;
+}
+
+.authink-button--secondary,
+.authink-button--oauth {
+  color: var(--authink-color-text);
+  background: var(--authink-color-surface);
+  border-color: var(--authink-color-border);
+}
+
+.authink-button--secondary:hover:not(:disabled),
+.authink-button--oauth:hover:not(:disabled) {
+  background: var(--authink-color-surface-muted);
+  border-color: var(--authink-color-border-strong);
+}
+
+.authink-button__icon {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex: 0 0 auto;
+}
+
+.authink-button__spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--authink-radius-full);
+  animation: authink-spin 900ms linear infinite;
+}
+
+@keyframes authink-spin {
+  to { transform: rotate(1turn); }
+}
+
+/* Form field */
+.authink-field {
+  display: grid;
+  gap: var(--authink-space-2);
+}
+
+.authink-field__label {
+  color: var(--authink-color-text);
+  font-family: var(--authink-font-body);
+  font-size: var(--authink-font-size-md);
+  font-weight: var(--authink-font-weight-medium);
+}
+
+.authink-input-wrap {
+  position: relative;
+}
+
+.authink-input {
+  width: 100%;
+  min-height: var(--authink-control-height);
+  padding: 0 var(--authink-space-4);
+  border: var(--authink-border-width) solid var(--authink-color-border);
+  border-radius: var(--authink-radius-md);
+  color: var(--authink-color-text);
+  background: var(--authink-color-surface);
+  font: inherit;
+  transition:
+    border-color var(--authink-duration-normal) var(--authink-ease-standard),
+    box-shadow var(--authink-duration-normal) var(--authink-ease-standard),
+    background-color var(--authink-duration-normal) var(--authink-ease-standard);
+}
+
+.authink-input::placeholder {
+  color: var(--authink-color-text-subtle);
+  opacity: 1;
+}
+
+.authink-input:hover:not(:disabled) {
+  border-color: var(--authink-color-border-strong);
+}
+
+.authink-input:focus {
+  border-color: var(--authink-color-focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--authink-color-focus) 15%, transparent);
+}
+
+.authink-input[aria-invalid="true"] {
+  border-color: var(--authink-error-600);
+}
+
+.authink-input:disabled {
+  color: var(--authink-color-text-muted);
+  background: var(--authink-color-surface-muted);
+  cursor: not-allowed;
+}
+
+.authink-input--with-trailing {
+  padding-right: 3rem;
+}
+
+.authink-input__trailing {
+  position: absolute;
+  top: 50%;
+  right: var(--authink-space-2);
+  width: var(--authink-touch-target);
+  height: var(--authink-touch-target);
+  display: grid;
+  place-items: center;
+  transform: translateY(-50%);
+  border: 0;
+  color: var(--authink-color-text-muted);
+  background: transparent;
+  border-radius: var(--authink-radius-md);
+  cursor: pointer;
+}
+
+.authink-field__hint,
+.authink-field__error {
+  margin: 0;
+  font-size: var(--authink-font-size-sm);
+  line-height: var(--authink-line-height-normal);
+}
+
+.authink-field__hint {
+  color: var(--authink-color-text-muted);
+}
+
+.authink-field__error {
+  color: var(--authink-error-600);
+}
+
+/* Checkbox */
+.authink-checkbox {
+  min-height: var(--authink-touch-target);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--authink-space-2);
+  color: var(--authink-color-text-muted);
+  font-size: var(--authink-font-size-md);
+  cursor: pointer;
+}
+
+.authink-checkbox__control {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  border: var(--authink-border-width) solid var(--authink-color-border-strong);
+  border-radius: var(--authink-radius-xs);
+  background: var(--authink-color-surface);
+  display: grid;
+  place-items: center;
+}
+
+.authink-checkbox__control:checked {
+  border-color: var(--authink-color-primary);
+  background: var(--authink-color-primary);
+}
+
+.authink-checkbox__control:checked::after {
+  content: "";
+  width: 0.5rem;
+  height: 0.28rem;
+  border-left: 2px solid var(--authink-color-on-primary);
+  border-bottom: 2px solid var(--authink-color-on-primary);
+  transform: translateY(-1px) rotate(-45deg);
+}
+
+/* Card */
+.authink-card {
+  width: min(100%, var(--authink-card-width));
+  padding: var(--authink-space-10);
+  border: var(--authink-border-width) solid var(--authink-color-border);
+  border-radius: var(--authink-radius-2xl);
+  color: var(--authink-color-text);
+  background: var(--authink-color-surface);
+  box-shadow: var(--authink-shadow-surface);
+  backdrop-filter: blur(18px);
+}
+
+.authink-card__header {
+  margin-bottom: var(--authink-space-8);
+}
+
+.authink-card__title {
+  margin: 0;
+  color: var(--authink-color-text);
+  font-family: var(--authink-font-display);
+  font-size: clamp(var(--authink-font-size-2xl), 3vw, var(--authink-font-size-3xl));
+  font-weight: var(--authink-font-weight-regular);
+  line-height: var(--authink-line-height-tight);
+  letter-spacing: 0.01em;
+}
+
+.authink-card__description {
+  margin: var(--authink-space-3) 0 0;
+  color: var(--authink-color-text-muted);
+  font-size: var(--authink-font-size-md);
+  line-height: var(--authink-line-height-relaxed);
+}
+
+.authink-form {
+  display: grid;
+  gap: var(--authink-space-5);
+}
+
+.authink-form__meta {
+  min-height: var(--authink-touch-target);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--authink-space-4);
+}
+
+/* Alert */
+.authink-alert {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--authink-space-3);
+  padding: var(--authink-space-3) var(--authink-space-4);
+  border: var(--authink-border-width) solid transparent;
+  border-radius: var(--authink-radius-lg);
+  font-size: var(--authink-font-size-md);
+  line-height: var(--authink-line-height-normal);
+}
+
+.authink-alert--error {
+  color: var(--authink-error-700);
+  background: var(--authink-error-100);
+  border-color: color-mix(in srgb, var(--authink-error-600) 32%, transparent);
+}
+
+.authink-alert--success {
+  color: var(--authink-success-700);
+  background: var(--authink-success-100);
+  border-color: color-mix(in srgb, var(--authink-success-600) 28%, transparent);
+}
+
+.authink-alert--warning {
+  color: var(--authink-warning-700);
+  background: var(--authink-warning-100);
+  border-color: color-mix(in srgb, var(--authink-warning-600) 28%, transparent);
+}
+
+.authink-alert--info {
+  color: var(--authink-info-700);
+  background: var(--authink-info-100);
+  border-color: color-mix(in srgb, var(--authink-info-600) 28%, transparent);
+}
+
+/* Divider */
+.authink-divider {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--authink-space-3);
+  color: var(--authink-color-text-subtle);
+  font-size: var(--authink-font-size-sm);
+}
+
+.authink-divider::before,
+.authink-divider::after {
+  content: "";
+  height: 1px;
+  background: var(--authink-color-border);
+}
+
+/* TOTP */
+.authink-totp {
+  display: flex;
+  justify-content: center;
+  gap: clamp(0.35rem, 1vw, 0.5rem);
+}
+
+.authink-totp__input {
+  width: clamp(2.5rem, 4vw, 3rem);
+  height: 3.25rem;
+  padding: 0;
+  border: var(--authink-border-width) solid var(--authink-color-border);
+  border-radius: var(--authink-radius-md);
+  color: var(--authink-color-text);
+  background: var(--authink-color-surface);
+  font-family: var(--authink-font-mono);
+  font-size: var(--authink-font-size-xl);
+  font-weight: var(--authink-font-weight-semibold);
+  text-align: center;
+  caret-color: var(--authink-color-seal);
+}
+
+.authink-totp[data-invalid="true"] .authink-totp__input {
+  border-color: var(--authink-error-600);
+}
+
+/* Links */
+.authink-link {
+  color: var(--authink-color-link);
+  font-weight: var(--authink-font-weight-medium);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+.authink-link:hover {
+  text-decoration-color: var(--authink-color-seal);
+}
+
+@media (max-width: 47.9375rem) {
+  .authink-card {
+    padding: var(--authink-space-6) var(--authink-space-5);
+    border-radius: var(--authink-radius-xl);
+  }
+
+  .authink-form__meta {
+    align-items: flex-start;
+  }
+
+  .authink-totp__input {
+    width: clamp(2.35rem, 12vw, 2.9rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .authink-button__spinner {
+    animation-duration: 1.8s;
+  }
+}
