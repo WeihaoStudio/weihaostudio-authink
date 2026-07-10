@@ -6,6 +6,8 @@ type FieldProps = {
   type?: "text" | "email" | "password";
   placeholder?: string;
   autoComplete?: string;
+  defaultValue?: string;
+  required?: boolean;
   error?: string;
 };
 
@@ -15,6 +17,8 @@ export function Field({
   type = "text",
   placeholder,
   autoComplete,
+  defaultValue,
+  required = true,
   error,
 }: FieldProps) {
   const id = useId();
@@ -33,6 +37,8 @@ export function Field({
           type={resolvedType}
           placeholder={placeholder}
           autoComplete={autoComplete}
+          defaultValue={defaultValue}
+          required={required}
           aria-invalid={Boolean(error)}
           aria-describedby={error ? `${id}-error` : undefined}
         />
