@@ -1,0 +1,196 @@
+/* WeihaoStudio AuthInk Design Tokens
+ * Source of truth for frontend theme values.
+ * Components should consume semantic tokens instead of raw values.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Primitive — Ink */
+  --authink-ink-950: #090909;
+  --authink-ink-900: #111111;
+  --authink-ink-800: #242424;
+  --authink-ink-700: #3d3d3d;
+  --authink-ink-600: #565651;
+  --authink-ink-500: #72726b;
+  --authink-ink-400: #96958d;
+  --authink-ink-300: #b9b7ae;
+  --authink-ink-200: #d8d5cc;
+  --authink-ink-100: #e8e6df;
+  --authink-ink-50: #f3f1ec;
+
+  /* Primitive — Paper */
+  --authink-paper-0: #ffffff;
+  --authink-paper-50: #fcfbf8;
+  --authink-paper-100: #faf9f6;
+  --authink-paper-200: #f5f3ee;
+  --authink-paper-300: #efede7;
+
+  /* Primitive — Seal */
+  --authink-seal-700: #8f241d;
+  --authink-seal-600: #a72d24;
+  --authink-seal-500: #c0392b;
+  --authink-seal-400: #d45548;
+  --authink-seal-100: #f7e4e1;
+
+  /* Semantic — Status */
+  --authink-success-700: #246b47;
+  --authink-success-600: #2f855a;
+  --authink-success-100: #e4f3e9;
+  --authink-warning-700: #8a5a14;
+  --authink-warning-600: #b7791f;
+  --authink-warning-100: #faf0d8;
+  --authink-error-700: #9b2424;
+  --authink-error-600: #c53030;
+  --authink-error-100: #f9e1e1;
+  --authink-info-700: #315f78;
+  --authink-info-600: #3f7896;
+  --authink-info-100: #e3eff5;
+
+  /* Typography */
+  --authink-font-brand: "LXGW WenKai", "Noto Serif SC", serif;
+  --authink-font-display: "LXGW WenKai", "Noto Serif SC", serif;
+  --authink-font-body: Inter, "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --authink-font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  --authink-font-size-xs: 0.75rem;
+  --authink-font-size-sm: 0.8125rem;
+  --authink-font-size-md: 0.875rem;
+  --authink-font-size-base: 1rem;
+  --authink-font-size-lg: 1.125rem;
+  --authink-font-size-xl: 1.375rem;
+  --authink-font-size-2xl: 1.75rem;
+  --authink-font-size-3xl: 2.25rem;
+
+  --authink-line-height-tight: 1.25;
+  --authink-line-height-normal: 1.5;
+  --authink-line-height-relaxed: 1.7;
+
+  --authink-font-weight-regular: 400;
+  --authink-font-weight-medium: 500;
+  --authink-font-weight-semibold: 600;
+
+  /* Spacing — 4px scale */
+  --authink-space-0: 0;
+  --authink-space-1: 0.25rem;
+  --authink-space-2: 0.5rem;
+  --authink-space-3: 0.75rem;
+  --authink-space-4: 1rem;
+  --authink-space-5: 1.25rem;
+  --authink-space-6: 1.5rem;
+  --authink-space-8: 2rem;
+  --authink-space-10: 2.5rem;
+  --authink-space-12: 3rem;
+  --authink-space-16: 4rem;
+  --authink-space-20: 5rem;
+  --authink-space-24: 6rem;
+
+  /* Radius */
+  --authink-radius-xs: 0.25rem;
+  --authink-radius-sm: 0.375rem;
+  --authink-radius-md: 0.5rem;
+  --authink-radius-lg: 0.75rem;
+  --authink-radius-xl: 1rem;
+  --authink-radius-2xl: 1.5rem;
+  --authink-radius-full: 9999px;
+
+  /* Border */
+  --authink-border-width: 1px;
+  --authink-focus-width: 2px;
+  --authink-focus-offset: 2px;
+
+  /* Shadow */
+  --authink-shadow-xs: 0 1px 2px rgb(17 17 17 / 0.04);
+  --authink-shadow-sm: 0 4px 16px rgb(17 17 17 / 0.06);
+  --authink-shadow-card: 0 18px 60px rgb(17 17 17 / 0.10);
+  --authink-shadow-dark-card: 0 24px 80px rgb(0 0 0 / 0.35);
+
+  /* Motion */
+  --authink-duration-fast: 120ms;
+  --authink-duration-normal: 200ms;
+  --authink-duration-slow: 360ms;
+  --authink-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --authink-ease-emphasized: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Layout */
+  --authink-content-max: 100rem;
+  --authink-card-width: 28rem;
+  --authink-page-gutter: clamp(1rem, 4vw, 5rem);
+  --authink-control-height: 2.75rem;
+  --authink-control-height-mobile: 3rem;
+  --authink-touch-target: 2.75rem;
+
+  /* Semantic — Light */
+  --authink-color-page: var(--authink-paper-100);
+  --authink-color-surface: rgb(255 255 255 / 0.94);
+  --authink-color-surface-muted: var(--authink-paper-200);
+  --authink-color-text: var(--authink-ink-900);
+  --authink-color-text-muted: var(--authink-ink-600);
+  --authink-color-text-subtle: var(--authink-ink-500);
+  --authink-color-border: var(--authink-ink-200);
+  --authink-color-border-strong: var(--authink-ink-400);
+  --authink-color-primary: var(--authink-ink-900);
+  --authink-color-on-primary: var(--authink-paper-0);
+  --authink-color-focus: var(--authink-ink-700);
+  --authink-color-link: var(--authink-ink-800);
+  --authink-color-seal: var(--authink-seal-500);
+  --authink-color-overlay: rgb(17 17 17 / 0.44);
+  --authink-shadow-surface: var(--authink-shadow-card);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --authink-color-page: #090a0c;
+  --authink-color-surface: rgb(21 22 25 / 0.90);
+  --authink-color-surface-muted: #1b1c20;
+  --authink-color-text: #f5f5f0;
+  --authink-color-text-muted: #c4c4bc;
+  --authink-color-text-subtle: #9b9b94;
+  --authink-color-border: #34353a;
+  --authink-color-border-strong: #55565c;
+  --authink-color-primary: #f5f5f0;
+  --authink-color-on-primary: #111214;
+  --authink-color-focus: #dddcd5;
+  --authink-color-link: #f0efe9;
+  --authink-color-seal: #d45548;
+  --authink-color-overlay: rgb(0 0 0 / 0.62);
+  --authink-shadow-surface: var(--authink-shadow-dark-card);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+
+    --authink-color-page: #090a0c;
+    --authink-color-surface: rgb(21 22 25 / 0.90);
+    --authink-color-surface-muted: #1b1c20;
+    --authink-color-text: #f5f5f0;
+    --authink-color-text-muted: #c4c4bc;
+    --authink-color-text-subtle: #9b9b94;
+    --authink-color-border: #34353a;
+    --authink-color-border-strong: #55565c;
+    --authink-color-primary: #f5f5f0;
+    --authink-color-on-primary: #111214;
+    --authink-color-focus: #dddcd5;
+    --authink-color-link: #f0efe9;
+    --authink-color-seal: #d45548;
+    --authink-color-overlay: rgb(0 0 0 / 0.62);
+    --authink-shadow-surface: var(--authink-shadow-dark-card);
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  :root {
+    --authink-page-gutter: 1rem;
+    --authink-control-height: var(--authink-control-height-mobile);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --authink-duration-fast: 0.01ms;
+    --authink-duration-normal: 0.01ms;
+    --authink-duration-slow: 0.01ms;
+  }
+}
