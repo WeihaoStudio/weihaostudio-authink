@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" role="img" aria-label="暗色月夜水墨山水背景">
+  <defs>
+    <linearGradient id="night" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#090b10"/>
+      <stop offset=".56" stop-color="#111722"/>
+      <stop offset="1" stop-color="#1d2631"/>
+    </linearGradient>
+    <radialGradient id="moonGlow" cx="35%" cy="18%" r="34%">
+      <stop offset="0" stop-color="#f7f5ed" stop-opacity=".28"/>
+      <stop offset=".42" stop-color="#dfe4ea" stop-opacity=".1"/>
+      <stop offset="1" stop-color="#0b0e14" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b9c3cf" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#07090d" stop-opacity=".05"/>
+    </linearGradient>
+    <filter id="ink" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.035" numOctaves="3" seed="17" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="7"/>
+    </filter>
+    <filter id="blur"><feGaussianBlur stdDeviation="14"/></filter>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#night)"/>
+  <rect width="1920" height="1080" fill="url(#moonGlow)"/>
+  <g fill="#eef0f3">
+    <circle cx="302" cy="168" r="58" opacity=".88"/>
+    <circle cx="329" cy="146" r="61" fill="#0b0f16" opacity=".98"/>
+    <circle cx="462" cy="112" r="2.2" opacity=".78"/>
+    <circle cx="521" cy="173" r="1.8" opacity=".62"/>
+    <circle cx="784" cy="96" r="1.4" opacity=".52"/>
+    <circle cx="907" cy="186" r="2.1" opacity=".58"/>
+    <circle cx="1164" cy="126" r="1.6" opacity=".48"/>
+    <circle cx="1350" cy="201" r="1.9" opacity=".54"/>
+  </g>
+  <g fill="#6f7f91" filter="url(#ink)">
+    <path d="M-60 772 218 494l123 103 195-299 232 344 129-145 255 283Z" opacity=".27"/>
+    <path d="M-80 890 302 623l153 103 174-229 190 244 139-92 267 254Z" opacity=".22"/>
+    <path d="M744 840 993 556l157 154 162-224 226 338 116-91 326 272v75H716Z" opacity=".17"/>
+  </g>
+  <path d="M0 748c334-72 595-54 848 6 311 74 660 56 1072-27v353H0Z" fill="url(#water)"/>
+  <g fill="#f0bf72" opacity=".88">
+    <rect x="1320" y="706" width="76" height="42" rx="2"/>
+    <path d="m1308 705 50-34 52 34Z"/>
+    <rect x="1350" y="669" width="7" height="-44"/>
+  </g>
+  <g fill="#0a0d12" opacity=".96">
+    <path d="M1288 760h145v16h-145z"/>
+    <path d="M1268 776h185v10h-185z"/>
+    <path d="M1278 705h165v8h-165z"/>
+  </g>
+  <ellipse cx="1358" cy="812" rx="150" ry="24" fill="#e3c99b" opacity=".12" filter="url(#blur)"/>
+  <g fill="none" stroke="#d5dde6" stroke-linecap="round" opacity=".17">
+    <path d="M102 853c272 24 500 18 705-20 242-45 500-34 846 31"/>
+    <path d="M80 892c273 22 540 17 787-17 260-36 533-24 873 38"/>
+  </g>
+</svg>
