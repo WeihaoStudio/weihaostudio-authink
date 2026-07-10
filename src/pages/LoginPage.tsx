@@ -1,17 +1,31 @@
 import { FormEvent, useState } from "react";
 import { AuthShell } from "../components/AuthShell";
 import { Field } from "../components/Field";
-import { OAuthButtons } from "../components/OAuthButtons";
+import { OAuthButtons, type OAuthProvider } from "../components/OAuthButtons";
 
 type LoginPageProps = {
   theme: "light" | "dark";
   onThemeChange: () => void;
+  actionUrl?: string;
+  resetPasswordUrl?: string;
+  username?: string;
+  errorMessage?: string;
+  providers?: OAuthProvider[];
 };
 
-export function LoginPage({ theme, onThemeChange }: LoginPageProps) {
+export function LoginPage({
+  theme,
+  onThemeChange,
+  actionUrl,
+  resetPasswordUrl = "/?page=reset",
+  username,
+  errorMessage,
+  providers,
+}: LoginPageProps) {
   const [submitting, setSubmitting] = useState(false);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    if (actionUrl) return;
     event.preventDefault();
     setSubmitting(true);
     window.setTimeout(() => setSubmitting(false), 900);
@@ -32,13 +46,21 @@ export function LoginPage({ theme, onThemeChange }: LoginPageProps) {
           <p className="authink-card__description">使用您的账号登录以继续访问</p>
         </header>
 
-        <form className="authink-form" onSubmit={handleSubmit}>
+        {errorMessage ? (
+          <div className="authink-alert authink-alert--error" role="alert">
+            <span aria-hidden="true">!</span>
+            <span>{errorMessage}</span>
+          </div>
+        ) : null}
+
+        <form className="authink-form" action={actionUrl} method="post" onSubmit={handleSubmit}>
           <Field
             label="用户名或邮箱"
             name="username"
             type="text"
             placeholder="请输入用户名或邮箱"
             autoComplete="username"
+            defaultValue={username}
           />
           <Field
             label="密码"
@@ -53,7 +75,7 @@ export function LoginPage({ theme, onThemeChange }: LoginPageProps) {
               <input className="authink-checkbox__control" type="checkbox" name="rememberMe" />
               <span>记住我</span>
             </label>
-            <a className="authink-link" href="#reset-password">忘记密码？</a>
+            <a className="authink-link" href={resetPasswordUrl}>忘记密码？</a>
           </div>
 
           <button
@@ -66,7 +88,7 @@ export function LoginPage({ theme, onThemeChange }: LoginPageProps) {
           </button>
 
           <div className="authink-divider"><span>或使用以下方式登录</span></div>
-          <OAuthButtons />
+          <OAuthButtons providers={providers} />
         </form>
 
         <div className="authink-secondary-actions">
