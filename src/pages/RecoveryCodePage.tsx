@@ -5,16 +5,31 @@ import { Field } from "../components/Field";
 type RecoveryCodePageProps = {
   theme: "light" | "dark";
   onThemeChange: () => void;
+  actionUrl?: string;
+  totpUrl?: string;
+  loginUrl?: string;
+  errorMessage?: string;
 };
 
-export function RecoveryCodePage({ theme, onThemeChange }: RecoveryCodePageProps) {
-  const [invalid, setInvalid] = useState(false);
+export function RecoveryCodePage({
+  theme,
+  onThemeChange,
+  actionUrl,
+  totpUrl = "/?page=totp",
+  loginUrl = "/?page=login",
+  errorMessage,
+}: RecoveryCodePageProps) {
+  const [invalid, setInvalid] = useState(Boolean(errorMessage));
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
     const data = new FormData(event.currentTarget);
     const code = String(data.get("recoveryCode") ?? "").trim();
-    setInvalid(code.length < 8);
+    if (code.length < 8) {
+      event.preventDefault();
+      setInvalid(true);
+      return;
+    }
+    if (!actionUrl) event.preventDefault();
   }
 
   return (
@@ -34,14 +49,21 @@ export function RecoveryCodePage({ theme, onThemeChange }: RecoveryCodePageProps
           </p>
         </header>
 
-        <form className="authink-form" onSubmit={handleSubmit}>
+        {errorMessage ? (
+          <div className="authink-alert authink-alert--error" role="alert">
+            <span aria-hidden="true">!</span>
+            <span>{errorMessage}</span>
+          </div>
+        ) : null}
+
+        <form className="authink-form" action={actionUrl} method="post" onSubmit={handleSubmit}>
           <Field
             label="恢复码"
             name="recoveryCode"
             type="text"
             placeholder="输入恢复码（区分大小写）"
             autoComplete="one-time-code"
-            error={invalid ? "恢复码格式不正确，请检查后重试" : undefined}
+            error={invalid && !errorMessage ? "恢复码格式不正确，请检查后重试" : undefined}
           />
 
           <a className="authink-link authink-inline-help" href="#recovery-help">什么是恢复码？</a>
@@ -52,8 +74,8 @@ export function RecoveryCodePage({ theme, onThemeChange }: RecoveryCodePageProps
         </form>
 
         <div className="authink-secondary-actions">
-          <a className="authink-link" href="/?page=totp">返回二步验证</a>
-          <a className="authink-link" href="/?page=login">返回登录</a>
+          <a className="authink-link" href={totpUrl}>返回二步验证</a>
+          <a className="authink-link" href={loginUrl}>返回登录</a>
         </div>
       </article>
     </AuthShell>
