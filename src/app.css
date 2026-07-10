@@ -1,0 +1,278 @@
+/* App-specific fidelity layer.
+ * Keeps the reusable design system generic while matching the approved
+ * WeihaoStudio AuthInk high-fidelity composition.
+ */
+
+.authink-preview-nav {
+  position: fixed;
+  z-index: 30;
+  left: 50%;
+  bottom: 1rem;
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  transform: translateX(-50%);
+  border: 1px solid color-mix(in srgb, var(--authink-color-border) 78%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--authink-color-surface) 90%, transparent);
+  box-shadow: var(--authink-shadow-sm);
+  backdrop-filter: blur(18px);
+}
+
+.authink-preview-nav button {
+  min-height: 2.25rem;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: 999px;
+  color: var(--authink-color-text-muted);
+  background: transparent;
+  cursor: pointer;
+}
+
+.authink-preview-nav button.is-active {
+  color: var(--authink-color-on-primary);
+  background: var(--authink-color-primary);
+}
+
+.authink-page {
+  isolation: isolate;
+}
+
+.authink-page::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 11% 10%, rgb(255 255 255 / 0.46), transparent 24%),
+    linear-gradient(110deg, transparent 0 54%, color-mix(in srgb, var(--authink-color-page) 72%, transparent) 75% 100%);
+}
+
+:root[data-theme="dark"] .authink-page::before {
+  background:
+    radial-gradient(circle at 15% 14%, rgb(220 227 235 / 0.08), transparent 27%),
+    linear-gradient(110deg, transparent 0 52%, rgb(8 10 14 / 0.48) 72% 100%);
+}
+
+.authink-layout {
+  min-height: 100dvh;
+}
+
+.authink-layout__brand {
+  position: relative;
+}
+
+.authink-layout__brand::after {
+  content: "";
+  position: absolute;
+  right: 7%;
+  bottom: 11%;
+  width: 5.5rem;
+  height: 5.5rem;
+  opacity: 0.13;
+  border: 2px solid var(--authink-color-seal);
+  border-radius: 0.4rem;
+  transform: rotate(-6deg);
+  box-shadow: inset 0 0 0 0.35rem color-mix(in srgb, var(--authink-color-seal) 8%, transparent);
+}
+
+.authink-brand-lockup {
+  color: var(--authink-color-text);
+  filter: drop-shadow(0 12px 28px rgb(17 17 17 / 0.08));
+}
+
+:root[data-theme="dark"] .authink-brand-lockup img {
+  filter: invert(1) contrast(0.9) brightness(1.18);
+}
+
+.authink-brand-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.authink-brand-copy__title,
+.authink-card__title {
+  font-variation-settings: "wght" 400;
+  text-wrap: balance;
+}
+
+.authink-layout__auth {
+  position: relative;
+  border-left: 1px solid color-mix(in srgb, var(--authink-color-border) 42%, transparent);
+}
+
+.authink-layout__auth::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E");
+}
+
+.authink-toolbar,
+.authink-auth-stage,
+.authink-page-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.authink-toolbar__theme {
+  width: var(--authink-touch-target);
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--authink-color-border) 74%, transparent);
+  background: color-mix(in srgb, var(--authink-color-surface) 78%, transparent);
+}
+
+.authink-card--hero {
+  position: relative;
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--authink-color-border) 74%, transparent);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--authink-color-surface) 97%, transparent), color-mix(in srgb, var(--authink-color-surface-muted) 40%, transparent));
+}
+
+.authink-card--hero::before {
+  content: "";
+  position: absolute;
+  top: -7rem;
+  right: -6rem;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  opacity: 0.05;
+  background: radial-gradient(circle, var(--authink-color-text), transparent 67%);
+}
+
+.authink-card__header {
+  position: relative;
+}
+
+.authink-card__seal {
+  position: absolute;
+  top: 0.2rem;
+  right: 0;
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid var(--authink-color-seal);
+  border-radius: 0.2rem;
+  color: var(--authink-color-seal);
+  font-family: var(--authink-font-display);
+  font-size: 0.85rem;
+  transform: rotate(4deg);
+}
+
+.authink-button--ink {
+  border-radius: 0.55rem 0.75rem 0.5rem 0.7rem;
+  clip-path: polygon(0.7% 8%, 98.5% 0, 100% 90%, 97.8% 100%, 1.2% 95%, 0 20%);
+  letter-spacing: 0.16em;
+}
+
+.authink-button--ink::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.14;
+  background:
+    linear-gradient(92deg, transparent 0 4%, currentColor 5% 5.5%, transparent 6% 92%, currentColor 93% 93.4%, transparent 94%),
+    radial-gradient(ellipse at 20% 100%, currentColor, transparent 53%);
+  mix-blend-mode: soft-light;
+}
+
+.authink-oauth-list .authink-button {
+  min-height: 3rem;
+}
+
+.authink-help-trigger {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--authink-color-border);
+  border-radius: 999px;
+  color: var(--authink-color-text-muted);
+  background: transparent;
+  cursor: pointer;
+}
+
+.authink-totp-error {
+  margin: -0.5rem 0 0;
+  text-align: center;
+}
+
+.authink-totp[data-complete="true"] .authink-totp__input {
+  border-color: color-mix(in srgb, var(--authink-success-600) 72%, var(--authink-color-border));
+}
+
+.authink-totp__input:focus {
+  outline: 0;
+  border-color: var(--authink-color-focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--authink-color-focus) 14%, transparent);
+}
+
+@media (min-width: 75rem) {
+  .authink-layout {
+    grid-template-columns: minmax(0, 62%) minmax(30rem, 38%);
+  }
+
+  .authink-layout__auth {
+    padding-inline: clamp(3rem, 4.5vw, 5.5rem);
+  }
+
+  .authink-card--hero {
+    width: min(100%, 30rem);
+  }
+}
+
+@media (max-width: 47.9375rem) {
+  .authink-preview-nav {
+    bottom: 0.6rem;
+  }
+
+  .authink-page::before {
+    background: linear-gradient(180deg, transparent 0 8rem, var(--authink-color-page) 22rem 100%);
+  }
+
+  .authink-layout__auth {
+    border-left: 0;
+  }
+
+  .authink-layout__brand::after {
+    display: none;
+  }
+
+  .authink-card--hero {
+    width: 100%;
+    box-shadow: 0 14px 45px rgb(17 17 17 / 0.08);
+  }
+
+  .authink-card__seal {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+}
+
+@media (max-height: 49rem) and (min-width: 48rem) {
+  .authink-card {
+    padding-block: var(--authink-space-6);
+  }
+
+  .authink-card__header {
+    margin-bottom: var(--authink-space-5);
+  }
+
+  .authink-form {
+    gap: var(--authink-space-3);
+  }
+}
+
+@media print {
+  .authink-preview-nav,
+  .authink-toolbar {
+    display: none;
+  }
+}
