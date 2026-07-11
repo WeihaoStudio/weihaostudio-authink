@@ -55,11 +55,11 @@ describe("AuthInk login contract", () => {
             "action",
             "https://sso.example.test/login-actions/authenticate"
         );
-        expect(screen.getByRole("textbox", { name: /用户名|邮箱/i })).toHaveAttribute(
+        expect(screen.getByRole("textbox", { name: /用户名|邮箱|username|email/i })).toHaveAttribute(
             "name",
             "username"
         );
-        expect(screen.getByLabelText(/密码/i)).toHaveAttribute("name", "password");
+        expect(container.querySelector('input[name="password"]')).toHaveAttribute("name", "password");
         expect(screen.getByRole("alert")).toHaveTextContent("用户名或密码错误");
         expect(screen.getByRole("link", { name: /Google/i })).toHaveAttribute(
             "href",

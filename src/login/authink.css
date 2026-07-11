@@ -1,0 +1,485 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    min-height: 100%;
+    margin: 0;
+}
+
+body {
+    background: var(--authink-color-canvas);
+    color: var(--authink-color-text);
+    font-family: var(--authink-font-body);
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button,
+a,
+input {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.authink-shell {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(0, 58fr) minmax(420px, 42fr);
+    background: var(--authink-color-canvas);
+    color: var(--authink-color-text);
+}
+
+.authink-visual {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    isolation: isolate;
+    background-image: var(--authink-bg-light);
+    background-position: center;
+    background-size: cover;
+}
+
+.authink-shell[data-theme="dark"] .authink-visual {
+    background-image: var(--authink-bg-dark);
+}
+
+.authink-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgb(247 245 240 / 5%), rgb(11 17 21 / 18%));
+}
+
+.authink-visual__logo,
+.authink-panel__logo {
+    display: block;
+    width: min(240px, 38vw);
+    height: auto;
+}
+
+.authink-visual__logo {
+    position: absolute;
+    top: 48px;
+    left: 48px;
+}
+
+.authink-visual__caption {
+    position: absolute;
+    left: 56px;
+    bottom: 52px;
+    display: grid;
+    gap: 8px;
+    color: #f7f5f0;
+    text-shadow: 0 2px 18px rgb(0 0 0 / 35%);
+}
+
+.authink-visual__caption span:first-child {
+    font-family: var(--authink-font-display);
+    font-size: clamp(36px, 4vw, 64px);
+    letter-spacing: 0.12em;
+}
+
+.authink-visual__caption span:last-child {
+    font-size: 14px;
+    letter-spacing: 0.16em;
+}
+
+.authink-panel {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 56px 48px;
+    background: var(--authink-color-canvas);
+}
+
+.authink-theme-toggle {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--authink-color-border);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--authink-color-text-secondary);
+    cursor: pointer;
+}
+
+.authink-form-wrap {
+    width: min(100%, var(--authink-form-width));
+}
+
+.authink-panel__logo {
+    display: none;
+    margin-bottom: 28px;
+}
+
+.authink-header {
+    margin-bottom: 30px;
+}
+
+.authink-eyebrow {
+    margin: 0 0 10px;
+    color: var(--authink-color-seal);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+}
+
+.authink-header h1 {
+    margin: 0;
+    font-family: var(--authink-font-display);
+    font-size: clamp(30px, 3vw, 42px);
+    font-weight: 500;
+    line-height: 1.28;
+    letter-spacing: 0.04em;
+}
+
+.authink-header p:last-child {
+    margin: 10px 0 0;
+    color: var(--authink-color-text-secondary);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.authink-alert,
+.authink-field-error {
+    margin: 0 0 18px;
+    padding: 12px 14px;
+    border-left: 3px solid var(--authink-color-danger);
+    background: var(--authink-color-danger-surface);
+    color: var(--authink-color-danger);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.authink-form,
+.authink-field {
+    display: grid;
+}
+
+.authink-form {
+    gap: 18px;
+}
+
+.authink-field {
+    gap: 8px;
+}
+
+.authink-field label {
+    color: var(--authink-color-text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.authink-field input {
+    width: 100%;
+    height: var(--authink-control-height);
+    border: 1px solid var(--authink-color-border);
+    border-radius: 8px;
+    padding: 0 14px;
+    background: var(--authink-color-surface);
+    color: var(--authink-color-text);
+    outline: none;
+    transition: border-color var(--authink-duration-fast) var(--authink-ease-standard), box-shadow var(--authink-duration-fast) var(--authink-ease-standard);
+}
+
+.authink-field input:focus-visible,
+.authink-theme-toggle:focus-visible,
+.authink-password button:focus-visible,
+.authink-submit:focus-visible,
+.authink-social__button:focus-visible,
+.authink-options a:focus-visible,
+.authink-info a:focus-visible {
+    outline: none;
+    box-shadow: var(--authink-shadow-focus);
+}
+
+.authink-field input:focus-visible {
+    border-color: var(--authink-color-focus);
+}
+
+.authink-field input[aria-invalid="true"] {
+    border-color: var(--authink-color-danger);
+}
+
+.authink-password {
+    position: relative;
+}
+
+.authink-password input {
+    padding-right: 64px;
+}
+
+.authink-password button {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    border: 0;
+    padding: 7px 8px;
+    background: transparent;
+    color: var(--authink-color-link);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.authink-options {
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 14px;
+}
+
+.authink-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--authink-color-text-secondary);
+}
+
+.authink-checkbox input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--authink-color-primary);
+}
+
+.authink-options a,
+.authink-info a {
+    color: var(--authink-color-link);
+    text-underline-offset: 3px;
+}
+
+.authink-options a:hover,
+.authink-info a:hover {
+    color: var(--authink-color-link-hover);
+}
+
+.authink-submit {
+    position: relative;
+    min-height: 60px;
+    overflow: hidden;
+    border: 0;
+    padding: 0 26px;
+    background: transparent url("./assets/login-button-brush.svg") center / 100% 100% no-repeat;
+    color: #ffffff;
+    cursor: pointer;
+    transition: transform var(--authink-duration-fast) var(--authink-ease-standard), opacity var(--authink-duration-fast) var(--authink-ease-standard);
+}
+
+.authink-submit::before {
+    content: "";
+    position: absolute;
+    inset: 3px 7%;
+    z-index: -1;
+    background: var(--authink-color-primary);
+}
+
+.authink-submit span {
+    position: relative;
+    z-index: 1;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+}
+
+.authink-submit:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.authink-submit:disabled {
+    cursor: wait;
+    opacity: 0.58;
+}
+
+.authink-social {
+    margin-top: 26px;
+}
+
+.authink-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--authink-color-text-muted);
+    font-size: 12px;
+}
+
+.authink-divider::before,
+.authink-divider::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: var(--authink-color-divider);
+}
+
+.authink-social__list {
+    display: grid;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.authink-social__button {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid var(--authink-color-border);
+    border-radius: 8px;
+    background: var(--authink-color-surface);
+    color: var(--authink-color-text);
+    text-decoration: none;
+    font-size: 14px;
+    transition: border-color var(--authink-duration-fast) var(--authink-ease-standard), background var(--authink-duration-fast) var(--authink-ease-standard);
+}
+
+.authink-social__button:hover {
+    border-color: var(--authink-color-border-strong);
+    background: var(--authink-color-surface-subtle);
+}
+
+.authink-social__button img {
+    width: 20px;
+    height: 20px;
+}
+
+.authink-info,
+.authink-footer {
+    color: var(--authink-color-text-muted);
+    font-size: 13px;
+    text-align: center;
+}
+
+.authink-info {
+    margin-top: 20px;
+}
+
+.authink-info p {
+    margin: 0;
+}
+
+.authink-footer {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+}
+
+@media (max-width: 919px) {
+    .authink-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .authink-visual {
+        min-height: 240px;
+        background-position: center 46%;
+    }
+
+    .authink-visual__logo {
+        top: 28px;
+        left: 32px;
+    }
+
+    .authink-visual__caption {
+        left: 32px;
+        bottom: 28px;
+    }
+
+    .authink-visual__caption span:first-child {
+        font-size: 36px;
+    }
+
+    .authink-panel {
+        min-height: auto;
+        padding: 48px 32px;
+    }
+}
+
+@media (max-width: 767px) {
+    .authink-shell {
+        position: relative;
+        min-height: 100svh;
+        display: block;
+        background-image: var(--authink-bg-light);
+        background-position: center;
+        background-size: cover;
+    }
+
+    .authink-shell[data-theme="dark"] {
+        background-image: var(--authink-bg-dark);
+    }
+
+    .authink-visual {
+        position: absolute;
+        inset: 0;
+        min-height: 100%;
+        background: none;
+        pointer-events: none;
+    }
+
+    .authink-visual::after {
+        background: linear-gradient(180deg, rgb(247 245 240 / 12%), rgb(247 245 240 / 38%));
+    }
+
+    .authink-shell[data-theme="dark"] .authink-visual::after {
+        background: linear-gradient(180deg, rgb(11 17 21 / 8%), rgb(11 17 21 / 54%));
+    }
+
+    .authink-visual__logo,
+    .authink-visual__caption {
+        display: none;
+    }
+
+    .authink-panel {
+        position: relative;
+        z-index: 1;
+        min-height: 100svh;
+        display: flex;
+        align-items: flex-start;
+        padding: 72px 20px 28px;
+        background: transparent;
+    }
+
+    .authink-form-wrap {
+        width: 100%;
+    }
+
+    .authink-panel__logo {
+        display: block;
+        width: min(220px, 68vw);
+    }
+
+    .authink-header {
+        margin-bottom: 24px;
+    }
+
+    .authink-header h1 {
+        font-size: 30px;
+    }
+
+    .authink-theme-toggle {
+        top: 18px;
+        right: 18px;
+    }
+
+    .authink-field input,
+    .authink-social__button {
+        background: var(--authink-color-surface);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .authink-field input,
+    .authink-submit,
+    .authink-social__button {
+        transition: none;
+    }
+}
