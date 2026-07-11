@@ -17,6 +17,14 @@ describe("AuthInk login contract", () => {
         expect(authInkAssets.githubIconUrl).toContain("github-mark.svg");
     });
 
+    it("keeps the login structure free of a card-overlay wrapper", () => {
+        const kcContext = getKcContextMock({ pageId: "login.ftl" });
+        const { container } = render(<KcPage kcContext={kcContext} />);
+
+        expect(container.querySelector(".authink-panel")).toBeInTheDocument();
+        expect(container.querySelector(".authink-card")).not.toBeInTheDocument();
+    });
+
     it("posts to Keycloak and renders accessible local-provider controls", () => {
         const kcContext = getKcContextMock({
             pageId: "login.ftl",

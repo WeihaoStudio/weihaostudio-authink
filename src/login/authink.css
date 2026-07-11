@@ -270,8 +270,8 @@ input {
     overflow: hidden;
     border: 0;
     padding: 0 26px;
-    background: transparent url("./assets/login-button-brush.svg") center / 100% 100% no-repeat;
-    color: #ffffff;
+    background: transparent;
+    color: var(--authink-color-on-primary);
     cursor: pointer;
     transition: transform var(--authink-duration-fast) var(--authink-ease-standard), opacity var(--authink-duration-fast) var(--authink-ease-standard);
 }
@@ -279,9 +279,11 @@ input {
 .authink-submit::before {
     content: "";
     position: absolute;
-    inset: 3px 7%;
-    z-index: -1;
+    inset: 0;
+    z-index: 0;
     background: var(--authink-color-primary);
+    -webkit-mask: url("./assets/login-button-brush.svg") center / 100% 100% no-repeat;
+    mask: url("./assets/login-button-brush.svg") center / 100% 100% no-repeat;
 }
 
 .authink-submit span {

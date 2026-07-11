@@ -26,14 +26,18 @@ export default function Template(
         infoNode,
         documentTitle
     } = props;
-    const { message } = kcContext;
+    const { message, authinkTheme } = kcContext;
     const { msgStr } = i18n;
-    const [theme, setTheme] = useState<"light" | "dark">(() =>
-        typeof window !== "undefined" &&
-        window.matchMedia?.("(prefers-color-scheme: dark)").matches
+    const [theme, setTheme] = useState<"light" | "dark">(() => {
+        if (authinkTheme !== undefined) {
+            return authinkTheme;
+        }
+
+        return typeof window !== "undefined" &&
+            window.matchMedia?.("(prefers-color-scheme: dark)").matches
             ? "dark"
-            : "light"
-    );
+            : "light";
+    });
 
     useEffect(() => {
         document.title = documentTitle ?? msgStr("loginTitle", kcContext.realm.displayName);
