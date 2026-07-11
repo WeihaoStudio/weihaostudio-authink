@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { keycloakify } from "keycloakify/vite-plugin";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
     test: {
@@ -10,6 +11,7 @@ export default defineConfig({
     },
     plugins: [
         react(),
+        tailwindcss(),
         keycloakify({
             themeName: "weihaostudio-authink",
             accountThemeImplementation: "none",

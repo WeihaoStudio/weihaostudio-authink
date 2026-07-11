@@ -5,24 +5,39 @@ import { getKcContextMock } from "./KcPageStory";
 import { authInkAssets } from "./assets";
 
 describe("AuthInk login contract", () => {
-    it("uses distinct approved local assets", () => {
+    it("uses approved local login assets", () => {
         expect(authInkAssets.backgroundLightUrl).toContain(
             "weihaostudio-keycloak-bg-light-4k-300dpi.png"
         );
-        expect(authInkAssets.backgroundDarkUrl).toContain(
-            "weihaostudio-keycloak-bg-dark-4k-300dpi.png"
-        );
-        expect(authInkAssets.backgroundLightUrl).not.toBe(authInkAssets.backgroundDarkUrl);
         expect(authInkAssets.googleIconUrl).toContain("google-g.svg");
         expect(authInkAssets.githubIconUrl).toContain("github-mark.svg");
     });
 
-    it("keeps the login structure free of a card-overlay wrapper", () => {
+    it("matches the approved desktop authentication-card structure", () => {
         const kcContext = getKcContextMock({ pageId: "login.ftl" });
         const { container } = render(<KcPage kcContext={kcContext} />);
 
-        expect(container.querySelector(".authink-panel")).toBeInTheDocument();
-        expect(container.querySelector(".authink-card")).not.toBeInTheDocument();
+        expect(container.querySelector(".visual")).toBeInTheDocument();
+        expect(container.querySelector(".panel .auth-card")).toBeInTheDocument();
+        expect(container.querySelector(".auth-card__logo")).toBeInTheDocument();
+        expect(screen.getByRole("heading", { name: "欢迎回来" })).toBeInTheDocument();
+        expect(screen.getByText("使用您的账号安全登录。")).toBeInTheDocument();
+        expect(container.querySelector(".authink-theme-toggle")).not.toBeInTheDocument();
+        expect(container.querySelector(".authink-eyebrow")).not.toBeInTheDocument();
+        expect(container.querySelector(".authink-visual__caption")).not.toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "登录" })).toBeInTheDocument();
+    });
+
+    it("uses one fixed 4K wallpaper without a gradient or dark-image rotation", () => {
+        const kcContext = getKcContextMock({ pageId: "login.ftl" });
+        const { container } = render(<KcPage kcContext={kcContext} />);
+        const shell = container.querySelector(".auth-browser--production");
+
+        expect(shell).toHaveStyle(
+            `--auth-light-background: url(${authInkAssets.backgroundLightUrl})`
+        );
+        expect(shell?.getAttribute("style")).not.toContain("weihaostudio-keycloak-bg-dark");
+        expect(shell).not.toHaveAttribute("data-theme");
     });
 
     it("posts to Keycloak and renders accessible local-provider controls", () => {

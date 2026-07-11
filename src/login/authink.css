@@ -1,487 +1,582 @@
-* {
-    box-sizing: border-box;
-}
+@import "tailwindcss";
 
-html,
-body,
-#root {
-    min-height: 100%;
-    margin: 0;
-}
-
-body {
-    background: var(--authink-color-canvas);
-    color: var(--authink-color-text);
-    font-family: var(--authink-font-body);
-}
-
-button,
-input {
-    font: inherit;
-}
-
-button,
-a,
-input {
-    -webkit-tap-highlight-color: transparent;
-}
-
-.authink-shell {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: minmax(0, 58fr) minmax(420px, 42fr);
-    background: var(--authink-color-canvas);
-    color: var(--authink-color-text);
-}
-
-.authink-visual {
-    position: relative;
-    min-height: 100vh;
-    overflow: hidden;
-    isolation: isolate;
-    background-image: var(--authink-bg-light);
-    background-position: center;
-    background-size: cover;
-}
-
-.authink-shell[data-theme="dark"] .authink-visual {
-    background-image: var(--authink-bg-dark);
-}
-
-.authink-visual::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(180deg, rgb(247 245 240 / 5%), rgb(11 17 21 / 18%));
-}
-
-.authink-visual__logo,
-.authink-panel__logo {
-    display: block;
-    width: min(240px, 38vw);
-    height: auto;
-}
-
-.authink-visual__logo {
-    position: absolute;
-    top: 48px;
-    left: 48px;
-}
-
-.authink-visual__caption {
-    position: absolute;
-    left: 56px;
-    bottom: 52px;
-    display: grid;
-    gap: 8px;
-    color: #f7f5f0;
-    text-shadow: 0 2px 18px rgb(0 0 0 / 35%);
-}
-
-.authink-visual__caption span:first-child {
-    font-family: var(--authink-font-display);
-    font-size: clamp(36px, 4vw, 64px);
-    letter-spacing: 0.12em;
-}
-
-.authink-visual__caption span:last-child {
-    font-size: 14px;
-    letter-spacing: 0.16em;
-}
-
-.authink-panel {
-    position: relative;
-    min-height: 100vh;
-    display: grid;
-    place-items: center;
-    padding: 56px 48px;
-    background: var(--authink-color-canvas);
-}
-
-.authink-theme-toggle {
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--authink-color-border);
-    border-radius: 50%;
-    background: transparent;
-    color: var(--authink-color-text-secondary);
-    cursor: pointer;
-}
-
-.authink-form-wrap {
-    width: min(100%, var(--authink-form-width));
-}
-
-.authink-panel__logo {
-    display: none;
-    margin-bottom: 28px;
-}
-
-.authink-header {
-    margin-bottom: 30px;
-}
-
-.authink-eyebrow {
-    margin: 0 0 10px;
-    color: var(--authink-color-seal);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-}
-
-.authink-header h1 {
-    margin: 0;
-    font-family: var(--authink-font-display);
-    font-size: clamp(30px, 3vw, 42px);
-    font-weight: 500;
-    line-height: 1.28;
-    letter-spacing: 0.04em;
-}
-
-.authink-header p:last-child {
-    margin: 10px 0 0;
-    color: var(--authink-color-text-secondary);
-    font-size: 14px;
-    line-height: 1.7;
-}
-
-.authink-alert,
-.authink-field-error {
-    margin: 0 0 18px;
-    padding: 12px 14px;
-    border-left: 3px solid var(--authink-color-danger);
-    background: var(--authink-color-danger-surface);
-    color: var(--authink-color-danger);
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.authink-form,
-.authink-field {
-    display: grid;
-}
-
-.authink-form {
-    gap: 18px;
-}
-
-.authink-field {
-    gap: 8px;
-}
-
-.authink-field label {
-    color: var(--authink-color-text-secondary);
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.authink-field input {
-    width: 100%;
-    height: var(--authink-control-height);
-    border: 1px solid var(--authink-color-border);
-    border-radius: 8px;
-    padding: 0 14px;
-    background: var(--authink-color-surface);
-    color: var(--authink-color-text);
-    outline: none;
-    transition: border-color var(--authink-duration-fast) var(--authink-ease-standard), box-shadow var(--authink-duration-fast) var(--authink-ease-standard);
-}
-
-.authink-field input:focus-visible,
-.authink-theme-toggle:focus-visible,
-.authink-password button:focus-visible,
-.authink-submit:focus-visible,
-.authink-social__button:focus-visible,
-.authink-options a:focus-visible,
-.authink-info a:focus-visible {
-    outline: none;
-    box-shadow: var(--authink-shadow-focus);
-}
-
-.authink-field input:focus-visible {
-    border-color: var(--authink-color-focus);
-}
-
-.authink-field input[aria-invalid="true"] {
-    border-color: var(--authink-color-danger);
-}
-
-.authink-password {
-    position: relative;
-}
-
-.authink-password input {
-    padding-right: 64px;
-}
-
-.authink-password button {
-    position: absolute;
-    top: 50%;
-    right: 8px;
-    transform: translateY(-50%);
-    border: 0;
-    padding: 7px 8px;
-    background: transparent;
-    color: var(--authink-color-link);
-    font-size: 13px;
-    cursor: pointer;
-}
-
-.authink-options {
-    min-height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    font-size: 14px;
-}
-
-.authink-checkbox {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--authink-color-text-secondary);
-}
-
-.authink-checkbox input {
-    width: 16px;
-    height: 16px;
-    accent-color: var(--authink-color-primary);
-}
-
-.authink-options a,
-.authink-info a {
-    color: var(--authink-color-link);
-    text-underline-offset: 3px;
-}
-
-.authink-options a:hover,
-.authink-info a:hover {
-    color: var(--authink-color-link-hover);
-}
-
-.authink-submit {
-    position: relative;
-    min-height: 60px;
-    overflow: hidden;
-    border: 0;
-    padding: 0 26px;
-    background: transparent;
-    color: var(--authink-color-on-primary);
-    cursor: pointer;
-    transition: transform var(--authink-duration-fast) var(--authink-ease-standard), opacity var(--authink-duration-fast) var(--authink-ease-standard);
-}
-
-.authink-submit::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background: var(--authink-color-primary);
-    -webkit-mask: url("./assets/login-button-brush.svg") center / 100% 100% no-repeat;
-    mask: url("./assets/login-button-brush.svg") center / 100% 100% no-repeat;
-}
-
-.authink-submit span {
-    position: relative;
-    z-index: 1;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-}
-
-.authink-submit:hover:not(:disabled) {
-    transform: translateY(-1px);
-}
-
-.authink-submit:disabled {
-    cursor: wait;
-    opacity: 0.58;
-}
-
-.authink-social {
-    margin-top: 26px;
-}
-
-.authink-divider {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--authink-color-text-muted);
-    font-size: 12px;
-}
-
-.authink-divider::before,
-.authink-divider::after {
-    content: "";
-    height: 1px;
-    flex: 1;
-    background: var(--authink-color-divider);
-}
-
-.authink-social__list {
-    display: grid;
-    gap: 12px;
-    margin-top: 16px;
-}
-
-.authink-social__button {
-    min-height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    border: 1px solid var(--authink-color-border);
-    border-radius: 8px;
-    background: var(--authink-color-surface);
-    color: var(--authink-color-text);
-    text-decoration: none;
-    font-size: 14px;
-    transition: border-color var(--authink-duration-fast) var(--authink-ease-standard), background var(--authink-duration-fast) var(--authink-ease-standard);
-}
-
-.authink-social__button:hover {
-    border-color: var(--authink-color-border-strong);
-    background: var(--authink-color-surface-subtle);
-}
-
-.authink-social__button img {
-    width: 20px;
-    height: 20px;
-}
-
-.authink-info,
-.authink-footer {
-    color: var(--authink-color-text-muted);
-    font-size: 13px;
-    text-align: center;
-}
-
-.authink-info {
-    margin-top: 20px;
-}
-
-.authink-info p {
-    margin: 0;
-}
-
-.authink-footer {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 32px;
-}
-
-@media (max-width: 919px) {
-    .authink-shell {
-        grid-template-columns: 1fr;
+*, *::before, *::after { box-sizing: border-box; }
+    html { background: var(--color-canvas); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--color-canvas);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: var(--text-body);
+      line-height: var(--leading-body);
+      -webkit-font-smoothing: antialiased;
     }
-
-    .authink-visual {
-        min-height: 240px;
-        background-position: center 46%;
+    button, input, select { font: inherit; }
+    a { color: var(--color-link); }
+    .specimen {
+      min-height: 100vh;
+      padding: var(--space-8);
+      background:
+        radial-gradient(circle at 10% 10%, color-mix(in oklab, var(--color-surface-subtle), transparent 8%), transparent 34%),
+        linear-gradient(180deg, var(--color-canvas-elevated), var(--color-canvas));
     }
-
-    .authink-visual__logo {
-        top: 28px;
-        left: 32px;
+    .specimen__header {
+      display: flex;
+      max-width: var(--container-max);
+      margin-inline: auto;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-6);
+      padding-block-end: var(--space-8);
     }
-
-    .authink-visual__caption {
-        left: 32px;
-        bottom: 28px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
     }
-
-    .authink-visual__caption span:first-child {
-        font-size: 36px;
+    .brand img { width: 220px; height: auto; }
+    .brand__copy h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: var(--text-heading);
+      font-weight: var(--font-weight-regular);
+      line-height: var(--leading-title);
     }
-
-    .authink-panel {
-        min-height: auto;
-        padding: 48px 32px;
+    .brand__copy p {
+      margin: var(--space-1) 0 0;
+      color: var(--color-text-secondary);
+      font-size: var(--text-label);
     }
-}
+    .theme-toggle {
+      min-height: var(--control-height);
+      padding-inline: var(--space-4);
+      border: var(--border-thin) solid var(--color-border);
+      border-radius: var(--radius-pill);
+      background: var(--color-surface);
+      color: var(--color-text);
+      cursor: pointer;
+    }
+    .theme-toggle:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-focus);
+    }
+    .showcase {
+      display: grid;
+      max-width: var(--container-max);
+      margin-inline: auto;
+      gap: var(--space-8);
+    }
+    .section-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-4);
+    }
+    .section-title h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: var(--text-title);
+      font-weight: var(--font-weight-regular);
+    }
+    .section-title span {
+      color: var(--color-text-muted);
+      font-size: var(--text-caption);
+      font-family: var(--font-mono);
+    }
+    .auth-browser {
+      overflow: hidden;
+      min-height: min(76vh, 780px);
+      border: var(--border-thin) solid var(--color-border-subtle);
+      border-radius: var(--radius-xl);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-card);
+    }
+    .browser-bar {
+      display: flex;
+      min-height: 40px;
+      align-items: center;
+      gap: var(--space-3);
+      padding-inline: var(--space-4);
+      border-bottom: var(--border-thin) solid var(--color-border-subtle);
+      background: var(--color-canvas-elevated);
+      color: var(--color-text-muted);
+      font-size: var(--text-caption);
+    }
+    .browser-dots {
+      display: inline-flex;
+      gap: var(--space-1);
+    }
+    .browser-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: var(--radius-pill);
+      background: var(--color-border-strong);
+    }
+    .browser-url {
+      flex: 1;
+      overflow: hidden;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-pill);
+      background: var(--color-surface-subtle);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .auth-shell {
+      display: grid;
+      min-height: calc(min(76vh, 780px) - 40px);
+      grid-template-columns: minmax(0, var(--auth-visual-ratio)) minmax(380px, var(--auth-panel-ratio));
+      background: var(--color-canvas);
+    }
+    .visual {
+      position: relative;
+      display: grid;
+      overflow: hidden;
+      min-height: 100%;
+      align-content: end;
+      padding: var(--space-16);
+      isolation: isolate;
+      background:
+        radial-gradient(ellipse at 20% 88%, color-mix(in oklab, var(--color-text-muted), transparent 72%), transparent 40%),
+        radial-gradient(ellipse at 62% 92%, color-mix(in oklab, var(--color-text-secondary), transparent 80%), transparent 38%),
+        linear-gradient(180deg, var(--color-canvas-elevated), var(--color-surface-subtle));
+    }
+    .visual::before,
+    .visual::after {
+      position: absolute;
+      content: "";
+      z-index: -1;
+      border-radius: 50% 45% 0 0;
+      background: color-mix(in oklab, var(--color-text-secondary), transparent 82%);
+      filter: blur(1px);
+      transform: rotate(-4deg);
+    }
+    .visual::before {
+      width: 72%;
+      height: 42%;
+      left: -8%;
+      bottom: 6%;
+      clip-path: polygon(0 100%, 15% 58%, 31% 82%, 48% 26%, 61% 66%, 78% 38%, 100% 100%);
+    }
+    .visual::after {
+      width: 58%;
+      height: 34%;
+      right: -10%;
+      bottom: 2%;
+      opacity: .7;
+      clip-path: polygon(0 100%, 22% 62%, 38% 78%, 61% 28%, 80% 72%, 100% 100%);
+    }
+    .auth-browser:not(.dark-demo) .visual {
+      background:
+        linear-gradient(90deg, transparent 58%, color-mix(in oklab, var(--color-canvas-elevated), transparent 18%) 74%, var(--color-canvas-elevated) 100%),
+        var(--auth-light-background, url("./assets/weihaostudio-keycloak-bg-light-4k-300dpi.png")) center center / cover no-repeat;
+    }
+    .auth-browser:not(.dark-demo) .visual::before,
+    .auth-browser:not(.dark-demo) .visual::after,
+    .auth-browser:not(.dark-demo) .visual__moon,
+    .auth-browser:not(.dark-demo) .visual__mist,
+    .auth-browser:not(.dark-demo) .visual__quote {
+      display: none;
+    }
+    [data-theme="dark"] .auth-browser:not(.dark-demo) .visual {
+      background:
+        linear-gradient(90deg, transparent 56%, color-mix(in oklab, var(--color-canvas-elevated), transparent 16%) 73%, var(--color-canvas-elevated) 100%),
+        var(--auth-dark-background, url("./assets/weihaostudio-keycloak-bg-light-4k-300dpi.png")) center center / cover no-repeat;
+    }
+    .visual__quote {
+      max-width: 520px;
+    }
+    .visual__quote p {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: var(--text-title);
+      line-height: var(--leading-title);
+    }
+    .visual__quote small {
+      display: block;
+      margin-block-start: var(--space-3);
+      color: var(--color-text-secondary);
+    }
+    .panel {
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      padding: var(--auth-desktop-padding);
+      background: color-mix(in oklab, var(--color-canvas-elevated), transparent 4%);
+    }
+    .auth-card {
+      width: min(100%, var(--auth-card-width));
+      padding: var(--space-10);
+      border: var(--border-thin) solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      background: color-mix(in oklab, var(--color-surface), transparent 3%);
+      color: var(--color-text);
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(10px);
+    }
+    .auth-card__logo {
+      display: block;
+      width: 150px;
+      height: auto;
+      margin-inline: auto;
+      margin-block-end: var(--space-5);
+    }
+    .auth-card h3 {
+      margin: 0;
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: var(--text-title);
+      font-weight: var(--font-weight-regular);
+      line-height: var(--leading-title);
+    }
+    .auth-card__description {
+      margin: var(--space-2) 0 0;
+      color: var(--color-text-secondary);
+      text-align: center;
+      font-size: var(--text-label);
+    }
+    .form-stack {
+      display: grid;
+      gap: var(--space-4);
+      margin-block-start: var(--space-8);
+    }
+    .field {
+      display: grid;
+      gap: var(--space-2);
+    }
+    .field label {
+      color: var(--color-text-secondary);
+      font-size: var(--text-label);
+      font-weight: var(--font-weight-medium);
+    }
+    .field input {
+      width: 100%;
+      min-height: var(--control-height);
+      padding-inline: var(--space-4);
+      border: var(--border-thin) solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-surface);
+      color: var(--color-text);
+    }
+    .field input::placeholder { color: var(--color-placeholder); }
+    .field input:hover { border-color: var(--color-border-strong); }
+    .field input:focus-visible {
+      outline: none;
+      border-color: var(--color-focus);
+      box-shadow: var(--shadow-focus);
+    }
+    .helper-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      color: var(--color-text-secondary);
+      font-size: var(--text-label);
+    }
+    .check-row {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .check-row input {
+      inline-size: 18px;
+      block-size: 18px;
+      accent-color: var(--color-primary);
+    }
+    .check-row input:focus-visible {
+      outline: var(--border-strong) solid var(--color-focus);
+      outline-offset: var(--space-1);
+    }
+    .button {
+      display: inline-flex;
+      width: 100%;
+      min-height: var(--control-height);
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding-inline: var(--space-5);
+      border: var(--border-thin) solid transparent;
+      border-radius: var(--radius-sm);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      transition:
+        transform var(--duration-fast) var(--ease-standard),
+        background-color var(--duration-fast) var(--ease-standard),
+        border-color var(--duration-fast) var(--ease-standard),
+        box-shadow var(--duration-fast) var(--ease-standard);
+    }
+    .button:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-focus);
+    }
+    .button--primary {
+      position: relative;
+      z-index: 0;
+      min-height: var(--control-height);
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--color-on-primary);
+      isolation: isolate;
+      --brush-filter: none;
+    }
+    .button--primary::before {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: center center / 100% auto no-repeat url("./assets/weihaostudio-keycloak-login-brush-1to1-300dpi.png");
+      content: "";
+      filter: var(--brush-filter);
+      transition: opacity var(--duration-fast) var(--ease-standard);
+    }
+    [data-theme="dark"] .button--primary,
+    .dark-demo .button--primary {
+      --brush-filter: invert(1) brightness(1.15);
+    }
+    .button--primary::after { content: none; }
+    .button--primary:hover { background: transparent; transform: translateY(-1px); }
+    .button--primary:hover::before { opacity: .9; }
+    .button--primary:active { background: transparent; transform: translateY(0); }
+    .button--primary:active::before { opacity: .82; }
+    .button--secondary {
+      border-color: var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text);
+    }
+    .button--secondary:hover {
+      border-color: var(--color-border-strong);
+      background: var(--color-surface-subtle);
+    }
+    .separator {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: var(--space-3);
+      color: var(--color-text-muted);
+      font-size: var(--text-caption);
+    }
+    .separator::before,
+    .separator::after {
+      height: var(--border-thin);
+      background: var(--color-divider);
+      content: "";
+    }
+    .provider-icon {
+      display: inline-grid;
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+      place-items: center;
+    }
+    .provider-icon img { display: block; width: 100%; height: 100%; }
 
-@media (max-width: 767px) {
-    .authink-shell {
+    .otp {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, var(--otp-cell-size)));
+      justify-content: center;
+      gap: var(--space-2);
+    }
+    .otp input {
+      inline-size: var(--otp-cell-size);
+      block-size: var(--otp-cell-size);
+      border: var(--border-thin) solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-surface);
+      color: var(--color-text);
+      text-align: center;
+      font: var(--font-weight-medium) var(--text-title-sm) / 1 var(--font-mono);
+    }
+    .otp input:focus-visible {
+      outline: none;
+      border-color: var(--color-focus);
+      box-shadow: var(--shadow-focus);
+    }
+    .alert {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border: var(--border-thin) solid var(--color-danger);
+      border-radius: var(--radius-sm);
+      background: var(--color-danger-surface);
+      color: var(--color-danger);
+      font-size: var(--text-label);
+    }
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-4);
+    }
+    .component-card {
+      padding: var(--space-5);
+      border: var(--border-thin) solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+    }
+    .component-card h3 {
+      margin: 0 0 var(--space-2);
+      font-family: var(--font-display);
+      font-size: var(--text-title-sm);
+      font-weight: var(--font-weight-regular);
+    }
+    .component-card p {
+      margin: 0;
+      color: var(--color-text-secondary);
+      font-size: var(--text-label);
+    }
+    .component-card .button,
+    .component-card .alert {
+      margin-block-start: var(--space-4);
+    }
+    .dark-demo .visual {
+      background:
+        linear-gradient(90deg, color-mix(in oklab, var(--color-canvas), transparent 4%) 0%, color-mix(in oklab, var(--color-canvas-elevated), transparent 38%) 56%, var(--color-canvas-elevated) 100%),
+        linear-gradient(180deg, transparent 42%, color-mix(in oklab, var(--color-canvas), transparent 8%) 100%),
+        var(--auth-dark-background, url("./assets/weihaostudio-keycloak-bg-light-4k-300dpi.png")) center center / cover no-repeat;
+    }
+    .dark-demo .visual::before,
+    .dark-demo .visual::after,
+    .dark-demo .visual__moon,
+    .dark-demo .visual__mist {
+      display: none;
+    }
+    @media (max-width: 919px) {
+      .auth-shell {
         position: relative;
-        min-height: 100svh;
         display: block;
-        background-image: var(--authink-bg-light);
-        background-position: center;
-        background-size: cover;
-    }
-
-    .authink-shell[data-theme="dark"] {
-        background-image: var(--authink-bg-dark);
-    }
-
-    .authink-visual {
+        min-height: clamp(620px, 78vh, 760px);
+        overflow: hidden;
+        isolation: isolate;
+        background: transparent;
+      }
+      .visual {
         position: absolute;
         inset: 0;
-        min-height: 100%;
-        background: none;
-        pointer-events: none;
-    }
-
-    .authink-visual::after {
-        background: linear-gradient(180deg, rgb(247 245 240 / 12%), rgb(247 245 240 / 38%));
-    }
-
-    .authink-shell[data-theme="dark"] .authink-visual::after {
-        background: linear-gradient(180deg, rgb(11 17 21 / 8%), rgb(11 17 21 / 54%));
-    }
-
-    .authink-visual__logo,
-    .authink-visual__caption {
-        display: none;
-    }
-
-    .authink-panel {
+        z-index: 0;
+        min-height: 0;
+        padding: 0;
+      }
+      .auth-browser:not(.dark-demo) .visual,
+      [data-theme="dark"] .auth-browser:not(.dark-demo) .visual,
+      .dark-demo .visual { background-position: center 42%; }
+      .visual__quote { display: none; }
+      .panel {
         position: relative;
         z-index: 1;
-        min-height: 100svh;
-        display: flex;
-        align-items: flex-start;
-        padding: 72px 20px 28px;
+        min-height: 100%;
+        padding: var(--auth-tablet-padding);
         background: transparent;
+      }
+      .auth-card {
+        border-color: transparent;
+        background: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+      .component-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 767px) {
+      .specimen { padding: var(--space-4); }
+      .specimen__header { align-items: flex-start; }
+      .brand { align-items: flex-start; }
+      .brand img { width: 150px; }
+      .brand__copy h1 { font-size: var(--text-title); }
+      .auth-shell { min-height: 0; }
+      .auth-browser:not(.dark-demo) .visual,
+      [data-theme="dark"] .auth-browser:not(.dark-demo) .visual,
+      .dark-demo .visual { background-position: center 38%; }
+      .panel { padding: var(--auth-phone-padding); }
+      .auth-card {
+        padding: var(--space-6);
+        border-radius: 0;
+      }
+      .component-grid { grid-template-columns: 1fr; }
+      .otp {
+        grid-template-columns: repeat(6, minmax(0, 40px));
+        gap: var(--space-1);
+      }
+      .otp input {
+        inline-size: 40px;
+        block-size: 44px;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .button { transition-duration: 0.01ms; }
+      .loading-indicator { animation-duration: 1.5s; }
     }
 
-    .authink-form-wrap {
-        width: 100%;
-    }
-
-    .authink-panel__logo {
-        display: block;
-        width: min(220px, 68vw);
-    }
-
-    .authink-header {
-        margin-bottom: 24px;
-    }
-
-    .authink-header h1 {
-        font-size: 30px;
-    }
-
-    .authink-theme-toggle {
-        top: 18px;
-        right: 18px;
-    }
-
-    .authink-field input,
-    .authink-social__button {
-        background: var(--authink-color-surface);
-    }
+/* Production adaptation: remove only the specimen/browser chrome while preserving
+ * the approved auth shell, card, controls, and responsive rules above. */
+.auth-browser.auth-browser--production {
+  min-height: 100vh;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
-
-@media (prefers-reduced-motion: reduce) {
-    .authink-field input,
-    .authink-submit,
-    .authink-social__button {
-        transition: none;
-    }
+.auth-browser--production .auth-shell {
+  min-height: 100vh;
+}
+.auth-browser.auth-browser--production:not(.dark-demo) .visual {
+  background: var(--auth-light-background) center center / cover no-repeat;
+}
+.auth-browser--production .panel {
+  min-height: 100vh;
+}
+.auth-browser--production .auth-card {
+  margin: 0;
+}
+.auth-browser--production .auth-alert {
+  padding: var(--space-3) var(--space-4);
+  border-left: var(--border-strong) solid var(--color-danger);
+  background: var(--color-danger-surface);
+  color: var(--color-danger);
+  font-size: var(--text-label);
+}
+.auth-browser--production .password-field {
+  position: relative;
+}
+.auth-browser--production .password-field input {
+  padding-inline-end: 68px;
+}
+.auth-browser--production .password-toggle {
+  position: absolute;
+  inset-inline-end: var(--space-2);
+  inset-block-start: 50%;
+  translate: 0 -50%;
+  border: 0;
+  padding: var(--space-2);
+  background: transparent;
+  color: var(--color-link);
+  font-size: var(--text-caption);
+  cursor: pointer;
+}
+.auth-browser--production .password-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+.auth-browser--production .field-error {
+  margin: calc(var(--space-2) * -1) 0 0;
+  color: var(--color-danger);
+  font-size: var(--text-caption);
+}
+.auth-browser--production .button--primary span {
+  position: relative;
+  z-index: 1;
+}
+.auth-browser--production .button--secondary {
+  text-decoration: none;
+}
+@media (max-width: 919px) {
+  .auth-browser--production .auth-shell,
+  .auth-browser--production .panel {
+    min-height: 100vh;
+  }
+}
+@media (max-width: 767px) {
+  .auth-browser--production .auth-card {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
 }

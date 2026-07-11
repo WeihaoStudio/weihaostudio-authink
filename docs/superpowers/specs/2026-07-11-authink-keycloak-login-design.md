@@ -2,7 +2,7 @@
 
 ## Goal
 
-Create an independent, Git-managed Keycloak login theme at `keycloak-themes/weihaostudio-authink` using React, Vite, TypeScript, Keycloakify, and pnpm. The first deliverable is a production-wired `login.ftl` experience and a deployable theme JAR compatible with the verified test environment, Keycloak 26.0.0.
+Create an independent, Git-managed Keycloak login theme at `keycloak-themes/weihaostudio-authink` using React, Vite, TypeScript, TailwindCSS, Keycloakify, and pnpm. The first deliverable is a production-wired `login.ftl` experience and a deployable theme JAR compatible with the verified test environment, Keycloak 26.0.0.
 
 ## Approved design source
 
@@ -23,9 +23,9 @@ The older static repository at `/home/weihao/agent-workspaces/WeihaoStudio/weiha
 
 Use the official Keycloakify 11 starter structure as the baseline. `src/main.tsx` renders generated `KcPage` from `window.kcContext`. `src/login/KcPage.tsx` dispatches Keycloak page IDs and customizes `login.ftl` first. A dedicated `Login.tsx` owns the login form semantics and submits directly to `kcContext.url.loginAction`.
 
-CSS is split into semantic tokens and page styling. The page styling references imported local assets through Vite URLs. The theme disables Keycloakify default CSS for the custom login experience while retaining Keycloak data, i18n, error messages, social provider URLs, and form behavior.
+The approved `design-system/preview/index.html` is the golden master for DOM shape, component classes, spacing, typography, controls, and responsive rules. Its authentication-shell CSS is copied into the React project with only asset-path and production-shell adaptations; it is not visually reinterpreted. TailwindCSS 4 is integrated through the Vite plugin for future engineering composition and page expansion, while the canonical preview CSS remains the source of truth for Login fidelity. The theme disables Keycloakify default CSS while retaining Keycloak data, error messages, provider URLs, and native form behavior.
 
-Storybook stories provide deterministic `login.ftl` states for visual and interaction verification without a running Keycloak server. Unit/component tests validate production-critical behaviors such as the form action, provider links, error semantics, theme resource separation, and mobile no-overlay constraints.
+Storybook stories provide deterministic `login.ftl` states for visual and interaction verification without a running Keycloak server, and browser screenshots are compared against the approved preview at matching viewports. Unit/component tests validate production-critical behaviors such as the form action, provider links, error semantics, theme resource separation, and mobile no-overlay constraints.
 
 ## Compatibility target
 
@@ -51,7 +51,7 @@ The login page supports:
 - Tablet: landscape header above the form.
 - Mobile at 767px and below: approved wallpaper fills the full authentication page and the form is placed directly over it.
 - Mobile must not introduce a large translucent card, backdrop blur, card shadow, container border, or rounded panel.
-- Light and dark modes use distinct local source images, never a filter-derived simulation.
+- Login uses the approved light 4K wallpaper as a fixed source image, with no gradient fade and no automatic light/dark wallpaper rotation.
 - The primary submit button uses the approved brush artwork, not a CSS blob approximation.
 
 ## Out of scope
@@ -67,7 +67,7 @@ The login page supports:
 2. A deployable JAR is generated for Keycloak 25 and above and is appropriate for the verified Keycloak 26.0.0 test target.
 3. The login form posts to `kcContext.url.loginAction`.
 4. Google and GitHub buttons use Keycloak-provided URLs and approved local SVG icons.
-5. Light and dark modes reference different approved local background files.
+5. Login references only the approved light 4K wallpaper and applies no gradient fade or automatic wallpaper rotation.
 6. At 320–767px there is no large card overlay or backdrop blur.
 7. Errors have text/ARIA semantics and are not conveyed only through color.
 8. Desktop, tablet, and mobile Storybook states visually match the approved AuthInk direction.

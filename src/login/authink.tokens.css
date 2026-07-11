@@ -1,53 +1,175 @@
+/* WeihaoStudio Auth Ink — Open Design tokens
+ * Canonical CSS custom properties for Keycloak authentication surfaces.
+ */
+
 :root {
-    color-scheme: light;
-    --authink-color-canvas: #f7f5f0;
-    --authink-color-surface: #fffefb;
-    --authink-color-surface-subtle: #eeeae2;
-    --authink-color-text: #191a1b;
-    --authink-color-text-secondary: #4c4f52;
-    --authink-color-text-muted: #62666a;
-    --authink-color-placeholder: #6b7074;
-    --authink-color-primary: #1e2428;
-    --authink-color-primary-hover: #343c41;
-    --authink-color-on-primary: #ffffff;
-    --authink-color-link: #245a78;
-    --authink-color-link-hover: #17435d;
-    --authink-color-focus: #245a78;
-    --authink-color-border: #c8c4bc;
-    --authink-color-border-strong: #858a8d;
-    --authink-color-divider: #d8d4cc;
-    --authink-color-danger: #9e2f2a;
-    --authink-color-danger-surface: #f8e7e5;
-    --authink-color-seal: #9c2f24;
-    --authink-font-display: "LXGW WenKai", "霞鹜文楷", "Kaiti SC", STKaiti, Georgia, serif;
-    --authink-font-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
-    --authink-shadow-focus: 0 0 0 4px rgb(36 90 120 / 22%);
-    --authink-duration-fast: 120ms;
-    --authink-ease-standard: cubic-bezier(0.2, 0, 0, 1);
-    --authink-control-height: 52px;
-    --authink-form-width: 420px;
+  color-scheme: light;
+
+  /* Color — foundations */
+  --color-canvas: #F7F5F0;
+  --color-canvas-elevated: #FCFBF7;
+  --color-surface: #FFFEFB;
+  --color-surface-subtle: #EEEAE2;
+  --color-surface-muted: #E4E0D8;
+  --color-overlay: rgba(25, 26, 27, 0.52);
+
+  /* Color — ink text */
+  --color-text: #191A1B;
+  --color-text-secondary: #4C4F52;
+  --color-text-muted: #62666A;
+  --color-text-inverse: #F5F2EA;
+  --color-placeholder: #6B7074;
+
+  /* Color — actions */
+  --color-primary: #1E2428;
+  --color-primary-hover: #343C41;
+  --color-primary-active: #11161A;
+  --color-on-primary: #FFFFFF;
+  --color-link: #245A78;
+  --color-link-hover: #17435D;
+  --color-focus: #245A78;
+
+  /* Color — borders */
+  --color-border: #C8C4BC;
+  --color-border-strong: #858A8D;
+  --color-border-subtle: #DEDAD2;
+  --color-divider: #D8D4CC;
+
+  /* Color — semantic states */
+  --color-success: #2E6B50;
+  --color-success-surface: #E5F1EA;
+  --color-warning: #7A4F10;
+  --color-warning-surface: #F7EEDB;
+  --color-danger: #9E2F2A;
+  --color-danger-surface: #F8E7E5;
+  --color-info: #275F7A;
+  --color-info-surface: #E4EFF4;
+  --color-seal: #9C2F24;
+
+  /* Typography */
+  --font-display: "LXGW WenKai", "霞鹜文楷", "Kaiti SC", STKaiti, Georgia, serif;
+  --font-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  --text-caption: 12px;
+  --text-label: 14px;
+  --text-body: 16px;
+  --text-body-lg: 18px;
+  --text-title-sm: 22px;
+  --text-title: 28px;
+  --text-heading: 36px;
+  --text-display: 48px;
+  --text-hero: 64px;
+
+  --leading-caption: 1.45;
+  --leading-body: 1.65;
+  --leading-title: 1.35;
+  --tracking-display: 0.02em;
+  --tracking-label: 0.02em;
+
+  /* Spacing — 4px base */
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Sizing */
+  --control-height-sm: 36px;
+  --control-height: 44px;
+  --control-height-lg: 52px;
+  --auth-card-width: 420px;
+  --auth-card-width-compact: 384px;
+  --container-max: 1440px;
+  --content-max: 1200px;
+  --otp-cell-size: 48px;
+
+  /* Radius */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+
+  /* Borders */
+  --border-thin: 1px;
+  --border-strong: 2px;
+
+  /* Elevation */
+  --shadow-card: 0 18px 56px rgba(25, 26, 27, 0.10);
+  --shadow-float: 0 24px 72px rgba(25, 26, 27, 0.16);
+  --shadow-focus: 0 0 0 4px rgba(36, 90, 120, 0.22);
+
+  /* Motion */
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --duration-slow: 300ms;
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Auth layout */
+  --auth-visual-ratio: 58%;
+  --auth-panel-ratio: 42%;
+  --auth-desktop-padding: 48px;
+  --auth-tablet-padding: 32px;
+  --auth-phone-padding: 20px;
+  --auth-min-height: 720px;
 }
 
 [data-theme="dark"] {
-    color-scheme: dark;
-    --authink-color-canvas: #0b1115;
-    --authink-color-surface: #111a20;
-    --authink-color-surface-subtle: #18242c;
-    --authink-color-text: #f5f2ea;
-    --authink-color-text-secondary: #c9d0d2;
-    --authink-color-text-muted: #aab4b8;
-    --authink-color-placeholder: #aab4b8;
-    --authink-color-primary: #f3f1ea;
-    --authink-color-primary-hover: #d9d5cb;
-    --authink-color-on-primary: #11161a;
-    --authink-color-link: #8ec6e7;
-    --authink-color-link-hover: #b6dcf1;
-    --authink-color-focus: #8ec6e7;
-    --authink-color-border: #43515a;
-    --authink-color-border-strong: #7e8b92;
-    --authink-color-divider: #33434d;
-    --authink-color-danger: #ff8c84;
-    --authink-color-danger-surface: #3b1c1c;
-    --authink-color-seal: #d86a5d;
-    --authink-shadow-focus: 0 0 0 4px rgb(142 198 231 / 28%);
+  color-scheme: dark;
+
+  --color-canvas: #0B1115;
+  --color-canvas-elevated: #0F171C;
+  --color-surface: #111A20;
+  --color-surface-subtle: #18242C;
+  --color-surface-muted: #22313A;
+  --color-overlay: rgba(4, 8, 11, 0.62);
+
+  --color-text: #F5F2EA;
+  --color-text-secondary: #C9D0D2;
+  --color-text-muted: #AAB4B8;
+  --color-text-inverse: #11161A;
+  --color-placeholder: #AAB4B8;
+
+  --color-primary: #F3F1EA;
+  --color-primary-hover: #D9D5CB;
+  --color-primary-active: #C5C0B5;
+  --color-on-primary: #11161A;
+  --color-link: #8EC6E7;
+  --color-link-hover: #B6DCF1;
+  --color-focus: #8EC6E7;
+
+  --color-border: #43515A;
+  --color-border-strong: #7E8B92;
+  --color-border-subtle: #2B3942;
+  --color-divider: #33434D;
+
+  --color-success: #72C49B;
+  --color-success-surface: #173329;
+  --color-warning: #F1C46A;
+  --color-warning-surface: #3B2D13;
+  --color-danger: #FF8C84;
+  --color-danger-surface: #3B1C1C;
+  --color-info: #8EC6E7;
+  --color-info-surface: #18313E;
+  --color-seal: #D86A5D;
+
+  --shadow-card: 0 20px 64px rgba(0, 0, 0, 0.34);
+  --shadow-float: 0 28px 80px rgba(0, 0, 0, 0.46);
+  --shadow-focus: 0 0 0 4px rgba(142, 198, 231, 0.28);
 }

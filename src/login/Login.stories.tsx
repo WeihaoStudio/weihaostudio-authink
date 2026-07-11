@@ -56,21 +56,6 @@ export const InvalidCredentials: Story = {
     }
 };
 
-export const Dark: Story = {
-    args: {
-        kcContext: {
-            authinkTheme: "dark",
-            social: {
-                displayInfo: true,
-                providers: socialProviders
-            }
-        }
-    },
-    parameters: {
-        backgrounds: { default: "dark" }
-    }
-};
-
 export const PasswordOnly: Story = {
     args: {
         kcContext: {
