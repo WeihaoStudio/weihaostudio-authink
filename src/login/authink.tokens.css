@@ -1,0 +1,53 @@
+:root {
+    color-scheme: light;
+    --authink-color-canvas: #f7f5f0;
+    --authink-color-surface: #fffefb;
+    --authink-color-surface-subtle: #eeeae2;
+    --authink-color-text: #191a1b;
+    --authink-color-text-secondary: #4c4f52;
+    --authink-color-text-muted: #62666a;
+    --authink-color-placeholder: #6b7074;
+    --authink-color-primary: #1e2428;
+    --authink-color-primary-hover: #343c41;
+    --authink-color-on-primary: #ffffff;
+    --authink-color-link: #245a78;
+    --authink-color-link-hover: #17435d;
+    --authink-color-focus: #245a78;
+    --authink-color-border: #c8c4bc;
+    --authink-color-border-strong: #858a8d;
+    --authink-color-divider: #d8d4cc;
+    --authink-color-danger: #9e2f2a;
+    --authink-color-danger-surface: #f8e7e5;
+    --authink-color-seal: #9c2f24;
+    --authink-font-display: "LXGW WenKai", "霞鹜文楷", "Kaiti SC", STKaiti, Georgia, serif;
+    --authink-font-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+    --authink-shadow-focus: 0 0 0 4px rgb(36 90 120 / 22%);
+    --authink-duration-fast: 120ms;
+    --authink-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --authink-control-height: 52px;
+    --authink-form-width: 420px;
+}
+
+[data-theme="dark"] {
+    color-scheme: dark;
+    --authink-color-canvas: #0b1115;
+    --authink-color-surface: #111a20;
+    --authink-color-surface-subtle: #18242c;
+    --authink-color-text: #f5f2ea;
+    --authink-color-text-secondary: #c9d0d2;
+    --authink-color-text-muted: #aab4b8;
+    --authink-color-placeholder: #aab4b8;
+    --authink-color-primary: #f3f1ea;
+    --authink-color-primary-hover: #d9d5cb;
+    --authink-color-on-primary: #11161a;
+    --authink-color-link: #8ec6e7;
+    --authink-color-link-hover: #b6dcf1;
+    --authink-color-focus: #8ec6e7;
+    --authink-color-border: #43515a;
+    --authink-color-border-strong: #7e8b92;
+    --authink-color-divider: #33434d;
+    --authink-color-danger: #ff8c84;
+    --authink-color-danger-surface: #3b1c1c;
+    --authink-color-seal: #d86a5d;
+    --authink-shadow-focus: 0 0 0 4px rgb(142 198 231 / 28%);
+}

@@ -2,8 +2,21 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import KcPage from "./KcPage";
 import { getKcContextMock } from "./KcPageStory";
+import { authInkAssets } from "./assets";
 
 describe("AuthInk login contract", () => {
+    it("uses distinct approved local assets", () => {
+        expect(authInkAssets.backgroundLightUrl).toContain(
+            "weihaostudio-keycloak-bg-light-4k-300dpi.png"
+        );
+        expect(authInkAssets.backgroundDarkUrl).toContain(
+            "weihaostudio-keycloak-bg-dark-4k-300dpi.png"
+        );
+        expect(authInkAssets.backgroundLightUrl).not.toBe(authInkAssets.backgroundDarkUrl);
+        expect(authInkAssets.googleIconUrl).toContain("google-g.svg");
+        expect(authInkAssets.githubIconUrl).toContain("github-mark.svg");
+    });
+
     it("posts to Keycloak and renders accessible local-provider controls", () => {
         const kcContext = getKcContextMock({
             pageId: "login.ftl",
