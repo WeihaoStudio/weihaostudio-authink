@@ -69,8 +69,29 @@ export default function Login(
                             onClick={() => setIsPasswordVisible(value => !value)}
                             aria-controls="password"
                             aria-label={isPasswordVisible ? msgStr("hidePassword") : msgStr("showPassword")}
+                            aria-pressed={isPasswordVisible}
                         >
-                            {isPasswordVisible ? "隐藏" : "显示"}
+                            {isPasswordVisible ? (
+                                <svg
+                                    className="password-toggle__icon"
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M3 3l18 18" />
+                                    <path d="M10.6 10.7a2 2 0 0 0 2.7 2.7" />
+                                    <path d="M9.9 4.2A10.8 10.8 0 0 1 12 4c5.5 0 9 5.4 9 5.4a14.7 14.7 0 0 1-2.1 2.8" />
+                                    <path d="M6.6 6.6C4.3 8.1 3 10.4 3 10.4S6.5 16 12 16a9.8 9.8 0 0 0 3.4-.6" />
+                                </svg>
+                            ) : (
+                                <svg
+                                    className="password-toggle__icon"
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+                                    <path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6Z" />
+                                    <circle cx="12" cy="12" r="2.5" />
+                                </svg>
+                            )}
                         </button>
                     </div>
                 </div>
@@ -93,7 +114,8 @@ export default function Login(
                                 type="checkbox"
                                 defaultChecked={Boolean(login.rememberMe)}
                             />
-                            记住我
+                            <span className="check-row__box" aria-hidden="true" />
+                            <span>记住我</span>
                         </label>
                     ) : (
                         <span />

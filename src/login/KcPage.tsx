@@ -6,6 +6,7 @@ import DefaultPage from "keycloakify/login/DefaultPage";
 import Template from "keycloakify/login/Template";
 import AuthInkTemplate from "./Template";
 import Login from "./Login";
+import LoginOtp from "./LoginOtp";
 const UserProfileFormFields = lazy(
     () => import("keycloakify/login/UserProfileFormFields")
 );
@@ -24,6 +25,16 @@ export default function KcPage(props: { kcContext: KcContext }) {
                     case "login.ftl":
                         return (
                             <Login
+                                kcContext={kcContext}
+                                i18n={i18n}
+                                classes={classes}
+                                Template={AuthInkTemplate}
+                                doUseDefaultCss={false}
+                            />
+                        );
+                    case "login-otp.ftl":
+                        return (
+                            <LoginOtp
                                 kcContext={kcContext}
                                 i18n={i18n}
                                 classes={classes}

@@ -169,7 +169,7 @@
     .auth-browser:not(.dark-demo) .visual {
       background:
         linear-gradient(90deg, transparent 58%, color-mix(in oklab, var(--color-canvas-elevated), transparent 18%) 74%, var(--color-canvas-elevated) 100%),
-        var(--auth-light-background, url("./assets/weihaostudio-keycloak-bg-light-4k-300dpi.png")) center center / cover no-repeat;
+        var(--auth-light-background, url("./assets/weihaostudio-keycloak-bg-light-4k-300dpi.webp")) center center / cover no-repeat;
     }
     .auth-browser:not(.dark-demo) .visual::before,
     .auth-browser:not(.dark-demo) .visual::after,
@@ -181,7 +181,7 @@
     [data-theme="dark"] .auth-browser:not(.dark-demo) .visual {
       background:
         linear-gradient(90deg, transparent 56%, color-mix(in oklab, var(--color-canvas-elevated), transparent 16%) 73%, var(--color-canvas-elevated) 100%),
-        var(--auth-dark-background, url("./assets/weihaostudio-keycloak-bg-light-4k-300dpi.png")) center center / cover no-repeat;
+        var(--auth-dark-background, url("./assets/weihaostudio-keycloak-bg-dark-4k-300dpi.webp")) center center / cover no-repeat;
     }
     .visual__quote {
       max-width: 520px;
@@ -274,18 +274,51 @@
       font-size: var(--text-label);
     }
     .check-row {
+      position: relative;
       display: inline-flex;
       align-items: center;
       gap: var(--space-2);
+      cursor: pointer;
     }
     .check-row input {
+      position: absolute;
       inline-size: 18px;
       block-size: 18px;
-      accent-color: var(--color-primary);
+      margin: 0;
+      opacity: 0;
     }
-    .check-row input:focus-visible {
-      outline: var(--border-strong) solid var(--color-focus);
-      outline-offset: var(--space-1);
+    .check-row__box {
+      position: relative;
+      flex: 0 0 auto;
+      inline-size: 18px;
+      block-size: 18px;
+      border: var(--border-thin) solid var(--color-border-strong);
+      border-radius: 5px;
+      background: color-mix(in oklab, var(--color-surface), transparent 18%);
+      box-shadow: inset 0 1px 2px color-mix(in oklab, var(--color-text), transparent 92%);
+      transition: border-color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard);
+    }
+    .check-row input:checked + .check-row__box {
+      border-color: var(--color-primary);
+      background: var(--color-primary);
+    }
+    .check-row input:checked + .check-row__box::after {
+      position: absolute;
+      inset-block-start: 2px;
+      inset-inline-start: 5px;
+      inline-size: 5px;
+      block-size: 9px;
+      border: solid var(--color-on-primary);
+      border-width: 0 2px 2px 0;
+      content: "";
+      transform: rotate(45deg);
+    }
+    .check-row input:focus-visible + .check-row__box {
+      outline: none;
+      box-shadow: var(--shadow-focus);
+    }
+    .check-row:hover .check-row__box {
+      border-color: var(--color-focus);
     }
     .button {
       display: inline-flex;
@@ -324,7 +357,7 @@
       position: absolute;
       inset: 0;
       z-index: -1;
-      background: center center / 100% auto no-repeat url("./assets/weihaostudio-keycloak-login-brush-1to1-300dpi.png");
+      background: center center / 100% auto no-repeat url("./assets/weihaostudio-keycloak-login-brush-1to1-300dpi.webp");
       content: "";
       filter: var(--brush-filter);
       transition: opacity var(--duration-fast) var(--ease-standard);
@@ -334,9 +367,9 @@
       --brush-filter: invert(1) brightness(1.15);
     }
     .button--primary::after { content: none; }
-    .button--primary:hover { background: transparent; transform: translateY(-1px); }
+    .button--primary:hover { background: transparent; transform: none; }
     .button--primary:hover::before { opacity: .9; }
-    .button--primary:active { background: transparent; transform: translateY(0); }
+    .button--primary:active { background: transparent; transform: none; }
     .button--primary:active::before { opacity: .82; }
     .button--secondary {
       border-color: var(--color-border);
@@ -432,7 +465,7 @@
       background:
         linear-gradient(90deg, color-mix(in oklab, var(--color-canvas), transparent 4%) 0%, color-mix(in oklab, var(--color-canvas-elevated), transparent 38%) 56%, var(--color-canvas-elevated) 100%),
         linear-gradient(180deg, transparent 42%, color-mix(in oklab, var(--color-canvas), transparent 8%) 100%),
-        var(--auth-dark-background, url("./assets/weihaostudio-keycloak-bg-light-4k-300dpi.png")) center center / cover no-repeat;
+        var(--auth-dark-background, url("./assets/weihaostudio-keycloak-bg-dark-4k-300dpi.webp")) center center / cover no-repeat;
     }
     .dark-demo .visual::before,
     .dark-demo .visual::after,
@@ -515,15 +548,67 @@
 }
 .auth-browser--production .auth-shell {
   min-height: 100vh;
+  background: var(--auth-light-background) center center / cover no-repeat;
+}
+.auth-browser--production[data-theme="dark"] .auth-shell {
+  background: var(--auth-dark-background) center center / cover no-repeat;
 }
 .auth-browser.auth-browser--production:not(.dark-demo) .visual {
-  background: var(--auth-light-background) center center / cover no-repeat;
+  background: transparent;
 }
 .auth-browser--production .panel {
   min-height: 100vh;
+  background: transparent;
+}
+@media (min-width: 920px) {
+  .auth-browser.auth-browser--production:not(.dark-demo) .visual__quote {
+    display: block;
+    max-width: 440px;
+    color: var(--color-text);
+    text-shadow: 0 1px 18px color-mix(in oklab, var(--color-canvas), transparent 38%);
+  }
+  .auth-browser.auth-browser--production:not(.dark-demo) .visual__quote p {
+    letter-spacing: 0.04em;
+  }
+  .auth-browser.auth-browser--production:not(.dark-demo) .visual__quote small {
+    max-width: 320px;
+    opacity: 0.82;
+  }
 }
 .auth-browser--production .auth-card {
   margin: 0;
+  border-color: color-mix(in oklab, var(--color-border-strong), transparent 42%);
+  background: color-mix(in oklab, var(--color-surface), transparent 90%);
+  box-shadow: 0 24px 64px color-mix(in oklab, var(--color-text), transparent 82%);
+  backdrop-filter: blur(14px) saturate(112%);
+}
+.auth-browser--production .authink-theme-toggle {
+  position: fixed;
+  inset-block-start: var(--space-5);
+  inset-inline-end: var(--space-5);
+  z-index: 10;
+  display: grid;
+  inline-size: 44px;
+  block-size: 44px;
+  place-items: center;
+  border: var(--border-thin) solid color-mix(in oklab, var(--color-border-strong), transparent 35%);
+  border-radius: var(--radius-pill);
+  background: color-mix(in oklab, var(--color-surface), transparent 28%);
+  color: var(--color-text);
+  box-shadow: 0 8px 24px color-mix(in oklab, var(--color-text), transparent 86%);
+  backdrop-filter: blur(12px) saturate(112%);
+  font-family: var(--font-display);
+  font-size: var(--text-label);
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+.auth-browser--production .authink-theme-toggle:hover {
+  background: color-mix(in oklab, var(--color-surface), transparent 14%);
+  transform: translateY(-1px);
+}
+.auth-browser--production .authink-theme-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
 }
 .auth-browser--production .auth-alert {
   padding: var(--space-3) var(--space-4);
@@ -536,19 +621,36 @@
   position: relative;
 }
 .auth-browser--production .password-field input {
-  padding-inline-end: 68px;
+  padding-inline-end: 52px;
 }
 .auth-browser--production .password-toggle {
   position: absolute;
   inset-inline-end: var(--space-2);
   inset-block-start: 50%;
   translate: 0 -50%;
+  display: grid;
+  inline-size: 36px;
+  block-size: 36px;
+  place-items: center;
   border: 0;
-  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  padding: 0;
   background: transparent;
-  color: var(--color-link);
-  font-size: var(--text-caption);
+  color: var(--color-text-muted);
   cursor: pointer;
+}
+.auth-browser--production .password-toggle:hover {
+  background: color-mix(in oklab, var(--color-surface-muted), transparent 52%);
+  color: var(--color-text);
+}
+.auth-browser--production .password-toggle__icon {
+  inline-size: 20px;
+  block-size: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .auth-browser--production .password-toggle:focus-visible {
   outline: none;
@@ -565,6 +667,21 @@
 }
 .auth-browser--production .button--secondary {
   text-decoration: none;
+}
+.auth-browser--production .field select {
+  width: 100%;
+  min-height: var(--control-height);
+  border: var(--border-thin) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding-inline: var(--space-4);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+.auth-browser--production .auth-card__back-link {
+  display: block;
+  text-align: center;
+  font-size: var(--text-label);
 }
 @media (max-width: 919px) {
   .auth-browser--production .auth-shell,

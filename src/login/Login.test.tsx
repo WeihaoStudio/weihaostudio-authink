@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import KcPage from "./KcPage";
 import { getKcContextMock } from "./KcPageStory";
@@ -7,8 +7,12 @@ import { authInkAssets } from "./assets";
 describe("AuthInk login contract", () => {
     it("uses approved local login assets", () => {
         expect(authInkAssets.backgroundLightUrl).toContain(
-            "weihaostudio-keycloak-bg-light-4k-300dpi.png"
+            "weihaostudio-keycloak-bg-light-4k-300dpi.webp"
         );
+        expect(authInkAssets.backgroundDarkUrl).toContain(
+            "weihaostudio-keycloak-bg-dark-4k-300dpi.webp"
+        );
+        expect(authInkAssets.logoWhiteUrl).toContain("logo-lockup-white.webp");
         expect(authInkAssets.googleIconUrl).toContain("google-g.svg");
         expect(authInkAssets.githubIconUrl).toContain("github-mark.svg");
     });
@@ -22,7 +26,17 @@ describe("AuthInk login contract", () => {
         expect(container.querySelector(".auth-card__logo")).toBeInTheDocument();
         expect(screen.getByRole("heading", { name: "欢迎回来" })).toBeInTheDocument();
         expect(screen.getByText("使用您的账号安全登录。")).toBeInTheDocument();
-        expect(container.querySelector(".authink-theme-toggle")).not.toBeInTheDocument();
+        expect(screen.getByText("山水有归处。")).toBeInTheDocument();
+        const themeToggle = screen.getByRole("button", { name: "切换到夜间主题" });
+        expect(themeToggle).toHaveTextContent("夜");
+        fireEvent.click(themeToggle);
+        expect(container.querySelector(".auth-browser--production")).toHaveAttribute("data-theme", "dark");
+        expect(screen.getByRole("button", { name: "切换到日间主题" })).toHaveTextContent("昼");
+        expect(screen.getByText("月色入山。")).toBeInTheDocument();
+        expect(container.querySelector(".auth-card__logo")).toHaveAttribute(
+            "src",
+            authInkAssets.logoWhiteUrl
+        );
         expect(container.querySelector(".authink-eyebrow")).not.toBeInTheDocument();
         expect(container.querySelector(".authink-visual__caption")).not.toBeInTheDocument();
         expect(screen.getByRole("button", { name: "登录" })).toBeInTheDocument();
@@ -36,8 +50,10 @@ describe("AuthInk login contract", () => {
         expect(shell).toHaveStyle(
             `--auth-light-background: url(${authInkAssets.backgroundLightUrl})`
         );
-        expect(shell?.getAttribute("style")).not.toContain("weihaostudio-keycloak-bg-dark");
-        expect(shell).not.toHaveAttribute("data-theme");
+        expect(shell).toHaveStyle(
+            `--auth-dark-background: url(${authInkAssets.backgroundDarkUrl})`
+        );
+        expect(shell).toHaveAttribute("data-theme", "light");
     });
 
     it("posts to Keycloak and renders accessible local-provider controls", () => {
