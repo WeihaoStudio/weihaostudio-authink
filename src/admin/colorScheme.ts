@@ -1,5 +1,4 @@
 import { getKcContext } from "./KcContext";
-import { authInkAssets } from "../login/assets";
 
 const DARK_THEME_CLASS = "pf-v5-theme-dark";
 export type AdminTheme = "light" | "dark";
@@ -15,10 +14,6 @@ export function applyAdminTheme(theme: AdminTheme) {
     document.documentElement.classList.toggle(DARK_THEME_CLASS, theme === "dark");
     document.documentElement.dataset.theme = theme;
     window.dispatchEvent(new CustomEvent("authink-theme-change", { detail: theme }));
-    document.documentElement.style.setProperty(
-        "--authink-admin-wallpaper",
-        `url("${theme === "dark" ? authInkAssets.backgroundDarkUrl : authInkAssets.backgroundLightUrl}")`
-    );
 }
 
 export function getPreferredAdminTheme(): AdminTheme {

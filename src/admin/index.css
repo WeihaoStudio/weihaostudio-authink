@@ -1,7 +1,8 @@
 /**
  * AuthInk Admin Theme — canonical OpenDesign tokens
- * Maps PatternFly admin DOM to the admin-shell visual language.
- * Tokens are provided by authink.tokens.css (imported in KcAdminUi.tsx).
+ * Professional, dense, no-nonsense admin surface.
+ * No wallpaper, no glass. Clean surfaces with subtle warmth.
+ * Tokens from authink.tokens.css (imported in KcAdminUi.tsx).
  */
 
 :root {
@@ -9,30 +10,19 @@
   --pf-v5-global--primary-color--200: var(--color-primary-active);
   --pf-v5-global--link--Color: var(--color-link);
   --pf-v5-global--FontFamily--sans-serif: var(--font-body);
+  --pf-v5-global--BackgroundColor--100: var(--color-canvas);
+  --pf-v5-global--Color--100: var(--color-text);
+  --pf-v5-global--Color--200: var(--color-text-secondary);
+  --pf-v5-global--BorderColor--100: var(--color-border);
+  --pf-v5-global--BorderColor--200: var(--color-border-subtle);
 }
 
 html, body, #root { min-height: 100%; }
-body { background: var(--color-canvas); color: var(--color-text); font-family: var(--font-body); }
-
-/* Subdued backdrop (matches OpenDesign admin-theme-page__backdrop) */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  background: center / cover no-repeat var(--authink-admin-wallpaper, none);
-  opacity: .16;
-  pointer-events: none;
+body {
+  background: var(--color-canvas);
+  color: var(--color-text);
+  font-family: var(--font-body);
 }
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: color-mix(in srgb, var(--color-canvas) 90%, transparent);
-  pointer-events: none;
-}
-[data-theme="dark"] body::before { opacity: .22; }
 
 /* Keycloak admin specifics */
 img.keycloak__pageheader_brand { width: auto; height: 42px; object-fit: contain; }
@@ -44,9 +34,7 @@ img.keycloak__pageheader_brand { width: auto; height: 42px; object-fit: contain;
   margin-left: calc(-1 * var(--space-6));
   padding: var(--space-4) var(--space-4) var(--space-2);
   border-top: var(--border-thin) solid var(--color-border-subtle);
-  background: color-mix(in srgb, var(--color-surface) 90%, transparent);
-  backdrop-filter: blur(14px) saturate(110%);
-  -webkit-backdrop-filter: blur(14px) saturate(110%);
+  background: var(--color-surface);
 }
 .keycloak__section_intro__help {
   padding: var(--space-4) 0 var(--space-6);
@@ -62,8 +50,6 @@ div.w-tc-editor { font-family: var(--font-mono); }
   min-height: 100dvh;
   color: var(--color-text);
   background: var(--color-canvas);
-  isolation: isolate;
-  overflow-x: hidden;
 }
 
 .authink-admin .pf-v5-c-page,
@@ -73,44 +59,36 @@ div.w-tc-editor { font-family: var(--font-mono); }
   background: transparent;
 }
 
-/* Masthead = admin-topbar */
+/* Masthead — solid, clean */
 .authink-admin .pf-v5-c-masthead {
   z-index: 4;
-  min-height: 76px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 16px clamp(24px, 4vw, 56px);
+  min-height: 68px;
   border-bottom: var(--border-thin) solid var(--color-border-subtle);
-  background: color-mix(in srgb, var(--color-surface) 74%, transparent);
-  backdrop-filter: blur(14px) saturate(110%);
-  -webkit-backdrop-filter: blur(14px) saturate(110%);
+  background: var(--color-surface);
+  box-shadow: 0 1px 3px rgba(25, 26, 27, .04);
 }
 
-/* Sidebar = admin-aside */
+/* Sidebar — solid surface, no glass */
 .authink-admin .pf-v5-c-page__sidebar {
   z-index: 3;
-  width: 248px;
+  width: 256px;
   border-inline-end: var(--border-thin) solid var(--color-border-subtle);
-  background: color-mix(in srgb, var(--color-surface) 72%, transparent);
-  backdrop-filter: blur(14px) saturate(110%);
-  -webkit-backdrop-filter: blur(14px) saturate(110%);
+  background: var(--color-surface);
 }
 
 .authink-admin .pf-v5-c-page__sidebar-body {
-  padding: 24px 16px;
+  padding: 20px 12px;
 }
 
-/* Main section = workspace, not a glass card */
+/* Main section — clean workspace */
 .authink-admin .pf-v5-c-page__main-section {
   margin: 0;
   border: 0;
   border-radius: 0;
-  background: transparent;
+  background: var(--color-canvas);
   box-shadow: none;
   backdrop-filter: none;
-  padding: clamp(36px, 5vw, 72px) clamp(24px, 5vw, 72px);
+  padding: var(--space-8) clamp(var(--space-6), 4vw, var(--space-12));
 }
 
 /* ── Navigation ────────────────────────────────────── */
@@ -124,6 +102,7 @@ div.w-tc-editor { font-family: var(--font-mono); }
   background: transparent;
   color: var(--color-text-secondary);
   text-align: left;
+  font-size: var(--text-label);
   transition: color var(--duration-fast) var(--ease-standard),
               background-color var(--duration-fast) var(--ease-standard);
 }
@@ -136,20 +115,39 @@ div.w-tc-editor { font-family: var(--font-mono); }
 .authink-admin .pf-v5-c-nav__link.pf-m-current,
 .authink-admin .pf-v5-c-nav__item.pf-m-current > .pf-v5-c-nav__link {
   border-inline-start-color: transparent;
-  background: var(--color-primary);
-  color: var(--color-on-primary);
+  background: var(--color-surface-muted);
+  color: var(--color-text);
   font-weight: var(--font-weight-semibold);
 }
 
+/* Nav section titles */
+.authink-admin .pf-v5-c-nav__section-title {
+  margin: var(--space-6) var(--space-3) var(--space-2);
+  color: var(--color-text-muted);
+  font: 500 var(--text-caption)/1.3 var(--font-mono);
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
 /* ── Cards ─────────────────────────────────────────── */
-.authink-admin .pf-v5-c-card,
-.authink-admin .pf-v5-c-modal-box {
+.authink-admin .pf-v5-c-card {
   border: var(--border-thin) solid var(--color-border-subtle);
   border-radius: var(--radius-lg);
-  background: color-mix(in srgb, var(--color-surface) 90%, transparent);
+  background: var(--color-surface);
   box-shadow: var(--shadow-card);
-  backdrop-filter: blur(14px) saturate(110%);
-  -webkit-backdrop-filter: blur(14px) saturate(110%);
+}
+
+.authink-admin .pf-v5-c-card__header {
+  border-bottom: var(--border-thin) solid var(--color-divider);
+  padding: var(--space-4) var(--space-5);
+}
+
+.authink-admin .pf-v5-c-card__title {
+  font: 400 var(--text-title-sm)/1.25 var(--font-display);
+}
+
+.authink-admin .pf-v5-c-card__body {
+  padding: var(--space-5);
 }
 
 /* ── Tables ────────────────────────────────────────── */
@@ -157,7 +155,7 @@ div.w-tc-editor { font-family: var(--font-mono); }
   overflow: hidden;
   border: var(--border-thin) solid var(--color-border-subtle);
   border-radius: var(--radius-lg);
-  background: color-mix(in srgb, var(--color-surface) 90%, transparent);
+  background: var(--color-surface);
   box-shadow: var(--shadow-card);
 }
 
@@ -176,12 +174,17 @@ div.w-tc-editor { font-family: var(--font-mono); }
 }
 
 .authink-admin .pf-v5-c-table tbody tr:hover {
-  background: color-mix(in srgb, var(--color-surface-muted) 70%, transparent);
+  background: var(--color-surface-muted);
 }
 
-.authink-admin .pf-v5-c-table tbody tr:focus-within {
-  outline: var(--border-strong) solid var(--color-focus);
-  outline-offset: -2px;
+.authink-admin .pf-v5-c-table th,
+.authink-admin .pf-v5-c-table td {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: var(--border-thin) solid var(--color-divider);
+}
+
+.authink-admin .pf-v5-c-table tr:last-child td {
+  border-bottom: 0;
 }
 
 /* ── Form controls ─────────────────────────────────── */
@@ -195,9 +198,15 @@ div.w-tc-editor { font-family: var(--font-mono); }
   min-height: var(--control-height);
 }
 
+.authink-admin .pf-v5-c-form-control:focus,
+.authink-admin .pf-v5-c-select__toggle:focus,
+.authink-admin .pf-v5-c-input-group:focus-within {
+  border-color: var(--color-focus);
+  box-shadow: var(--shadow-focus);
+}
+
 .authink-admin .pf-v5-c-form-control:hover,
-.authink-admin .pf-v5-c-select__toggle:hover,
-.authink-admin .pf-v5-c-input-group:hover {
+.authink-admin .pf-v5-c-select__toggle:hover {
   border-color: var(--color-border-strong);
 }
 
@@ -209,6 +218,7 @@ div.w-tc-editor { font-family: var(--font-mono); }
   background: var(--color-primary);
   color: var(--color-on-primary);
   font-weight: var(--font-weight-semibold);
+  transition: background-color var(--duration-fast) var(--ease-standard);
 }
 
 .authink-admin .pf-v5-c-button.pf-m-primary:hover {
@@ -229,6 +239,31 @@ div.w-tc-editor { font-family: var(--font-mono); }
   border-color: var(--color-border-strong);
 }
 
+.authink-admin .pf-v5-c-button.pf-m-link {
+  color: var(--color-link);
+}
+
+.authink-admin .pf-v5-c-button.pf-m-link:hover {
+  color: var(--color-link-hover);
+}
+
+/* ── Modal ─────────────────────────────────────────── */
+.authink-admin .pf-v5-c-modal-box {
+  border: var(--border-thin) solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-float);
+}
+
+/* ── Tabs ──────────────────────────────────────────── */
+.authink-admin .pf-v5-c-tabs__link {
+  color: var(--color-text-secondary);
+}
+
+.authink-admin .pf-v5-c-tabs__item.pf-m-current .pf-v5-c-tabs__link {
+  color: var(--color-text);
+}
+
 /* ── Focus ─────────────────────────────────────────── */
 .authink-admin :focus-visible {
   outline: none;
@@ -246,13 +281,11 @@ div.w-tc-editor { font-family: var(--font-mono); }
   height: 44px;
   place-items: center;
   padding: 0;
-  border: var(--border-thin) solid color-mix(in oklab, var(--color-border-strong), transparent 35%);
+  border: var(--border-thin) solid var(--color-border-subtle);
   border-radius: var(--radius-pill);
-  background: color-mix(in oklab, var(--color-surface), transparent 28%);
+  background: var(--color-surface);
   color: var(--color-text);
-  box-shadow: 0 8px 24px color-mix(in oklab, var(--color-text), transparent 86%);
-  backdrop-filter: blur(12px) saturate(112%);
-  -webkit-backdrop-filter: blur(12px) saturate(112%);
+  box-shadow: 0 2px 8px rgba(25, 26, 27, .08);
   font-family: var(--font-display);
   font-size: var(--text-label);
   cursor: pointer;
@@ -262,13 +295,40 @@ div.w-tc-editor { font-family: var(--font-mono); }
 }
 
 .authink-admin-theme-toggle:hover {
-  background: color-mix(in oklab, var(--color-surface), transparent 14%);
+  background: var(--color-surface-muted);
   transform: translateY(-1px);
 }
 
 .authink-admin-theme-toggle:focus-visible {
   outline: none;
   box-shadow: var(--shadow-focus);
+}
+
+/* ── Breadcrumbs ───────────────────────────────────── */
+.authink-admin .pf-v5-c-breadcrumb__link {
+  color: var(--color-link);
+}
+
+/* ── Toolbar / filter ──────────────────────────────── */
+.authink-admin .pf-v5-c-toolbar {
+  padding: var(--space-4) 0;
+  border-bottom: var(--border-thin) solid var(--color-border-subtle);
+  background: transparent;
+}
+
+/* ── Dark theme ────────────────────────────────────── */
+[data-theme="dark"] .authink-admin .pf-v5-c-masthead {
+  background: var(--color-surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+}
+
+[data-theme="dark"] .authink-admin .pf-v5-c-page__sidebar {
+  background: var(--color-surface);
+}
+
+[data-theme="dark"] .authink-admin-theme-toggle {
+  background: var(--color-surface);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
 }
 
 /* ── Responsive ────────────────────────────────────── */
@@ -280,7 +340,7 @@ div.w-tc-editor { font-family: var(--font-mono); }
   }
 
   .authink-admin .pf-v5-c-page__sidebar-body {
-    padding: 18px 76px 14px 20px;
+    padding: 12px 76px 12px 20px;
   }
 
   .authink-admin .pf-v5-c-nav__list {
@@ -288,9 +348,9 @@ div.w-tc-editor { font-family: var(--font-mono); }
     gap: 4px;
     margin-top: 0;
     padding: 4px;
-    border: var(--border-thin) solid color-mix(in srgb, var(--color-border-subtle) 82%, transparent);
+    border: var(--border-thin) solid var(--color-border-subtle);
     border-radius: var(--radius-md);
-    background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+    background: var(--color-surface);
     scrollbar-width: none;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
@@ -307,28 +367,24 @@ div.w-tc-editor { font-family: var(--font-mono); }
     white-space: nowrap;
     border-radius: var(--radius-sm);
     font: 500 14px/1.25 var(--font-body);
-    letter-spacing: 0;
   }
 
   .authink-admin .pf-v5-c-nav__link.pf-m-current,
   .authink-admin .pf-v5-c-nav__item.pf-m-current > .pf-v5-c-nav__link {
-    background: var(--color-surface);
-    box-shadow: var(--shadow-card);
+    background: var(--color-surface-muted);
+    box-shadow: none;
     color: var(--color-text);
   }
 }
 
 @media (max-width: 768px) {
-  body::before { opacity: .10; background-position: 42% center; }
-  [data-theme="dark"] body::before { opacity: .16; }
-
   .authink-admin .pf-v5-c-masthead {
-    min-height: 64px;
+    min-height: 60px;
     padding-inline-end: 72px;
   }
 
   .authink-admin .pf-v5-c-page__main-section {
-    padding-inline: 20px;
+    padding-inline: var(--space-5);
   }
 
   .authink-admin .pf-v5-c-table {
