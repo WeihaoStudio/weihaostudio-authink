@@ -719,3 +719,8 @@
   display: grid;
   gap: var(--space-4);
 }
+.auth-browser--production .authink-flow__meta {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-label);
+}
