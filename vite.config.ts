@@ -14,7 +14,7 @@ export default defineConfig({
         tailwindcss(),
         keycloakify({
             themeName: "weihaostudio-authink",
-            accountThemeImplementation: "none",
+            accountThemeImplementation: "Single-Page",
             keycloakVersionTargets: {
                 "22-to-25": false,
                 "all-other-versions": "weihaostudio-authink.jar"
