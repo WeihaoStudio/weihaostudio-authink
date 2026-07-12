@@ -11,6 +11,9 @@ importers:
       '@keycloak/keycloak-admin-client':
         specifier: 26.6.1
         version: 26.6.1
+      '@keycloakify/email-native':
+        specifier: ~260007.0.0
+        version: 260007.0.0
       '@keycloakify/keycloak-account-ui':
         specifier: ~260601.0.0
         version: 260601.0.0(85d9dbf49b89ded673d60f2937ce3ef3)
@@ -655,6 +658,9 @@ packages:
   '@keycloak/keycloak-admin-client@26.6.1':
     resolution: {integrity: sha512-IWzXCyUFhLkk2LkryCunEAGbRVB7ttC7WNmjXlFT83WlBrmxRCDKo52LzmIRgtWcy0VU1qe3Poj5BGyIkE1AnQ==}
     engines: {node: '>=18'}
+
+  '@keycloakify/email-native@260007.0.0':
+    resolution: {integrity: sha512-hFUiOwwpc84eXPAct44G/pTBkYnDQF1jIObME+ZUrb7XidmFJ/TdH9q49LKpd9sIivSyOEJa1qLtrggP+c+BJw==}
 
   '@keycloakify/keycloak-account-ui@260601.0.0':
     resolution: {integrity: sha512-fSEr0yDihKNIzAg3K7rGMo2K+3GyNxAD1TVHJ2efaugQn06iu3/MdVmiFGB26VktUmRcMdCXyIbIq2SIXPzZlA==}
@@ -3365,6 +3371,8 @@ snapshots:
       '@microsoft/kiota-serialization-text': 1.0.0-preview.103
       camelize-ts: 3.0.0
       url-template: 3.1.1
+
+  '@keycloakify/email-native@260007.0.0': {}
 
   '@keycloakify/keycloak-account-ui@260601.0.0(85d9dbf49b89ded673d60f2937ce3ef3)':
     dependencies:
