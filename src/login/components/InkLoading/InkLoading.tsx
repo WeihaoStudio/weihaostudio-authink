@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import inkRingUrl from "./assets/ink-ring.webp";
-import { getInkFrameState, INK_LOADING_GEOMETRY, smoothstep } from "./inkLoadingCore";
+import { getInkDryAlpha, getInkFrameState, INK_LOADING_GEOMETRY, smoothstep } from "./inkLoadingCore";
 import "./inkLoading.css";
 
 export interface InkLoadingProps {
@@ -87,7 +87,7 @@ function renderFrame(
     context: CanvasRenderingContext2D,
     prepared: PreparedInk,
     reveal: number,
-    globalAlpha: number,
+    dryProgress: number,
     output: ImageData
 ) {
     const pixels = output.data;
@@ -96,16 +96,19 @@ function renderFrame(
     const endAngle = (INK_LOADING_GEOMETRY.gapStartDeg + 360) * Math.PI / 180;
     const revealAngle = startAngle + (endAngle - startAngle) * reveal;
     const solidAngle = revealAngle - INK_LOADING_GEOMETRY.feather;
+    const strokeSpan = endAngle - startAngle;
 
     for (const pixelIndex of prepared.strokeIndices) {
         const angle = prepared.sourceAngle[pixelIndex];
         let alpha = 0;
         if (angle <= solidAngle) {
-            alpha = prepared.sourceAlpha[pixelIndex] * globalAlpha;
+            alpha = prepared.sourceAlpha[pixelIndex];
         } else if (angle < revealAngle + INK_LOADING_GEOMETRY.feather) {
             const mix = 1 - smoothstep(solidAngle, revealAngle + INK_LOADING_GEOMETRY.feather, angle);
-            alpha = prepared.sourceAlpha[pixelIndex] * mix * globalAlpha;
+            alpha = prepared.sourceAlpha[pixelIndex] * mix;
         }
+        const pixelProgress = Math.max(0, Math.min(1, (angle - startAngle) / strokeSpan));
+        alpha *= getInkDryAlpha(pixelProgress, dryProgress);
         pixels[pixelIndex * 4 + 3] = Math.round(alpha);
     }
     context.putImageData(output, 0, 0);
@@ -144,7 +147,7 @@ export function InkLoading({
 
         const drawStatic = () => {
             if (!context || !prepared || !output) return;
-            renderFrame(context, prepared, 1, 1, output);
+            renderFrame(context, prepared, 1, 0, output);
         };
         const tick = (timestamp: number) => {
             if (disposed || !context || !prepared || !output) return;
@@ -156,7 +159,7 @@ export function InkLoading({
             }
             const frame = getInkFrameState(timestamp - startedAt, speed);
             if (frame.phase === "pause") context.clearRect(0, 0, prepared.width, prepared.height);
-            else renderFrame(context, prepared, frame.reveal, frame.alpha, output);
+            else renderFrame(context, prepared, frame.reveal, frame.dryProgress, output);
             frameId = window.requestAnimationFrame(tick);
         };
         const resume = () => {

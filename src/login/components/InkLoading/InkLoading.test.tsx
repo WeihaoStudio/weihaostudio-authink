@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { InkLoading } from "./InkLoading";
-import { getInkFrameState, INK_LOADING_TIMING } from "./inkLoadingCore";
+import { getInkDryAlpha, getInkFrameState, INK_LOADING_TIMING } from "./inkLoadingCore";
 
 describe("InkLoading", () => {
     it("exposes an accessible status by default", () => {
@@ -38,10 +38,19 @@ describe("InkLoading", () => {
         expect(() => renderToString(<InkLoading />)).not.toThrow();
     });
 
-    it("keeps the approved draw, hold, fade and pause timeline", () => {
+    it("keeps the approved draw, hold, directional dry and pause timeline", () => {
         expect(getInkFrameState(0)).toMatchObject({ phase: "draw", reveal: 0, alpha: 1 });
-        expect(getInkFrameState(INK_LOADING_TIMING.drawMs)).toEqual({ phase: "hold", reveal: 1, alpha: 1 });
-        expect(getInkFrameState(INK_LOADING_TIMING.drawMs + INK_LOADING_TIMING.holdMs)).toMatchObject({ phase: "fade", reveal: 1 });
-        expect(getInkFrameState(INK_LOADING_TIMING.drawMs + INK_LOADING_TIMING.holdMs + INK_LOADING_TIMING.fadeMs)).toEqual({ phase: "pause", reveal: 0, alpha: 0 });
+        expect(getInkFrameState(INK_LOADING_TIMING.drawMs)).toEqual({ phase: "hold", reveal: 1, dryProgress: 0, alpha: 1 });
+        expect(INK_LOADING_TIMING.dryMs).toBe(2400);
+        expect(getInkFrameState(INK_LOADING_TIMING.drawMs + INK_LOADING_TIMING.holdMs)).toEqual({ phase: "dry", reveal: 1, dryProgress: 0 });
+        expect(getInkFrameState(INK_LOADING_TIMING.drawMs + INK_LOADING_TIMING.holdMs + INK_LOADING_TIMING.dryMs)).toEqual({ phase: "pause", reveal: 0, dryProgress: 1 });
+    });
+
+    it("dries pixels clockwise with a soft fading trail", () => {
+        expect(getInkDryAlpha(0, 0)).toBe(1);
+        expect(getInkDryAlpha(0.05, 0.5)).toBeLessThan(getInkDryAlpha(0.75, 0.5));
+        expect(getInkDryAlpha(0.75, 0.5)).toBe(1);
+        expect(getInkDryAlpha(0, 1)).toBe(0);
+        expect(getInkDryAlpha(1, 1)).toBe(0);
     });
 });
