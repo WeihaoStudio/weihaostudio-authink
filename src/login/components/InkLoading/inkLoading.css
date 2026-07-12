@@ -1,0 +1,22 @@
+.ink-loading {
+  --ink-loading-size: 48px;
+  display: inline-grid;
+  inline-size: var(--ink-loading-size);
+  block-size: var(--ink-loading-size);
+  flex: 0 0 auto;
+  place-items: center;
+  line-height: 0;
+}
+.ink-loading__canvas,
+.ink-loading__fallback {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: contain;
+}
+.button--primary .ink-loading {
+  filter: invert(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ink-loading__canvas { visibility: visible; }
+}

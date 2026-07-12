@@ -4,9 +4,7 @@
 
 ## Compatibility
 
-The isolated test stack at `192.168.200.10:/home/weihao/docker/keycloak-test` was verified on July 11, 2026 to run **Keycloak 26.0.0**. This project uses Keycloakify 11's login-only `all-other-versions` target and emits `weihaostudio-authink.jar`.
-
-Production Keycloak is intentionally out of scope. Do not copy or deploy this JAR to production without a separate approval and validation cycle.
+The theme is verified for the two isolated Homelab targets: production Keycloak **21.0.2 / Java 17** and test Keycloak **26.0.0 / Java 21**. Keycloakify 11 uses the login-only `all-other-versions` compatibility target, so both version-labelled JARs are intentionally byte-identical while retaining explicit deployment names.
 
 ## Commands
 
@@ -18,7 +16,7 @@ pnpm build-storybook
 pnpm build-keycloak-theme
 ```
 
-The deployable theme is generated under `dist_keycloak/`.
+The deployable theme is generated under `dist_keycloak/`. `build-keycloak-theme` also refreshes the two version-labelled JARs and `SHA256SUMS` under `dist_keycloak/versioned/`; never reuse older files from that directory after rebuilding.
 
 ## Project structure
 
@@ -29,10 +27,12 @@ The deployable theme is generated under `dist_keycloak/`.
 - `design-system/preview/index.html` — golden master for Login visual parity.
 - `src/login/assets/` — approved local backgrounds, logos, brush artwork, and OAuth icons.
 - `src/login/Login.stories.tsx` — deterministic visual states for Storybook.
+- `src/login/components/InkLoading/` — accessible Canvas-based ink loading component, WebP runtime asset, stories and lifecycle tests.
+- `scripts/package-versioned-themes.mjs` — refreshes the Keycloak 21.0.2 and 26.0.0 labelled deliverables from the current generic JAR.
 - `design-system/` — copied canonical Open Design evidence and preview reference.
 
 ## Visual constraints
 
-- Login uses the fixed approved `weihaostudio-keycloak-bg-light-4k-300dpi.png` wallpaper with no gradient fade or automatic wallpaper rotation.
+- Login uses the fixed approved light/dark 4K WebP wallpapers with no gradient fade or automatic wallpaper rotation.
 - The logo, brush submit button, Google icon, and GitHub icon are not redrawn.
 - At 767px and below the wallpaper fills the page and the form sits directly on it; no large card overlay, backdrop blur, border, radius, or panel shadow is introduced.

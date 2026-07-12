@@ -6,12 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "build-keycloak-theme": "pnpm run build && keycloakify build",
+    "build-keycloak-theme": "pnpm run build && keycloakify build && pnpm run package-versioned-themes",
     "storybook": "storybook dev -p 6006",
     "format": "prettier . --write",
     "test": "vitest",
     "test:run": "vitest run",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "package-versioned-themes": "node scripts/package-versioned-themes.mjs"
   },
   "license": "MIT",
   "keywords": [],

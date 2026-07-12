@@ -110,5 +110,11 @@ describe("AuthInk login contract", () => {
         );
         expect(container.querySelector('img[src*="google-g.svg"]')).toBeInTheDocument();
         expect(container.querySelector('img[src*="github-mark.svg"]')).toBeInTheDocument();
+
+        fireEvent.submit(form!);
+        const submit = screen.getByRole("button", { name: /正在验证/ });
+        expect(submit).toHaveAttribute("aria-busy", "true");
+        expect(submit.querySelector(".ink-loading")).toBeInTheDocument();
+        expect(submit.querySelector(".ink-loading")).not.toHaveAttribute("role");
     });
 });
