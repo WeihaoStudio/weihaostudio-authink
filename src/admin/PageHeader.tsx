@@ -19,6 +19,8 @@ import { PageHeaderClearCachesModal } from "./PageHeaderClearCachesModal";
 import { HelpHeader } from "./components/help-enabler/HelpHeader";
 import { useAccess } from "./context/access/Access";
 import { useRealm } from "./context/realm-context/RealmContext";
+import { useWhoAmI } from "./context/whoami/WhoAmI";
+import { withWhoAmIDisplayName } from "./withWhoAmIDisplayName";
 import { toDashboard } from "./dashboard/routes/Dashboard";
 import { usePreviewLogo } from "./realm-settings/themes/LogoContext";
 import { joinPath } from "./utils/joinPath";
@@ -99,6 +101,11 @@ export const Header = () => {
     const { t } = useTranslation();
     const { realm } = useRealm();
     const { hasAccess } = useAccess();
+    const { whoAmI } = useWhoAmI();
+    const mastheadKeycloak = withWhoAmIDisplayName(
+        keycloak,
+        whoAmI.displayName
+    );
 
     const contextLogo = usePreviewLogo();
     const customLogo = contextLogo?.logo;
@@ -112,7 +119,7 @@ export const Header = () => {
     return (
         <KeycloakMasthead
             data-testid="page-header"
-            keycloak={keycloak}
+            keycloak={mastheadKeycloak}
             features={{ hasManageAccount: false }}
             brand={{
                 href: logoUrl,
