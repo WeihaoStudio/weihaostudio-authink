@@ -8,6 +8,7 @@ import AuthInkTemplate from "./Template";
 import Login from "./Login";
 import LoginOtp from "./LoginOtp";
 import LoginVerifyEmail from "./LoginVerifyEmail";
+import LoginResetPassword from "./LoginResetPassword";
 const UserProfileFormFields = lazy(
     () => import("keycloakify/login/UserProfileFormFields")
 );
@@ -46,6 +47,16 @@ export default function KcPage(props: { kcContext: KcContext }) {
                     case "login-verify-email.ftl":
                         return (
                             <LoginVerifyEmail
+                                kcContext={kcContext}
+                                i18n={i18n}
+                                classes={classes}
+                                Template={AuthInkTemplate}
+                                doUseDefaultCss={false}
+                            />
+                        );
+                    case "login-reset-password.ftl":
+                        return (
+                            <LoginResetPassword
                                 kcContext={kcContext}
                                 i18n={i18n}
                                 classes={classes}
