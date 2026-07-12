@@ -3,5 +3,8 @@
 # === Owned files start ===
 # === Owned files end =====
 
+# === @keycloakify/keycloak-admin-ui v260601.0.1 ===
+/admin/early-color-scheme.js
+
 # === @keycloakify/keycloak-account-ui v260601.0.0 ===
 /account/early-color-scheme.js
