@@ -697,3 +697,25 @@
     backdrop-filter: none;
   }
 }
+
+.auth-browser--production .authink-flow {
+  display: grid;
+  gap: var(--space-6);
+}
+.auth-browser--production .authink-flow__copy {
+  margin: 0;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+}
+.auth-browser--production .authink-flow__address {
+  display: block;
+  margin-block: var(--space-2);
+  overflow-wrap: anywhere;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-medium);
+}
+.auth-browser--production .authink-flow__actions {
+  display: grid;
+  gap: var(--space-4);
+}
