@@ -3,16 +3,26 @@
 # === Owned files start ===
 # account/colorScheme.ts
 # account/KcAccountUi.tsx
+# email/theme.properties
 # account/root/header.module.css
 # account/root/Header.tsx
+# email/html/email-verification.ftl
+# email/html/executeActions.ftl
+# email/html/identity-provider-link.ftl
+# email/html/password-reset.ftl
+# email/html/template.ftl
+# email/messages/messages_en.properties
+# email/messages/messages_zh_CN.properties
+# email/text/email-verification.ftl
+# email/text/executeActions.ftl
+# email/text/identity-provider-link.ftl
+# email/text/password-reset.ftl
 # === Owned files end =====
 
 # === @keycloakify/email-native v260007.0.0 ===
-/email/theme.properties
 /email/html/email-test.ftl
 /email/html/email-update-confirmation.ftl
 /email/html/email-verification-with-code.ftl
-/email/html/email-verification.ftl
 /email/html/event-login_error.ftl
 /email/html/event-remove_credential.ftl
 /email/html/event-remove_totp.ftl
@@ -21,18 +31,13 @@
 /email/html/event-update_totp.ftl
 /email/html/event-user_disabled_by_permanent_lockout.ftl
 /email/html/event-user_disabled_by_temporary_lockout.ftl
-/email/html/executeActions.ftl
-/email/html/identity-provider-link.ftl
 /email/html/org-invite.ftl
-/email/html/password-reset.ftl
-/email/html/template.ftl
 /email/messages/messages_ar.properties
 /email/messages/messages_ca.properties
 /email/messages/messages_cs.properties
 /email/messages/messages_da.properties
 /email/messages/messages_de.properties
 /email/messages/messages_el.properties
-/email/messages/messages_en.properties
 /email/messages/messages_es.properties
 /email/messages/messages_fa.properties
 /email/messages/messages_fi.properties
@@ -53,12 +58,10 @@
 /email/messages/messages_th.properties
 /email/messages/messages_tr.properties
 /email/messages/messages_uk.properties
-/email/messages/messages_zh_CN.properties
 /email/messages/messages_zh_TW.properties
 /email/text/email-test.ftl
 /email/text/email-update-confirmation.ftl
 /email/text/email-verification-with-code.ftl
-/email/text/email-verification.ftl
 /email/text/event-login_error.ftl
 /email/text/event-remove_credential.ftl
 /email/text/event-remove_totp.ftl
@@ -67,10 +70,7 @@
 /email/text/event-update_totp.ftl
 /email/text/event-user_disabled_by_permanent_lockout.ftl
 /email/text/event-user_disabled_by_temporary_lockout.ftl
-/email/text/executeActions.ftl
-/email/text/identity-provider-link.ftl
 /email/text/org-invite.ftl
-/email/text/password-reset.ftl
 
 # === @keycloakify/keycloak-ui-shared v260601.0.0 ===
 /shared/SessionExpirationWarningOverlay.tsx
