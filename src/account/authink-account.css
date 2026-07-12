@@ -1,36 +1,21 @@
+/* AuthInk Account Theme — canonical OpenDesign tokens
+ * Maps PatternFly account DOM to the account-shell visual language.
+ * Tokens are provided by authink.tokens.css (imported in KcAccountUi.tsx).
+ */
+
 :root {
-  --authink-account-ink: #181715;
-  --authink-account-canvas: #f4f0e9;
-  --authink-account-surface: rgba(255, 253, 248, .9);
-  --authink-account-surface-strong: rgba(255, 253, 248, .96);
-  --authink-account-muted: #ebe5dc;
-  --authink-account-border: rgba(63, 59, 53, .2);
-  --authink-account-shadow: 0 14px 32px rgba(42, 37, 32, .1);
-  --authink-account-focus: #5a5148;
-  --pf-v5-global--primary-color--100: #292725;
-  --pf-v5-global--primary-color--200: #11100f;
-  --pf-v5-global--link--Color: #4d4842;
-  --pf-v5-global--FontFamily--sans-serif: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --pf-v5-global--primary-color--100: var(--color-primary);
+  --pf-v5-global--primary-color--200: var(--color-primary-active);
+  --pf-v5-global--link--Color: var(--color-link);
+  --pf-v5-global--FontFamily--sans-serif: var(--font-body);
 }
 
-html[data-authink-theme="dark"] {
-  --authink-account-ink: #f4f0e8;
-  --authink-account-canvas: #171614;
-  --authink-account-surface: rgba(33, 31, 29, .9);
-  --authink-account-surface-strong: rgba(33, 31, 29, .96);
-  --authink-account-muted: #2e2b27;
-  --authink-account-border: rgba(238, 232, 220, .22);
-  --authink-account-shadow: 0 14px 32px rgba(0, 0, 0, .28);
-  --authink-account-focus: #e9dfd2;
-  --pf-v5-global--primary-color--100: #e8e1d6;
-  --pf-v5-global--primary-color--200: #ffffff;
-  --pf-v5-global--link--Color: #ddd3c5;
-}
-
+/* ── Shell ─────────────────────────────────────────── */
 .authink-account {
   min-height: 100dvh;
-  color: var(--authink-account-ink);
-  background: var(--authink-account-canvas);
+  color: var(--color-text);
+  background: var(--color-canvas);
+  font-family: var(--font-body);
 }
 
 .authink-account .pf-v5-c-page,
@@ -40,26 +25,29 @@ html[data-authink-theme="dark"] {
   background: transparent;
 }
 
-.authink-account .pf-v5-c-masthead {
-  z-index: 4;
-  min-height: 72px;
-  border-bottom: 1px solid var(--authink-account-border);
-  background: var(--authink-account-surface-strong);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, .24);
-}
-
+/* Sidebar = account-aside */
 .authink-account .pf-v5-c-page__sidebar {
   z-index: 3;
   width: 256px;
-  border-inline-end: 1px solid var(--authink-account-border);
-  background: var(--authink-account-surface);
+  border-inline-end: var(--border-thin) solid var(--color-border-subtle);
+  background: color-mix(in srgb, var(--color-surface) 68%, transparent);
 }
 
 .authink-account .pf-v5-c-page__sidebar-body {
-  padding: 22px 14px;
+  padding: 32px 20px 24px;
 }
 
-/* The Keycloak page section is the OpenDesign workspace, not a second card. */
+/* Masthead = minimal, transparent */
+.authink-account .pf-v5-c-masthead {
+  z-index: 4;
+  min-height: 72px;
+  border-bottom: var(--border-thin) solid var(--color-border-subtle);
+  background: color-mix(in srgb, var(--color-surface) 74%, transparent);
+  backdrop-filter: blur(14px) saturate(110%);
+  -webkit-backdrop-filter: blur(14px) saturate(110%);
+}
+
+/* Main section = workspace, not a glass card */
 .authink-account .pf-v5-c-page__main-section {
   margin: 0;
   border: 0;
@@ -69,88 +57,173 @@ html[data-authink-theme="dark"] {
   backdrop-filter: none;
 }
 
+/* ── Navigation ────────────────────────────────────── */
+.authink-account .pf-v5-c-nav__link {
+  display: flex;
+  align-items: center;
+  min-height: var(--control-height);
+  gap: 12px;
+  margin: 2px 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-secondary);
+  text-align: left;
+  transition: color var(--duration-fast) var(--ease-standard),
+              background-color var(--duration-fast) var(--ease-standard);
+}
+
+.authink-account .pf-v5-c-nav__link:hover {
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}
+
+.authink-account .pf-v5-c-nav__link.pf-m-current,
+.authink-account .pf-v5-c-nav__item.pf-m-current > .pf-v5-c-nav__link {
+  border-inline-start-color: transparent;
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-card);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ── Cards ─────────────────────────────────────────── */
 .authink-account .pf-v5-c-card,
 .authink-account .pf-v5-c-modal-box {
-  border-color: var(--authink-account-border);
-  background: var(--authink-account-surface-strong);
-  box-shadow: var(--authink-account-shadow);
+  border: var(--border-thin) solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--color-surface) 90%, transparent);
+  box-shadow: var(--shadow-card);
   backdrop-filter: blur(14px) saturate(110%);
+  -webkit-backdrop-filter: blur(14px) saturate(110%);
 }
 
+/* ── Tables ────────────────────────────────────────── */
 .authink-account .pf-v5-c-table {
   overflow: hidden;
-  border: 1px solid var(--authink-account-border);
-  border-radius: 14px;
-  background: var(--authink-account-surface-strong);
-  box-shadow: var(--authink-account-shadow);
-}
-
-.authink-account .pf-v5-c-form-control,
-.authink-account .pf-v5-c-select__toggle,
-.authink-account .pf-v5-c-input-group {
-  border-color: var(--authink-account-border);
-  background-color: var(--authink-account-surface-strong);
+  border: var(--border-thin) solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--color-surface) 90%, transparent);
+  box-shadow: var(--shadow-card);
 }
 
 .authink-account .pf-v5-c-table thead,
 .authink-account .pf-v5-c-table th {
-  background: var(--authink-account-muted);
-  color: var(--authink-account-ink);
-  font-size: .74rem;
+  background: var(--color-surface-subtle);
+  color: var(--color-text-muted);
+  font: 500 var(--text-caption)/1.3 var(--font-mono);
   letter-spacing: .06em;
   text-transform: uppercase;
 }
 
-.authink-account .pf-v5-c-table tbody tr { background: transparent; transition: background-color 160ms ease; }
-.authink-account .pf-v5-c-table tbody tr:hover { background: var(--authink-account-muted); }
-
-.authink-account .pf-v5-c-nav__link {
-  min-height: 44px;
-  margin: 2px 0;
-  border-radius: 10px;
-  color: var(--authink-account-ink);
-  transition: color 160ms ease, background-color 160ms ease;
+.authink-account .pf-v5-c-table tbody tr {
+  background: transparent;
+  transition: background-color var(--duration-fast) var(--ease-standard);
 }
 
-.authink-account .pf-v5-c-nav__link:hover { background: var(--authink-account-muted); }
-.authink-account .pf-v5-c-nav__link.pf-m-current,
-.authink-account .pf-v5-c-nav__item.pf-m-current > .pf-v5-c-nav__link {
-  border-inline-start-color: var(--authink-account-ink);
-  background: var(--authink-account-surface-strong);
-  box-shadow: inset 0 0 0 1px var(--authink-account-border);
-  font-weight: 600;
+.authink-account .pf-v5-c-table tbody tr:hover {
+  background: var(--color-surface-muted);
 }
 
-.authink-account .pf-v5-c-button.pf-m-primary { border-color: #211f1d; background: #211f1d; color: #fffdf8; }
-html[data-authink-theme="dark"] .authink-account .pf-v5-c-button.pf-m-primary { border-color: #ece5d9; background: #ece5d9; color: #211f1d; }
-.authink-account :focus-visible { outline: 2px solid var(--authink-account-focus); outline-offset: 2px; }
+/* ── Form controls ─────────────────────────────────── */
+.authink-account .pf-v5-c-form-control,
+.authink-account .pf-v5-c-select__toggle,
+.authink-account .pf-v5-c-input-group {
+  border: var(--border-thin) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  min-height: var(--control-height);
+}
 
+.authink-account .pf-v5-c-form-control:hover,
+.authink-account .pf-v5-c-select__toggle:hover,
+.authink-account .pf-v5-c-input-group:hover {
+  border-color: var(--color-border-strong);
+}
+
+/* ── Buttons ───────────────────────────────────────── */
+.authink-account .pf-v5-c-button.pf-m-primary {
+  min-height: var(--control-height);
+  border: var(--border-thin) solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.authink-account .pf-v5-c-button.pf-m-primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.authink-account .pf-v5-c-button.pf-m-secondary {
+  min-height: var(--control-height);
+  border: var(--border-thin) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.authink-account .pf-v5-c-button.pf-m-secondary:hover {
+  background: var(--color-surface-muted);
+  border-color: var(--color-border-strong);
+}
+
+/* ── Focus ─────────────────────────────────────────── */
+.authink-account :focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* ── Theme toggle ──────────────────────────────────── */
 .authink-account-theme-toggle {
   position: fixed;
-  inset-block-start: 20px;
-  inset-inline-end: 20px;
-  z-index: 1000;
+  top: var(--space-5);
+  right: var(--space-5);
+  z-index: 10;
   display: grid;
   width: 44px;
   height: 44px;
   place-items: center;
-  border: 1px solid var(--authink-account-border);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--authink-account-surface-strong) 78%, transparent);
-  color: var(--authink-account-ink);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, .14);
+  padding: 0;
+  border: var(--border-thin) solid color-mix(in oklab, var(--color-border-strong), transparent 35%);
+  border-radius: var(--radius-pill);
+  background: color-mix(in oklab, var(--color-surface), transparent 28%);
+  color: var(--color-text);
+  box-shadow: 0 8px 24px color-mix(in oklab, var(--color-text), transparent 86%);
   backdrop-filter: blur(12px) saturate(112%);
+  -webkit-backdrop-filter: blur(12px) saturate(112%);
+  font-family: var(--font-display);
+  font-size: var(--text-label);
   cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard),
+              transform var(--duration-fast) var(--ease-standard);
 }
-.authink-account-theme-toggle:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 
+.authink-account-theme-toggle:hover {
+  background: color-mix(in oklab, var(--color-surface), transparent 14%);
+  transform: translateY(-1px);
+}
+
+.authink-account-theme-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* ── Responsive nav ────────────────────────────────── */
 @media (max-width: 1024px) {
   .authink-account .pf-v5-c-page__sidebar {
     width: auto;
     border-inline-end: 0;
-    border-bottom: 1px solid var(--authink-account-border);
+    border-bottom: var(--border-thin) solid var(--color-border-subtle);
   }
-  .authink-account .pf-v5-c-page__sidebar-body { padding: 18px 20px; }
+
+  .authink-account .pf-v5-c-page__sidebar-body {
+    padding: 18px 76px 14px 20px;
+  }
+
   .authink-account .pf-v5-c-nav__list {
     display: grid;
     grid-auto-flow: column;
@@ -160,13 +233,38 @@ html[data-authink-theme="dark"] .authink-account .pf-v5-c-button.pf-m-primary { 
     overscroll-behavior-inline: contain;
     scrollbar-width: none;
   }
-  .authink-account .pf-v5-c-nav__list::-webkit-scrollbar { display: none; }
-  .authink-account .pf-v5-c-nav__section-title { display: none; }
-  .authink-account .pf-v5-c-nav__link { margin: 0; padding-inline: 12px; white-space: nowrap; }
+
+  .authink-account .pf-v5-c-nav__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .authink-account .pf-v5-c-nav__section-title {
+    display: none;
+  }
+
+  .authink-account .pf-v5-c-nav__link {
+    margin: 0;
+    padding-inline: 12px;
+    white-space: nowrap;
+  }
 }
 
-@media (max-width: 768px) {
-  .authink-account .pf-v5-c-masthead { min-height: 64px; padding-inline-end: 72px; }
-  .authink-account .pf-v5-c-page__main-section { padding-inline: 20px; }
-  .authink-account .pf-v5-c-table { border-radius: 12px; }
+@media (max-width: 640px) {
+  .authink-account .pf-v5-c-page__main-section {
+    padding-inline: 20px;
+  }
+
+  .authink-account .pf-v5-c-masthead {
+    min-height: 64px;
+    padding-inline-end: 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .authink-account *,
+  .authink-account *::before,
+  .authink-account *::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+  }
 }

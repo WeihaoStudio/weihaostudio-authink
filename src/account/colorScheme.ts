@@ -14,7 +14,7 @@ export function applyAccountTheme(theme: AccountTheme) {
     document.head.appendChild(element);
     document.documentElement.style.removeProperty("background-color");
     document.documentElement.classList.toggle(DARK_THEME_CLASS, isDark);
-    document.documentElement.dataset.authinkTheme = theme;
+    document.documentElement.dataset.theme = theme;
     window.dispatchEvent(new CustomEvent("authink-theme-change", { detail: theme }));
 }
 

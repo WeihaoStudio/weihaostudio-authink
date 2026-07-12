@@ -13,7 +13,7 @@ const getThemeState = () =>
 describe("AuthInk Admin color scheme management", () => {
     afterEach(() => {
         document.documentElement.classList.remove("pf-v5-theme-dark");
-        document.documentElement.removeAttribute("data-authink-theme");
+        document.documentElement.removeAttribute("data-theme");
         localStorage.clear();
         vi.restoreAllMocks();
     });
@@ -24,7 +24,7 @@ describe("AuthInk Admin color scheme management", () => {
 
         colorScheme.startColorSchemeManagement();
 
-        expect(document.documentElement).toHaveAttribute("data-authink-theme", "light");
+        expect(document.documentElement).toHaveAttribute("data-theme", "light");
         expect(document.documentElement).not.toHaveClass("pf-v5-theme-dark");
         expect(getThemeState()).toEqual({ initialTheme: "light", isThemeLocked: true });
     });

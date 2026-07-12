@@ -13,7 +13,7 @@ export function applyAdminTheme(theme: AdminTheme) {
     document.head.appendChild(element);
     document.documentElement.style.removeProperty("background-color");
     document.documentElement.classList.toggle(DARK_THEME_CLASS, theme === "dark");
-    document.documentElement.dataset.authinkTheme = theme;
+    document.documentElement.dataset.theme = theme;
     window.dispatchEvent(new CustomEvent("authink-theme-change", { detail: theme }));
     document.documentElement.style.setProperty(
         "--authink-admin-wallpaper",

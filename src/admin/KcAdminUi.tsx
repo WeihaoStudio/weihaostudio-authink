@@ -13,6 +13,7 @@ import { createHashRouter, RouterProvider } from "react-router-dom";
 import { i18n } from "./i18n/i18n";
 import { RootRoute } from "./routes";
 
+import "../login/authink.tokens.css";
 import "./index.css";
 import { AdminThemeToggle } from "./AdminThemeToggle";
 

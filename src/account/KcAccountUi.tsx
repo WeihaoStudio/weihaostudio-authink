@@ -16,6 +16,7 @@ import { i18n } from "./i18n/i18n";
 import { Root } from "./root/Root";
 import { SessionExpirationWarningOverlay } from "../shared/SessionExpirationWarningOverlay";
 import { AccountThemeToggle } from "./AccountThemeToggle";
+import "../login/authink.tokens.css";
 import "./authink-account.css";
 
 document.title = "Account Management";

@@ -6,18 +6,18 @@ import { applyAccountTheme } from "./colorScheme";
 describe("AuthInk Account theme toggle", () => {
     afterEach(() => {
         document.documentElement.classList.remove("pf-v5-theme-dark");
-        document.documentElement.removeAttribute("data-authink-theme");
+        document.documentElement.removeAttribute("data-theme");
         localStorage.clear();
     });
 
     it("applies PatternFly and AuthInk dark-mode markers", () => {
         applyAccountTheme("dark");
         expect(document.documentElement).toHaveClass("pf-v5-theme-dark");
-        expect(document.documentElement).toHaveAttribute("data-authink-theme", "dark");
+        expect(document.documentElement).toHaveAttribute("data-theme", "dark");
 
         applyAccountTheme("light");
         expect(document.documentElement).not.toHaveClass("pf-v5-theme-dark");
-        expect(document.documentElement).toHaveAttribute("data-authink-theme", "light");
+        expect(document.documentElement).toHaveAttribute("data-theme", "light");
     });
 
     it("uses the approved 夜/昼 control without persisting the user choice", () => {
@@ -40,5 +40,5 @@ it("does not render or re-apply a theme when the realm locks light mode", () => 
     render(<AccountThemeToggle initialTheme="dark" isThemeLocked />);
 
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
-    expect(document.documentElement).toHaveAttribute("data-authink-theme", "light");
+    expect(document.documentElement).toHaveAttribute("data-theme", "light");
 });

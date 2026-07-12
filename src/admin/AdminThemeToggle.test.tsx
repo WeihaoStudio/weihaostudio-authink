@@ -6,14 +6,14 @@ import { applyAdminTheme } from "./colorScheme";
 describe("AuthInk Admin theme toggle", () => {
     afterEach(() => {
         document.documentElement.classList.remove("pf-v5-theme-dark");
-        document.documentElement.removeAttribute("data-authink-theme");
+        document.documentElement.removeAttribute("data-theme");
         localStorage.clear();
     });
 
     it("keeps PatternFly dark mode synchronized with the AuthInk theme", () => {
         applyAdminTheme("dark");
         expect(document.documentElement).toHaveClass("pf-v5-theme-dark");
-        expect(document.documentElement).toHaveAttribute("data-authink-theme", "dark");
+        expect(document.documentElement).toHaveAttribute("data-theme", "dark");
         applyAdminTheme("light");
         expect(document.documentElement).not.toHaveClass("pf-v5-theme-dark");
     });
@@ -37,5 +37,5 @@ it("does not render or re-apply a theme when the realm locks light mode", () => 
     render(<AdminThemeToggle initialTheme="dark" isThemeLocked />);
 
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
-    expect(document.documentElement).toHaveAttribute("data-authink-theme", "light");
+    expect(document.documentElement).toHaveAttribute("data-theme", "light");
 });
