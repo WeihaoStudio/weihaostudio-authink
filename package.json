@@ -13,7 +13,8 @@
         "test": "vitest",
         "test:run": "vitest run",
         "build-storybook": "storybook build",
-        "package-versioned-themes": "node scripts/package-versioned-themes.mjs"
+        "package-versioned-themes": "node scripts/package-versioned-themes.mjs",
+        "test:packaging": "node --test scripts/deterministic-jar.node-test.mjs"
     },
     "license": "MIT",
     "keywords": [],

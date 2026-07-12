@@ -16,7 +16,7 @@ Realm: `WeihaoStudio`
 
 - `dist_keycloak/versioned/weihaostudio-authink-keycloak-21.0.2.jar`
 - `dist_keycloak/versioned/weihaostudio-authink-keycloak-26.0.0.jar`
-- SHA-256 for both labels: `aea1c58a485ef5c3fb954ac3d7499fb6ca18448ca34711f7d8bbe136f87e4d5f`
+- SHA-256 for both labels: `b72bfa8fa33dedb297ec61fe9f254480a916967ec5a19d470f93be0c981dd9de`
 
 JAR inventory for each artifact:
 
@@ -32,6 +32,7 @@ AuthInk 4K/reference PNG originals are not packaged. The remaining PNG files are
 - Vitest: 12 files, 40 tests passed.
 - Storybook production build: passed.
 - TypeScript + Vite + Keycloakify JAR build: passed.
+- Deterministic packaging test: passed; repeated packaging of equivalent content produced the same SHA-256.
 - KC26 provider SHA equals the local final artifact SHA.
 - KC26 restarted successfully with no theme/provider `ERROR` or `FATAL` entries.
 - KC26 realm state:
@@ -47,6 +48,8 @@ AuthInk 4K/reference PNG originals are not packaged. The remaining PNG files are
 - Account: `/home/weihao/docker/keycloak-theme-backups/20260712-185509-account/`
 - Email: `/home/weihao/docker/keycloak-theme-backups/20260712-190350-email/`
 - Admin/final JAR: `/home/weihao/docker/keycloak-theme-backups/20260712-191052-admin/`
+- Reproducible-package deployment: `/home/weihao/docker/keycloak-theme-backups/20260712-112247-reproducible-package/`
+- Final full-build deployment: `/home/weihao/docker/keycloak-theme-backups/20260712-112956-final-build/`
 
 Each directory contains the previous JAR and a `realm-theme-before.txt` snapshot. Restore both the JAR and the corresponding realm theme fields, then restart `keycloak-test-server-1`.
 
@@ -55,3 +58,18 @@ Each directory contains the previous JAR and a `realm-theme-before.txt` snapshot
 Authenticated Account/Admin walkthroughs and real outbound email delivery remain manual gates because the KC26 container bootstrap admin environment password is stale (`invalid_grant`) and no controlled test-user credential was available. The implementation did not reset/bypass administrator credentials or mutate credential tables.
 
 The KC21-labelled artifact is built for later testing, but Account/Admin compatibility is not claimed. Per ADR 0002, KC21 production remains on native Account/Admin/Email themes until a separate authenticated KC21 validation is completed.
+
+## Reproducible packaging follow-up
+
+A fresh rebuild exposed that the upstream Keycloakify JAR carries current ZIP entry timestamps. The version-packaging step now rewrites entries in sorted order with a fixed ZIP timestamp and deterministic DEFLATE settings before producing the version-labelled JARs. This guarantees stable version-labelled artifacts when packaging the same source JAR; it does not claim that separate Vite/Keycloakify full builds emit identical chunk contents.
+
+Verification:
+
+- `node --test scripts/deterministic-jar.node-test.mjs`: passed.
+- Two consecutive `pnpm package-versioned-themes` runs against the same source JAR produced identical SHA-256: `b72bfa8fa33dedb297ec61fe9f254480a916967ec5a19d470f93be0c981dd9de`.
+- The final normalized full-build JAR was deployed to KC26; local and runtime SHA-256 match.
+- KC26 realm discovery, Account entry and Admin Console entry returned HTTP 200.
+- Account and Admin HTML reference `account/weihaostudio-authink` and `admin/weihaostudio-authink` resources respectively.
+- No recent theme/provider `ERROR` or `FATAL` log entries were found.
+
+Two failed backup attempts were retained but renamed with `-incomplete`; their realm snapshots are empty and they must not be used for rollback. The valid rollback points are `20260712-112247-reproducible-package` and `20260712-112956-final-build`; prefer the latest `112956` snapshot for the current runtime.
