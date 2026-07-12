@@ -3,6 +3,10 @@
 # === Owned files start ===
 # account/colorScheme.ts
 # account/KcAccountUi.tsx
+# admin/colorScheme.ts
+# admin/index.css
+# admin/KcAdminUi.tsx
+# admin/PageHeader.tsx
 # email/theme.properties
 # account/root/header.module.css
 # account/root/Header.tsx
@@ -77,17 +81,13 @@
 /admin/App.tsx
 /admin/banners.module.css
 /admin/Banners.tsx
-/admin/colorScheme.ts
 /admin/environment.ts
 /admin/ForbiddenSection.tsx
 /admin/help-urls.ts
 /admin/i18next.d.ts
-/admin/index.css
-/admin/KcAdminUi.tsx
 /admin/KcContext.ts
 /admin/KcPage.tsx
 /admin/page-nav.css
-/admin/PageHeader.tsx
 /admin/PageHeaderClearCachesModal.tsx
 /admin/PageNav.tsx
 /admin/PageNotFoundSection.tsx

@@ -1,0 +1,95 @@
+/**
+ * This file has been claimed for ownership from @keycloakify/keycloak-admin-ui version 260601.0.1.
+ * To relinquish ownership and restore this file to its original content, run the following command:
+ * 
+ * $ npx keycloakify own --path "admin/index.css" --revert
+ */
+
+img.keycloak__pageheader_brand {
+    height: 35px;
+}
+
+.keycloak__form {
+    max-width: 1024px;
+    padding-bottom: var(--pf-v5-global--spacer--4xl);
+}
+
+input[type="checkbox"] {
+    height: 20px;
+    width: 20px;
+    vertical-align: baseline;
+}
+
+.keycloak__form_actions {
+    position: fixed;
+    bottom: 0px;
+    background-color: var(--pf-v5-c-page__main-section--m-light--BackgroundColor);
+    padding-top: var(--pf-v5-global--spacer--md);
+    padding-bottom: var(--pf-v5-global--spacer--sm);
+    padding-left: var(--pf-v5-global--spacer--md);
+    width: 100%;
+    border-top: 1px solid var(--pf-v5-global--BorderColor--100);
+    margin-left: calc(-1 * var(--pf-v5-global--spacer--lg));
+}
+
+.keycloak__section_intro__help {
+    padding: var(--pf-v5-global--spacer--md) 0 var(--pf-v5-global--spacer--lg);
+    color: var(--pf-v5-global--primary-color--100);
+    width: fit-content;
+}
+
+div.w-tc-editor {
+    font-family: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace";
+}
+
+:root {
+    --pf-v5-global--primary-color--100: #34312e;
+    --pf-v5-global--primary-color--200: #171513;
+    --pf-v5-global--link--Color: #514b45;
+    --pf-v5-global--FontFamily--sans-serif: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --authink-admin-surface: rgba(250, 247, 241, 0.94);
+    --authink-admin-border: rgba(72, 66, 60, 0.25);
+    --authink-admin-text: #211f1d;
+}
+
+html[data-authink-theme="dark"] {
+    --pf-v5-global--primary-color--100: #e7dfd3;
+    --pf-v5-global--primary-color--200: #ffffff;
+    --pf-v5-global--link--Color: #ddd2c4;
+    --authink-admin-surface: rgba(25, 24, 23, 0.94);
+    --authink-admin-border: rgba(238, 231, 219, 0.24);
+    --authink-admin-text: #f4efe7;
+}
+
+img.keycloak__pageheader_brand {
+    width: auto;
+    height: 42px;
+    object-fit: contain;
+}
+
+.authink-admin-theme-toggle {
+    position: fixed;
+    inset-block-start: 12px;
+    inset-inline-end: 72px;
+    z-index: 1000;
+    display: grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border: 1px solid var(--authink-admin-border);
+    border-radius: 999px;
+    background: var(--authink-admin-surface);
+    color: var(--authink-admin-text);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+    cursor: pointer;
+}
+
+.authink-admin-theme-toggle:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+}
+
+.pf-v5-c-page__main-section.pf-m-light,
+.pf-v5-c-card {
+    border-color: var(--authink-admin-border);
+}
