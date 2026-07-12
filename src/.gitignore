@@ -1,6 +1,10 @@
 # This file is managed by Keycloakify, do not edit it manually.
 
 # === Owned files start ===
+# account/colorScheme.ts
+# account/KcAccountUi.tsx
+# account/root/header.module.css
+# account/root/Header.tsx
 # === Owned files end =====
 
 # === @keycloakify/keycloak-ui-shared v260601.0.0 ===
@@ -75,11 +79,9 @@
 
 # === @keycloakify/keycloak-account-ui v260601.0.0 ===
 /account/api.ts
-/account/colorScheme.ts
 /account/environment.ts
 /account/i18n-type.ts
 /account/i18next.d.ts
-/account/KcAccountUi.tsx
 /account/KcContext.ts
 /account/KcPage.tsx
 /account/routes.tsx
@@ -152,8 +154,6 @@
 /account/resources/ResourceToolbar.tsx
 /account/resources/SharedWith.tsx
 /account/resources/ShareTheResource.tsx
-/account/root/header.module.css
-/account/root/Header.tsx
 /account/root/PageNav.tsx
 /account/root/Root.tsx
 /account/utils/formatDate.ts

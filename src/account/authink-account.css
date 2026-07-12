@@ -1,0 +1,66 @@
+:root {
+  --authink-account-ink: #181715;
+  --authink-account-paper: rgba(249, 246, 240, 0.86);
+  --authink-account-border: rgba(63, 59, 53, 0.24);
+  --pf-v5-global--primary-color--100: #292725;
+  --pf-v5-global--primary-color--200: #11100f;
+  --pf-v5-global--link--Color: #4d4842;
+  --pf-v5-global--FontFamily--sans-serif: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+html[data-authink-theme="dark"] {
+  --authink-account-ink: #f4f0e8;
+  --authink-account-paper: rgba(25, 25, 24, 0.86);
+  --authink-account-border: rgba(238, 232, 220, 0.25);
+  --pf-v5-global--primary-color--100: #e8e1d6;
+  --pf-v5-global--primary-color--200: #ffffff;
+  --pf-v5-global--link--Color: #ddd3c5;
+}
+
+.authink-account {
+  min-height: 100vh;
+  color: var(--authink-account-ink);
+  background: var(--authink-account-background-light) center / cover fixed no-repeat;
+}
+
+.authink-account .pf-v5-c-page,
+.authink-account .pf-v5-c-page__main,
+.authink-account .pf-v5-c-page__main-section,
+.authink-account .pf-v5-c-page__sidebar {
+  background-color: transparent;
+}
+
+.authink-account .pf-v5-c-page__main-section,
+.authink-account .pf-v5-c-card,
+.authink-account .pf-v5-c-form-control {
+  border-color: var(--authink-account-border);
+  background-color: var(--authink-account-paper);
+  backdrop-filter: blur(14px) saturate(110%);
+}
+
+.authink-account-theme-toggle {
+  position: fixed;
+  inset-block-start: 20px;
+  inset-inline-end: 20px;
+  z-index: 1000;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid var(--authink-account-border);
+  border-radius: 999px;
+  background: var(--authink-account-paper);
+  color: var(--authink-account-ink);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  backdrop-filter: blur(12px) saturate(112%);
+  cursor: pointer;
+}
+
+.authink-account-theme-toggle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+html[data-authink-theme="dark"] .authink-account {
+  background-image: var(--authink-account-background-dark);
+}
