@@ -41,7 +41,7 @@ describe("InkLoading", () => {
     it("keeps the approved draw, hold, directional dry and pause timeline", () => {
         expect(getInkFrameState(0)).toMatchObject({ phase: "draw", reveal: 0, alpha: 1 });
         expect(getInkFrameState(INK_LOADING_TIMING.drawMs)).toEqual({ phase: "hold", reveal: 1, dryProgress: 0, alpha: 1 });
-        expect(INK_LOADING_TIMING.dryMs).toBe(2400);
+        expect(INK_LOADING_TIMING.dryMs).toBe(3600);
         expect(getInkFrameState(INK_LOADING_TIMING.drawMs + INK_LOADING_TIMING.holdMs)).toEqual({ phase: "dry", reveal: 1, dryProgress: 0 });
         expect(getInkFrameState(INK_LOADING_TIMING.drawMs + INK_LOADING_TIMING.holdMs + INK_LOADING_TIMING.dryMs)).toEqual({ phase: "pause", reveal: 0, dryProgress: 1 });
     });

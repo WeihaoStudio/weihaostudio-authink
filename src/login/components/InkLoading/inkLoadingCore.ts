@@ -1,8 +1,8 @@
 export const INK_LOADING_TIMING = {
-    drawMs: 1800,
-    holdMs: 360,
-    dryMs: 2400,
-    pauseMs: 180
+    drawMs: 2800,
+    holdMs: 500,
+    dryMs: 3600,
+    pauseMs: 280
 } as const;
 
 export const INK_LOADING_GEOMETRY = {
