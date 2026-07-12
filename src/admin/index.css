@@ -1,95 +1,183 @@
 /**
  * This file has been claimed for ownership from @keycloakify/keycloak-admin-ui version 260601.0.1.
- * To relinquish ownership and restore this file to its original content, run the following command:
- * 
- * $ npx keycloakify own --path "admin/index.css" --revert
  */
 
-img.keycloak__pageheader_brand {
-    height: 35px;
-}
-
-.keycloak__form {
-    max-width: 1024px;
-    padding-bottom: var(--pf-v5-global--spacer--4xl);
-}
-
-input[type="checkbox"] {
-    height: 20px;
-    width: 20px;
-    vertical-align: baseline;
-}
-
-.keycloak__form_actions {
-    position: fixed;
-    bottom: 0px;
-    background-color: var(--pf-v5-c-page__main-section--m-light--BackgroundColor);
-    padding-top: var(--pf-v5-global--spacer--md);
-    padding-bottom: var(--pf-v5-global--spacer--sm);
-    padding-left: var(--pf-v5-global--spacer--md);
-    width: 100%;
-    border-top: 1px solid var(--pf-v5-global--BorderColor--100);
-    margin-left: calc(-1 * var(--pf-v5-global--spacer--lg));
-}
-
-.keycloak__section_intro__help {
-    padding: var(--pf-v5-global--spacer--md) 0 var(--pf-v5-global--spacer--lg);
-    color: var(--pf-v5-global--primary-color--100);
-    width: fit-content;
-}
-
-div.w-tc-editor {
-    font-family: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace";
-}
-
 :root {
-    --pf-v5-global--primary-color--100: #34312e;
-    --pf-v5-global--primary-color--200: #171513;
-    --pf-v5-global--link--Color: #514b45;
-    --pf-v5-global--FontFamily--sans-serif: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-    --authink-admin-surface: rgba(250, 247, 241, 0.94);
-    --authink-admin-border: rgba(72, 66, 60, 0.25);
-    --authink-admin-text: #211f1d;
+  --pf-v5-global--primary-color--100: #34312e;
+  --pf-v5-global--primary-color--200: #171513;
+  --pf-v5-global--link--Color: #514b45;
+  --pf-v5-global--FontFamily--sans-serif: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --authink-admin-canvas: #f4f0e9;
+  --authink-admin-surface: rgba(255, 253, 248, .9);
+  --authink-admin-shell-strong: rgba(255, 253, 248, .96);
+  --authink-admin-control: rgba(255, 253, 248, .94);
+  --authink-admin-surface-muted: #ebe5dc;
+  --authink-admin-border: rgba(72, 66, 60, .22);
+  --authink-admin-text: #211f1d;
+  --authink-admin-shadow: 0 14px 32px rgba(44, 39, 34, .1);
+  --authink-admin-focus: #5b5147;
+  --authink-admin-wallpaper: none;
+  --authink-admin-backdrop-opacity: .1;
 }
 
 html[data-authink-theme="dark"] {
-    --pf-v5-global--primary-color--100: #e7dfd3;
-    --pf-v5-global--primary-color--200: #ffffff;
-    --pf-v5-global--link--Color: #ddd2c4;
-    --authink-admin-surface: rgba(25, 24, 23, 0.94);
-    --authink-admin-border: rgba(238, 231, 219, 0.24);
-    --authink-admin-text: #f4efe7;
+  --pf-v5-global--primary-color--100: #e7dfd3;
+  --pf-v5-global--primary-color--200: #ffffff;
+  --pf-v5-global--link--Color: #ddd2c4;
+  --authink-admin-canvas: #171614;
+  --authink-admin-surface: rgba(33, 31, 29, .9);
+  --authink-admin-shell-strong: rgba(33, 31, 29, .96);
+  --authink-admin-control: rgba(42, 39, 36, .94);
+  --authink-admin-surface-muted: #2e2b27;
+  --authink-admin-border: rgba(238, 231, 219, .22);
+  --authink-admin-text: #f4efe7;
+  --authink-admin-shadow: 0 14px 32px rgba(0, 0, 0, .28);
+  --authink-admin-focus: #eee4d6;
+  --authink-admin-backdrop-opacity: .16;
 }
 
-img.keycloak__pageheader_brand {
-    width: auto;
-    height: 42px;
-    object-fit: contain;
+html, body, #root { min-height: 100%; }
+body { background: var(--authink-admin-canvas); }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--authink-admin-wallpaper) 42% center / cover no-repeat;
+  opacity: var(--authink-admin-backdrop-opacity);
+  pointer-events: none;
 }
+
+img.keycloak__pageheader_brand { width: auto; height: 42px; object-fit: contain; }
+.keycloak__form { max-width: 1024px; padding-bottom: var(--pf-v5-global--spacer--4xl); }
+.keycloak__form_actions {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin-left: calc(-1 * var(--pf-v5-global--spacer--lg));
+  padding: var(--pf-v5-global--spacer--md) var(--pf-v5-global--spacer--md) var(--pf-v5-global--spacer--sm);
+  border-top: 1px solid var(--authink-admin-border);
+  background: var(--authink-admin-shell-strong);
+}
+.keycloak__section_intro__help { padding: var(--pf-v5-global--spacer--md) 0 var(--pf-v5-global--spacer--lg); color: var(--pf-v5-global--primary-color--100); width: fit-content; }
+input[type="checkbox"] { width: 20px; height: 20px; vertical-align: baseline; }
+div.w-tc-editor { font-family: "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace"; }
+
+.authink-admin { position: relative; min-height: 100dvh; color: var(--authink-admin-text); background: var(--authink-admin-canvas); }
+.authink-admin .pf-v5-c-page,
+.authink-admin .pf-v5-c-page__main,
+.authink-admin .pf-v5-c-page__main-container { min-height: 100dvh; background: transparent; }
+
+.authink-admin .pf-v5-c-masthead {
+  z-index: 4;
+  min-height: 72px;
+  border-bottom: 1px solid var(--authink-admin-border);
+  background: color-mix(in srgb, var(--authink-admin-shell-strong) 88%, transparent);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .22);
+  backdrop-filter: blur(14px) saturate(110%);
+}
+.authink-admin .pf-v5-c-page__sidebar {
+  z-index: 3;
+  width: 256px;
+  border-inline-end: 1px solid var(--authink-admin-border);
+  background: color-mix(in srgb, var(--authink-admin-surface) 78%, transparent);
+  backdrop-filter: blur(14px) saturate(110%);
+}
+.authink-admin .pf-v5-c-page__sidebar-body { padding: 22px 14px; }
+
+/* The native main section is the Admin workspace. Keep card treatment for actual cards and tables only. */
+.authink-admin .pf-v5-c-page__main-section {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.authink-admin .pf-v5-c-nav__link {
+  min-height: 44px;
+  margin: 2px 0;
+  border-radius: 10px;
+  color: var(--authink-admin-text);
+  transition: color 160ms ease, background-color 160ms ease;
+}
+.authink-admin .pf-v5-c-nav__link:hover { background: var(--authink-admin-surface-muted); }
+.authink-admin .pf-v5-c-nav__link.pf-m-current,
+.authink-admin .pf-v5-c-nav__item.pf-m-current > .pf-v5-c-nav__link {
+  border-inline-start-color: var(--authink-admin-text);
+  background: var(--authink-admin-shell-strong);
+  box-shadow: inset 0 0 0 1px var(--authink-admin-border);
+  font-weight: 600;
+}
+
+.authink-admin .pf-v5-c-card,
+.authink-admin .pf-v5-c-modal-box {
+  border-color: var(--authink-admin-border);
+  background: var(--authink-admin-shell-strong);
+  box-shadow: var(--authink-admin-shadow);
+  backdrop-filter: blur(14px) saturate(110%);
+}
+.authink-admin .pf-v5-c-table {
+  overflow: hidden;
+  border: 1px solid var(--authink-admin-border);
+  border-radius: 14px;
+  background: var(--authink-admin-shell-strong);
+  box-shadow: var(--authink-admin-shadow);
+}
+.authink-admin .pf-v5-c-form-control,
+.authink-admin .pf-v5-c-select__toggle,
+.authink-admin .pf-v5-c-input-group { border-color: var(--authink-admin-border); background: var(--authink-admin-control); }
+.authink-admin .pf-v5-c-table thead,
+.authink-admin .pf-v5-c-table th { background: var(--authink-admin-surface-muted); color: var(--authink-admin-text); font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; }
+.authink-admin .pf-v5-c-table tbody tr { background: transparent; transition: background-color 160ms ease; }
+.authink-admin .pf-v5-c-table tbody tr:hover { background: var(--authink-admin-surface-muted); }
+.authink-admin .pf-v5-c-button.pf-m-primary { border-color: #211f1d; background: #211f1d; color: #fffdf8; }
+html[data-authink-theme="dark"] .authink-admin .pf-v5-c-button.pf-m-primary { border-color: #ece5d9; background: #ece5d9; color: #211f1d; }
+.authink-admin :focus-visible { outline: 2px solid var(--authink-admin-focus); outline-offset: 2px; }
 
 .authink-admin-theme-toggle {
-    position: fixed;
-    inset-block-start: 12px;
-    inset-inline-end: 72px;
-    z-index: 1000;
+  position: fixed;
+  inset-block-start: 20px;
+  inset-inline-end: 20px;
+  z-index: 1000;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid var(--authink-admin-border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--authink-admin-shell-strong) 78%, transparent);
+  color: var(--authink-admin-text);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .14);
+  backdrop-filter: blur(12px) saturate(112%);
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+.authink-admin-theme-toggle:hover { transform: translateY(-1px); }
+.authink-admin-theme-toggle:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+@media (max-width: 1024px) {
+  .authink-admin .pf-v5-c-page__sidebar { width: auto; border-inline-end: 0; border-bottom: 1px solid var(--authink-admin-border); }
+  .authink-admin .pf-v5-c-page__sidebar-body { padding: 18px 20px; }
+  .authink-admin .pf-v5-c-nav__list {
     display: grid;
-    width: 40px;
-    height: 40px;
-    place-items: center;
-    border: 1px solid var(--authink-admin-border);
-    border-radius: 999px;
-    background: var(--authink-admin-surface);
-    color: var(--authink-admin-text);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
-    cursor: pointer;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: 4px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+  }
+  .authink-admin .pf-v5-c-nav__list::-webkit-scrollbar { display: none; }
+  .authink-admin .pf-v5-c-nav__section-title { display: none; }
+  .authink-admin .pf-v5-c-nav__link { margin: 0; padding-inline: 12px; white-space: nowrap; }
 }
 
-.authink-admin-theme-toggle:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
-}
-
-.pf-v5-c-page__main-section.pf-m-light,
-.pf-v5-c-card {
-    border-color: var(--authink-admin-border);
+@media (max-width: 768px) {
+  body::before { opacity: .08; }
+  html[data-authink-theme="dark"] body::before { opacity: .15; }
+  .authink-admin .pf-v5-c-masthead { min-height: 64px; padding-inline-end: 72px; }
+  .authink-admin .pf-v5-c-page__main-section { padding-inline: 20px; }
+  .authink-admin .pf-v5-c-table { border-radius: 12px; }
 }

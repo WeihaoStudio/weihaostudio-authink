@@ -2,6 +2,7 @@ import { getKcContext } from "./KcContext";
 
 const DARK_THEME_CLASS = "pf-v5-theme-dark";
 export type AccountTheme = "light" | "dark";
+export type AccountThemeState = { initialTheme: AccountTheme; isThemeLocked: boolean };
 
 export function applyAccountTheme(theme: AccountTheme) {
     const isDark = theme === "dark";
@@ -14,21 +15,23 @@ export function applyAccountTheme(theme: AccountTheme) {
     document.documentElement.style.removeProperty("background-color");
     document.documentElement.classList.toggle(DARK_THEME_CLASS, isDark);
     document.documentElement.dataset.authinkTheme = theme;
+    window.dispatchEvent(new CustomEvent("authink-theme-change", { detail: theme }));
 }
 
 export function getPreferredAccountTheme(): AccountTheme {
-    const stored = localStorage.getItem("authink-account-theme");
-    if (stored === "dark" || stored === "light") {
-        return stored;
-    }
     return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
-export function startColorSchemeManagement() {
+export function getAccountThemeState(): AccountThemeState {
     const { kcContext } = getKcContext();
-    if (kcContext.darkMode === false) {
-        applyAccountTheme("light");
-        return;
-    }
-    applyAccountTheme(getPreferredAccountTheme());
+    const isThemeLocked = kcContext.darkMode === false || String(kcContext.darkMode) === "false";
+
+    return {
+        initialTheme: isThemeLocked ? "light" : getPreferredAccountTheme(),
+        isThemeLocked
+    };
+}
+
+export function startColorSchemeManagement() {
+    applyAccountTheme(getAccountThemeState().initialTheme);
 }

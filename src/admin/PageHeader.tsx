@@ -9,9 +9,9 @@
 
 // @ts-nocheck
 
-import { authInkAssets } from "../login/assets";
 import { KeycloakMasthead, useEnvironment, useHelp } from "../shared/keycloak-ui-shared";
 import { DropdownItem, ToolbarItem } from "../shared/@patternfly/react-core";
+import { useEffect, useState } from "react";
 import { HelpIcon } from "../shared/@patternfly/react-icons";
 import { useTranslation } from "react-i18next";
 import { Link, useHref } from "react-router-dom";
@@ -21,6 +21,8 @@ import { useAccess } from "./context/access/Access";
 import { useRealm } from "./context/realm-context/RealmContext";
 import { useWhoAmI } from "./context/whoami/WhoAmI";
 import { withWhoAmIDisplayName } from "./withWhoAmIDisplayName";
+import { getAdminBrandLogoUrl } from "./adminThemeBranding";
+import type { AdminTheme } from "./colorScheme";
 import { toDashboard } from "./dashboard/routes/Dashboard";
 import { usePreviewLogo } from "./realm-settings/themes/LogoContext";
 import { joinPath } from "./utils/joinPath";
@@ -96,7 +98,18 @@ const userDropdownItems = (isMasterRealm: boolean, isManager: boolean) => [
         : [])
 ];
 
+function currentTheme(): AdminTheme {
+    return document.documentElement.dataset.authinkTheme === "dark" ? "dark" : "light";
+}
+
 export const Header = () => {
+    const [theme, setTheme] = useState<AdminTheme>(currentTheme);
+
+    useEffect(() => {
+        const syncTheme = () => setTheme(currentTheme());
+        window.addEventListener("authink-theme-change", syncTheme);
+        return () => window.removeEventListener("authink-theme-change", syncTheme);
+    }, []);
     const { environment, keycloak } = useEnvironment();
     const { t } = useTranslation();
     const { realm } = useRealm();
@@ -123,7 +136,7 @@ export const Header = () => {
             features={{ hasManageAccount: false }}
             brand={{
                 href: logoUrl,
-                src: customLogo?.trim() ? customLogo : authInkAssets.logoWhiteUrl,
+                src: getAdminBrandLogoUrl({ theme, customLogo }),
                 alt: "WeihaoStudio",
                 className: "keycloak__pageheader_brand"
             }}

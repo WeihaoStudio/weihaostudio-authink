@@ -22,3 +22,20 @@ test("normalizes JAR metadata so equivalent contents are byte-identical", async 
         "subject=验证邮箱\n"
     );
 });
+
+test("omits test source entries when normalizing a release JAR", async () => {
+    const zip = new JSZip();
+    zip.file("theme/weihaostudio-authink/email/email-theme.test.ts", "test source");
+    zip.file("theme/weihaostudio-authink/email/template.ftl", "<html></html>");
+
+    const release = await normalizeJarBuffer(await zip.generateAsync({ type: "nodebuffer" }), {
+        excludeEntry: name => /\.(?:test|spec)\.(?:[cm]?[jt]sx?)$/u.test(name)
+    });
+    const normalized = await JSZip.loadAsync(release);
+
+    assert.equal(normalized.file("theme/weihaostudio-authink/email/email-theme.test.ts"), null);
+    assert.equal(
+        await normalized.file("theme/weihaostudio-authink/email/template.ftl").async("string"),
+        "<html></html>"
+    );
+});

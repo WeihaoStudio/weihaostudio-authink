@@ -9,15 +9,17 @@
 
 // @ts-nocheck
 
-import { authInkAssets } from "../../login/assets";
 import { KeycloakMasthead, label, useEnvironment } from "../../shared/keycloak-ui-shared";
 import { Button } from "../../shared/@patternfly/react-core";
 import { ExternalLinkSquareAltIcon } from "../../shared/@patternfly/react-icons";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHref } from "react-router-dom";
 
 import { AccountEnvironment } from "..";
 import { joinPath } from "../utils/joinPath";
+import { getAccountBrandLogoUrl } from "../accountThemeBranding";
+import type { AccountTheme } from "../colorScheme";
 
 import style from "./header.module.css";
 
@@ -42,7 +44,18 @@ const ReferrerLink = () => {
     ) : null;
 };
 
+function currentTheme(): AccountTheme {
+    return document.documentElement.dataset.authinkTheme === "dark" ? "dark" : "light";
+}
+
 export const Header = () => {
+    const [theme, setTheme] = useState<AccountTheme>(currentTheme);
+
+    useEffect(() => {
+        const syncTheme = () => setTheme(currentTheme());
+        window.addEventListener("authink-theme-change", syncTheme);
+        return () => window.removeEventListener("authink-theme-change", syncTheme);
+    }, []);
     const { environment, keycloak } = useEnvironment();
     const { t } = useTranslation();
 
@@ -59,7 +72,7 @@ export const Header = () => {
             features={{ hasManageAccount: false }}
             brand={{
                 href: indexHref,
-                src: authInkAssets.logoInkUrl,
+                src: getAccountBrandLogoUrl(theme),
                 alt: "WeihaoStudio",
                 className: style.brand
             }}

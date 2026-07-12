@@ -18,12 +18,24 @@ describe("AuthInk Admin theme toggle", () => {
         expect(document.documentElement).not.toHaveClass("pf-v5-theme-dark");
     });
 
-    it("uses the approved 夜/昼 button", () => {
+    it("uses the approved 夜/昼 button without persisting the choice", () => {
+        localStorage.setItem("authink-admin-theme", "dark");
         render(<AdminThemeToggle initialTheme="light" />);
+
         const button = screen.getByRole("button", { name: "切换到夜间主题" });
         expect(button).toHaveTextContent("夜");
+
         fireEvent.click(button);
+
         expect(screen.getByRole("button", { name: "切换到日间主题" })).toHaveTextContent("昼");
-        expect(localStorage.getItem("authink-admin-theme")).toBe("dark");
+        expect(localStorage.getItem("authink-admin-theme")).toBeNull();
     });
+});
+
+it("does not render or re-apply a theme when the realm locks light mode", () => {
+    applyAdminTheme("light");
+    render(<AdminThemeToggle initialTheme="dark" isThemeLocked />);
+
+    expect(screen.queryByRole("button")).not.toBeInTheDocument();
+    expect(document.documentElement).toHaveAttribute("data-authink-theme", "light");
 });

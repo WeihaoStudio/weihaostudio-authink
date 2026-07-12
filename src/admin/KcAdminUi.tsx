@@ -8,7 +8,7 @@
 import "@patternfly/patternfly/patternfly-addons.css";
 import "@patternfly/react-core/dist/styles/base.css";
 import { useEffect, useReducer } from "react";
-import { getPreferredAdminTheme, startColorSchemeManagement } from "./colorScheme";
+import { getAdminThemeState, startColorSchemeManagement } from "./colorScheme";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import { i18n } from "./i18n/i18n";
 import { RootRoute } from "./routes";
@@ -33,10 +33,12 @@ export default function KcAdminUi() {
         return null;
     }
 
+    const themeState = getAdminThemeState();
+
     return (
-        <>
-            <AdminThemeToggle initialTheme={getPreferredAdminTheme()} />
+        <div className="authink-admin">
+            <AdminThemeToggle {...themeState} />
             <RouterProvider router={router} />
-        </>
+        </div>
     );
 }

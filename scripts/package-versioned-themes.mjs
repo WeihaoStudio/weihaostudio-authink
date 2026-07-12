@@ -11,7 +11,9 @@ const versionedDir = resolve(distDir, "versioned");
 const targets = ["21.0.2", "26.0.0"];
 
 await mkdir(versionedDir, { recursive: true });
-const source = await normalizeJarBuffer(await readFile(sourceJar));
+const source = await normalizeJarBuffer(await readFile(sourceJar), {
+    excludeEntry: name => /\.(?:test|spec)\.(?:[cm]?[jt]sx?)$/u.test(name)
+});
 const digest = createHash("sha256").update(source).digest("hex");
 const sums = [];
 

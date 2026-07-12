@@ -9,14 +9,13 @@ import "@patternfly/patternfly/patternfly-addons.css";
 import "@patternfly/react-core/dist/styles/base.css";
 
 import { useReducer, useEffect } from "react";
-import { getPreferredAccountTheme, startColorSchemeManagement } from "./colorScheme";
+import { getAccountThemeState, startColorSchemeManagement } from "./colorScheme";
 import { KeycloakProvider } from "../shared/keycloak-ui-shared";
 import { environment } from "./environment";
 import { i18n } from "./i18n/i18n";
 import { Root } from "./root/Root";
 import { SessionExpirationWarningOverlay } from "../shared/SessionExpirationWarningOverlay";
 import { AccountThemeToggle } from "./AccountThemeToggle";
-import { authInkAssets } from "../login/assets";
 import "./authink-account.css";
 
 document.title = "Account Management";
@@ -35,15 +34,11 @@ export default function KcAccountUi() {
         return null;
     }
 
+    const themeState = getAccountThemeState();
+
     return (
-        <div
-            className="authink-account"
-            style={{
-                "--authink-account-background-light": `url(${authInkAssets.backgroundLightUrl})`,
-                "--authink-account-background-dark": `url(${authInkAssets.backgroundDarkUrl})`
-            } as React.CSSProperties}
-        >
-            <AccountThemeToggle initialTheme={getPreferredAccountTheme()} />
+        <div className="authink-account">
+            <AccountThemeToggle {...themeState} />
             <KeycloakProvider environment={environment}>
                 <Root />
                 <SessionExpirationWarningOverlay warnUserSecondsBeforeAutoLogout={45} />

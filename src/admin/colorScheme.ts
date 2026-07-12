@@ -1,7 +1,9 @@
 import { getKcContext } from "./KcContext";
+import { authInkAssets } from "../login/assets";
 
 const DARK_THEME_CLASS = "pf-v5-theme-dark";
 export type AdminTheme = "light" | "dark";
+export type AdminThemeState = { initialTheme: AdminTheme; isThemeLocked: boolean };
 
 export function applyAdminTheme(theme: AdminTheme) {
     document.getElementById("root-color-scheme-style")?.remove();
@@ -12,21 +14,27 @@ export function applyAdminTheme(theme: AdminTheme) {
     document.documentElement.style.removeProperty("background-color");
     document.documentElement.classList.toggle(DARK_THEME_CLASS, theme === "dark");
     document.documentElement.dataset.authinkTheme = theme;
+    window.dispatchEvent(new CustomEvent("authink-theme-change", { detail: theme }));
+    document.documentElement.style.setProperty(
+        "--authink-admin-wallpaper",
+        `url("${theme === "dark" ? authInkAssets.backgroundDarkUrl : authInkAssets.backgroundLightUrl}")`
+    );
 }
 
 export function getPreferredAdminTheme(): AdminTheme {
-    const stored = localStorage.getItem("authink-admin-theme");
-    if (stored === "dark" || stored === "light") {
-        return stored;
-    }
     return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
-export function startColorSchemeManagement() {
+export function getAdminThemeState(): AdminThemeState {
     const { kcContext } = getKcContext();
-    if (kcContext.darkMode === false) {
-        applyAdminTheme("light");
-        return;
-    }
-    applyAdminTheme(getPreferredAdminTheme());
+    const isThemeLocked = kcContext.darkMode === false || String(kcContext.darkMode) === "false";
+
+    return {
+        initialTheme: isThemeLocked ? "light" : getPreferredAdminTheme(),
+        isThemeLocked
+    };
+}
+
+export function startColorSchemeManagement() {
+    applyAdminTheme(getAdminThemeState().initialTheme);
 }

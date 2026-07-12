@@ -2,11 +2,15 @@ import JSZip from "jszip";
 
 const NORMALIZED_DATE = new Date("1980-01-01T00:00:00.000Z");
 
-export async function normalizeJarBuffer(source) {
+export async function normalizeJarBuffer(source, { excludeEntry = () => false } = {}) {
     const input = await JSZip.loadAsync(source, { createFolders: false });
     const output = new JSZip();
 
     for (const name of Object.keys(input.files).sort()) {
+        if (excludeEntry(name)) {
+            continue;
+        }
+
         const entry = input.files[name];
         const options = {
             date: NORMALIZED_DATE,
