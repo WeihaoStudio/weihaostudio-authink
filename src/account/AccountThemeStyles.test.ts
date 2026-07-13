@@ -143,7 +143,7 @@ function findTopLevelRule(source: string, ...requiredSelectors: string[]) {
 }
 
 describe("top-level CSS rule scanner", () => {
-    it("handles comments and selector groups while ignoring same-name media overrides", () => {
+    it("collects only ordinary top-level rules outside media and supports blocks", () => {
         const fixture = `
             /* preceding comment */
             .surface-b,
@@ -152,18 +152,31 @@ describe("top-level CSS rule scanner", () => {
             }
 
             @media (max-width: 640px) {
+                .surface-a,
+                .media-only {
+                    color: media-override;
+                }
+            }
+
+            @supports (backdrop-filter: blur(1px)) {
+                .supports-only,
                 .surface-a {
-                    color: override;
+                    color: supports-override;
                 }
             }
         `;
 
-        const groupedRule = findTopLevelRule(fixture, ".surface-a", ".surface-b");
-        const baseRule = findTopLevelRule(fixture, ".surface-a");
+        const rules = scanTopLevelRules(fixture);
+        const topLevelSelectors = rules.flatMap(rule => rule.selectors);
+        const topLevelBodies = rules.map(rule => rule.body).join("\n");
 
-        expect(groupedRule).toContain("color: base");
-        expect(baseRule).toContain("color: base");
-        expect(baseRule).not.toContain("override");
+        expect(rules).toHaveLength(1);
+        expect(rules.map(rule => rule.selectors)).toEqual([[".surface-b", ".surface-a"]]);
+        expect(topLevelBodies).toContain("color: base");
+        expect(topLevelSelectors).not.toContain(".media-only");
+        expect(topLevelSelectors).not.toContain(".supports-only");
+        expect(topLevelBodies).not.toContain("media-override");
+        expect(topLevelBodies).not.toContain("supports-override");
     });
 });
 
@@ -191,10 +204,8 @@ describe("AuthInk Account visual contract", () => {
     it.each([
         ["Sidebar", [".authink-account .pf-v5-c-page__sidebar"]],
         ["Masthead", [".authink-account .pf-v5-c-masthead"]],
-        [
-            "Card/Modal",
-            [".authink-account .pf-v5-c-card", ".authink-account .pf-v5-c-modal-box"]
-        ],
+        ["Card", [".authink-account .pf-v5-c-card"]],
+        ["Modal", [".authink-account .pf-v5-c-modal-box"]],
         ["Table", [".authink-account .pf-v5-c-table"]],
         ["Account theme toggle", [".authink-account-theme-toggle"]]
     ])("uses the surface token for %s", (_name, selectors) => {
