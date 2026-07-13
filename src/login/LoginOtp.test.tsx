@@ -16,7 +16,17 @@ describe("AuthInk TOTP contract", () => {
         const submit = screen.getByRole("button", { name: /正在验证/ });
         expect(submit).toHaveAttribute("aria-busy", "true");
         expect(submit).toBeDisabled();
-        expect(submit.querySelector(".ink-loading")).toBeInTheDocument();
-        expect(submit.querySelector(".ink-loading")).not.toHaveAttribute("role");
+        expect(submit).toHaveClass("button--loading-stage");
+        const stage = screen.getByRole("status", { name: "正在验证身份，请稍候" });
+        expect(stage).toHaveClass("authink-submit-loading");
+        expect(stage.parentElement).toHaveClass("authink-submit-control");
+        expect(submit).not.toContainElement(stage);
+        expect(stage.querySelector(".authink-submit-loading__visual")).toBeInTheDocument();
+        expect(stage.querySelector(".authink-submit-loading__message")).toHaveTextContent(
+            "正在验证身份…"
+        );
+        const ink = stage.querySelector(".ink-loading");
+        expect(ink).toHaveStyle("--ink-loading-size: 64px");
+        expect(ink).not.toHaveAttribute("role");
     });
 });

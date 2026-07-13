@@ -1,6 +1,6 @@
 export const INK_LOADING_TIMING = {
-    drawMs: 2800,
-    holdMs: 500,
+    drawMs: 3000,
+    holdMs: 600,
     dryMs: 3600,
     pauseMs: 280
 } as const;
@@ -22,7 +22,7 @@ export type InkFrameState =
     | { phase: "dry"; reveal: 1; dryProgress: number }
     | { phase: "pause"; reveal: 0; dryProgress: 1 };
 
-const easeOutCubic = (value: number) => 1 - Math.pow(1 - value, 3);
+const easeInOutSine = (value: number) => (1 - Math.cos(Math.PI * value)) / 2;
 
 export function getInkFrameState(elapsedMs: number, speed = 1): InkFrameState {
     const safeSpeed = Number.isFinite(speed) && speed > 0 ? speed : 1;
@@ -31,7 +31,7 @@ export function getInkFrameState(elapsedMs: number, speed = 1): InkFrameState {
     const phase = ((elapsedMs * safeSpeed) % totalMs + totalMs) % totalMs;
 
     if (phase < drawMs) {
-        return { phase: "draw", reveal: easeOutCubic(phase / drawMs), dryProgress: 0, alpha: 1 };
+        return { phase: "draw", reveal: easeInOutSine(phase / drawMs), dryProgress: 0, alpha: 1 };
     }
     if (phase < drawMs + holdMs) {
         return { phase: "hold", reveal: 1, dryProgress: 0, alpha: 1 };

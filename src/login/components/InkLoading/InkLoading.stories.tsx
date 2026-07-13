@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { InkLoading } from "./InkLoading";
+import { AuthInkSubmitLoading } from "../AuthInkSubmitLoading";
 
 const meta = {
     title: "AuthInk/InkLoading",
@@ -71,26 +72,17 @@ export const PageLoadingExample: Story = {
     )
 };
 
-export const ButtonLoadingExample: Story = {
+export const SubmitStageExample: Story = {
     render: () => (
-        <button
-            type="button"
-            aria-busy="true"
-            style={{
-                minWidth: 220,
-                minHeight: 44,
-                display: "inline-flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: 10,
-                border: 0,
-                color: "white",
-                background: "#171a1d",
-                font: "inherit"
-            }}
-        >
-            <InkLoading size={20} announce={false} style={{ filter: "invert(1)" }} />
-            正在验证…
-        </button>
+        <span className="authink-submit-control" style={{ width: 338 }}>
+            <button
+                type="button"
+                disabled
+                aria-busy="true"
+                aria-label="正在验证"
+                style={{ minHeight: 112, border: "1px solid #d8d2c8", background: "#fffefb" }}
+            />
+            <AuthInkSubmitLoading />
+        </span>
     )
 };

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { InkLoading } from "./components/InkLoading";
+import { AuthInkSubmitLoading } from "./components/AuthInkSubmitLoading";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "./KcContext";
@@ -117,16 +117,28 @@ export default function LoginOtp(
                     />
                 )}
 
-                <button
-                    className="button button--primary"
-                    name="login"
-                    type="submit"
-                    disabled={isSubmitting || digits.some(digit => digit === "")}
-                    aria-busy={isSubmitting}
-                >
-                    {isSubmitting && <InkLoading size={20} announce={false} />}
-                    <span>{isSubmitting ? "正在验证…" : "验证"}</span>
-                </button>
+                {isSubmitting ? (
+                    <span className="authink-submit-control">
+                        <button
+                            className="button button--primary button--loading-stage"
+                            name="login"
+                            type="submit"
+                            disabled
+                            aria-busy="true"
+                            aria-label="正在验证"
+                        />
+                        <AuthInkSubmitLoading />
+                    </span>
+                ) : (
+                    <button
+                        className="button button--primary"
+                        name="login"
+                        type="submit"
+                        disabled={digits.some(digit => digit === "")}
+                    >
+                        <span>验证</span>
+                    </button>
+                )}
 
                 {auth?.showTryAnotherWayLink && (
                     <button

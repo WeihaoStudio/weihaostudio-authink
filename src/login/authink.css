@@ -724,3 +724,87 @@
   color: var(--color-text-muted);
   font-size: var(--text-label);
 }
+
+/* Submit verification stage: keep the ink artwork centered independently of its label. */
+.button--loading-stage {
+  min-block-size: 112px;
+  padding-block: var(--space-3);
+  cursor: wait;
+}
+
+.authink-submit-loading {
+  display: grid;
+  inline-size: 100%;
+  min-block-size: 88px;
+  place-items: center;
+  align-content: center;
+  gap: var(--space-2);
+  color: var(--color-text);
+  text-align: center;
+}
+
+.authink-submit-loading__visual {
+  display: grid;
+  inline-size: 64px;
+  block-size: 64px;
+  place-items: center;
+}
+
+.authink-submit-loading__message {
+  display: block;
+  color: currentColor;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button--loading-stage {
+    cursor: progress;
+  }
+}
+
+.auth-browser--production .button--loading-stage {
+  border: var(--border-thin) solid color-mix(in srgb, var(--color-border) 72%, transparent);
+  background: color-mix(in srgb, var(--color-surface) 76%, transparent);
+  color: var(--color-text);
+  box-shadow: var(--shadow-card);
+  opacity: 1;
+}
+
+.auth-browser--production .button--loading-stage::before {
+  background: none;
+  content: none;
+}
+
+.auth-browser--production .authink-submit-control > .authink-submit-loading .ink-loading {
+  filter: none;
+}
+
+.auth-browser--production[data-theme="dark"] .button--loading-stage {
+  border-color: color-mix(in srgb, var(--color-border) 62%, transparent);
+  background: color-mix(in srgb, var(--color-surface) 54%, transparent);
+  color: var(--color-text);
+}
+
+.auth-browser--production[data-theme="dark"] .authink-submit-control > .authink-submit-loading .ink-loading {
+  filter: invert(1) brightness(1.08);
+}
+
+.authink-submit-control {
+  display: grid;
+  inline-size: 100%;
+}
+
+.authink-submit-control > .button--loading-stage,
+.authink-submit-control > .authink-submit-loading {
+  grid-area: 1 / 1;
+}
+
+.authink-submit-control > .authink-submit-loading {
+  position: relative;
+  z-index: 1;
+  min-block-size: 112px;
+  pointer-events: none;
+}

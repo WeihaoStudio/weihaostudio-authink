@@ -38,6 +38,23 @@ describe("InkLoading", () => {
         expect(() => renderToString(<InkLoading />)).not.toThrow();
     });
 
+    it("uses a readable, balanced draw timeline", () => {
+        expect(INK_LOADING_TIMING).toEqual({
+            drawMs: 3000,
+            holdMs: 600,
+            dryMs: 3600,
+            pauseMs: 280
+        });
+        const initialFeedback = getInkFrameState(INK_LOADING_TIMING.drawMs * 0.2);
+        expect(initialFeedback.phase).toBe("draw");
+        expect(initialFeedback.reveal).toBeGreaterThanOrEqual(0.08);
+
+        const earlyFrame = getInkFrameState(INK_LOADING_TIMING.drawMs * 0.4);
+        expect(earlyFrame.phase).toBe("draw");
+        expect(earlyFrame.reveal).toBeGreaterThanOrEqual(0.2);
+        expect(earlyFrame.reveal).toBeLessThanOrEqual(0.5);
+    });
+
     it("keeps the approved draw, hold, directional dry and pause timeline", () => {
         expect(getInkFrameState(0)).toMatchObject({ phase: "draw", reveal: 0, alpha: 1 });
         expect(getInkFrameState(INK_LOADING_TIMING.drawMs)).toEqual({ phase: "hold", reveal: 1, dryProgress: 0, alpha: 1 });
