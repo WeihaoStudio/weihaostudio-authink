@@ -1,9 +1,11 @@
-# AuthInk InkLoading centered submit stage — KC26 deployment record
+# AuthInk InkLoading centered submit stage — KC26/KC21 deployment record
 
 Date: 2026-07-13  
 Branch: `feature/202607-authink-login`  
 Commit: `654d4e4`  
-Target: `192.168.200.10` / `keycloak-test-server-1` / Keycloak 26.0.0
+Targets:
+- `192.168.200.10` / `keycloak-test-server-1` / Keycloak 26.0.0
+- `192.168.200.10` / `keycloak-server-1` / Keycloak 21.0.2
 
 ## Scope
 
@@ -54,6 +56,24 @@ It contains:
 
 The earlier directory ending in `-incomplete` has no valid realm snapshot and must not be used.
 
+## KC21 production promotion
+
+After KC26 automated and browser acceptance, the identical version-labelled artifact was promoted to `keycloak-server-1`.
+
+- KC21 discovery returned HTTP 200 after restart.
+- Runtime JAR SHA-256 matched `631eed3f83761599a457da12f84ac5d64a6c2347632bde0161d2426cee58ea7d`.
+- Realm theme fields remained unchanged:
+  - `master`: Login/Email use AuthInk; Account/Admin remain `keycloak.v2`.
+  - `WeihaoStudio`: Login/Account/Admin/Email use AuthInk.
+- No Theme, FreeMarker, `FATAL`, or template error was recorded. Keycloak emitted its existing bootstrap-admin duplicate-user startup message; it is unrelated to the theme.
+- Real KC21 Login submit-state browser geometry matched KC26: button/slot/stage `338 × 112px`, InkLoading `64 × 64px`, horizontal center offset `0px`, status outside the disabled button.
+
+KC21 rollback backup:
+
+`/home/weihao/docker/keycloak-theme-backups/20260713-045556-inkloading-kc21/`
+
+The earlier KC21 directory ending in `-incomplete` queried the wrong database and must not be used.
+
 ## Safety boundary
 
-KC21 production was not modified. Promotion to KC21 remains a separate acceptance step.
+No realm field, credential, user, client, provider, Account theme selection, Admin theme selection, or email configuration was modified. Only the version-labelled provider JAR was replaced in each target container.
