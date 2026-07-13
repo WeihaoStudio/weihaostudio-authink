@@ -15,12 +15,12 @@
 - Create `src/login/components/AuthInkSubmitLoading/AuthInkSubmitLoading.tsx`: shared status stage.
 - Create `src/login/components/AuthInkSubmitLoading/AuthInkSubmitLoading.test.tsx`: accessibility and geometry-class contract.
 - Create `src/login/components/AuthInkSubmitLoading/index.ts`: component export.
+- Create `src/login/components/AuthInkSubmitLoading/AuthInkSubmitLoading.stories.tsx`: deterministic light/dark/mobile/reduced-motion previews.
 - Modify `src/login/components/InkLoading/inkLoadingCore.ts`: balanced draw easing and target timing.
 - Modify `src/login/components/InkLoading/InkLoading.test.tsx`: timing/easing regression contract.
 - Modify `src/login/Login.tsx` and `src/login/LoginOtp.tsx`: switch submit state to shared stage.
 - Modify `src/login/Login.test.tsx` and `src/login/LoginOtp.test.tsx`: page-level submission contract.
 - Modify `src/login/authink.css`: centered 96–120px stage, theme treatment, reduced-motion-safe layout.
-- Modify `src/login/Login.stories.tsx` and `src/login/LoginOtp.stories.tsx`: deterministic submitting stories.
 
 ### Task 1: Lock the desired InkLoading timing with failing tests
 
@@ -58,12 +58,11 @@ export function AuthInkSubmitLoading() {
 - [ ] Replace the button children with `<AuthInkSubmitLoading />` only while submitting; otherwise retain the original button label.
 - [ ] Re-run focused tests; expect pass.
 
-### Task 4: Add deterministic Storybook submission states
+### Task 4: Add deterministic Storybook loading-stage states
 
-- [ ] Add a `forceSubmitting?: boolean` presentation-only prop to Login and OTP, defaulting false, and compute `showSubmitting = isSubmitting || forceSubmitting` without changing POST behavior.
-- [ ] Add `Submitting`, `SubmittingDark`, and mobile viewport stories for Login, plus `Submitting` for OTP.
-- [ ] Add tests proving default behavior remains unchanged when the prop is absent.
-- [ ] Run focused tests and `pnpm build-storybook`; expect pass.
+- [ ] Create `AuthInkSubmitLoading.stories.tsx` with light, dark, narrow/mobile, and reduced-motion/static previews of the shared component.
+- [ ] Keep Login and OTP production props unchanged; their actual submit transition remains covered by Testing Library and KC26 browser verification.
+- [ ] Run `pnpm build-storybook`; expect pass.
 
 ### Task 5: Full verification and independent review
 
