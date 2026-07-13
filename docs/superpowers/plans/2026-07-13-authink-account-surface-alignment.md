@@ -565,3 +565,47 @@ git push origin feature/202607-authink-login
 ## 本计划完成边界
 
 本计划完成时只允许 KC26 测试环境处于新版本。不得部署 KC21，不得修改生产容器、生产端口、生产目录或任何 Realm Theme 字段。是否推广 KC21 必须基于 KC26 已登录验收结果另行确认。
+
+## Task 8：KC26 失败回滚
+
+**触发条件：** Discovery 无法恢复、出现 Theme/FreeMarker 错误、远端 Hash 不匹配、Realm 字段变化，或已登录验收出现阻断性 P0 回归。
+
+- [ ] **Step 1：从已记录的备份目录恢复旧 JAR**
+
+```bash
+ssh weihao@192.168.200.10 'set -e
+BACKUP_DIR="$(cat /tmp/authink-account-backup-dir)"
+test -s "$BACKUP_DIR/weihaostudio-authink-keycloak-26.0.0.jar"
+docker cp "$BACKUP_DIR/weihaostudio-authink-keycloak-26.0.0.jar" \
+  keycloak-test-server-1:/opt/keycloak/providers/weihaostudio-authink-keycloak-26.0.0.jar
+docker restart keycloak-test-server-1
+'
+```
+
+- [ ] **Step 2：验证旧服务恢复**
+
+```bash
+ssh weihao@192.168.200.10 'set -e
+for attempt in $(seq 1 30); do
+  if curl -fsS http://127.0.0.1:8180/realms/master/.well-known/openid-configuration >/dev/null; then
+    break
+  fi
+  test "$attempt" -lt 30
+  sleep 2
+done
+BACKUP_DIR="$(cat /tmp/authink-account-backup-dir)"
+expected_sha="$(awk "{print \\$1}" "$BACKUP_DIR/jar-before.sha256")"
+runtime_sha="$(docker exec keycloak-test-server-1 sha256sum /opt/keycloak/providers/weihaostudio-authink-keycloak-26.0.0.jar | awk "{print \\$1}")"
+test "$expected_sha" = "$runtime_sha"
+'
+```
+
+预期：KC26 Discovery 恢复，运行时 JAR Hash 与 `jar-before.sha256` 一致。
+
+- [ ] **Step 3：确认 Realm 字段无需恢复**
+
+本计划不修改 Realm Theme 字段。比较 `realm-theme-before.txt` 和失败现场的 `realm-theme-after.txt`：若两者不同，停止自动操作并先报告具体 Diff；不得猜测或批量覆盖 Realm 字段。
+
+- [ ] **Step 4：记录回滚证据**
+
+在 `docs/deployment/2026-07-13-account-surface-kc26.md` 记录失败原因、回滚时间、恢复后的 Hash、Discovery 状态和未触碰 KC21 的确认信息。
