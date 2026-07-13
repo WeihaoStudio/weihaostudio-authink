@@ -100,10 +100,8 @@
 .authink-account .pf-v5-c-modal-box {
   border: var(--border-thin) solid var(--color-border-subtle);
   border-radius: var(--radius-lg);
-  background: color-mix(in srgb, var(--color-surface) 90%, transparent);
+  background: var(--color-surface);
   box-shadow: var(--shadow-card);
-  backdrop-filter: blur(14px) saturate(110%);
-  -webkit-backdrop-filter: blur(14px) saturate(110%);
 }
 
 /* ── Tables ────────────────────────────────────────── */
@@ -111,7 +109,7 @@
   overflow: hidden;
   border: var(--border-thin) solid var(--color-border-subtle);
   border-radius: var(--radius-lg);
-  background: color-mix(in srgb, var(--color-surface) 90%, transparent);
+  background: var(--color-surface);
   box-shadow: var(--shadow-card);
 }
 
@@ -195,24 +193,22 @@
   height: 44px;
   place-items: center;
   padding: 0;
-  border: var(--border-thin) solid color-mix(in oklab, var(--color-border-strong), transparent 35%);
+  border: var(--border-thin) solid var(--color-border-strong);
   border-radius: var(--radius-pill);
-  background: color-mix(in oklab, var(--color-surface), transparent 28%);
+  background: var(--color-surface);
   color: var(--color-text);
-  box-shadow: 0 8px 24px color-mix(in oklab, var(--color-text), transparent 86%);
-  backdrop-filter: blur(12px) saturate(112%);
-  -webkit-backdrop-filter: blur(12px) saturate(112%);
+  box-shadow: var(--shadow-card);
   font-family: var(--font-display);
   font-size: var(--text-label);
   cursor: pointer;
   transition: background-color var(--duration-fast) var(--ease-standard),
               color var(--duration-fast) var(--ease-standard),
-              transform var(--duration-fast) var(--ease-standard);
+              border-color var(--duration-fast) var(--ease-standard);
 }
 
 .authink-account-theme-toggle:hover {
-  background: color-mix(in oklab, var(--color-surface), transparent 14%);
-  transform: translateY(-1px);
+  border-color: var(--color-primary);
+  background: var(--color-surface-muted);
 }
 
 .authink-account-theme-toggle:focus-visible {
