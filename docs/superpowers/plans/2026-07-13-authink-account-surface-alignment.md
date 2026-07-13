@@ -45,7 +45,7 @@ it("uses solid Account surfaces without wallpaper or backdrop blur", () => {
 
 ```ts
 it("maps native Account sections onto the OpenDesign content track", () => {
-    expect(css).toMatch(/\.pf-v5-c-page__main-container[^}]*padding:\s*clamp\(72px,\s*9vw,\s*128px\)\s+clamp\(24px,\s*7vw,\s*112px\)\s+64px/s);
+    expect(css).toMatch(/\.pf-v5-c-page__main[^}]*padding:\s*clamp\(72px,\s*9vw,\s*128px\)\s+clamp\(24px,\s*7vw,\s*112px\)\s+64px/s);
     expect(css).toMatch(/\.pf-v5-c-page__main-section[^}]*max-width:\s*1080px/s);
     expect(css).toMatch(/\.pf-v5-c-page__main-section\s*\+\s*\.pf-v5-c-page__main-section[^}]*margin-top:\s*44px/s);
 });
@@ -110,17 +110,16 @@ git commit -m "test: define solid Account surface contract"
 
 - [ ] **Step 2：建立 OpenDesign 内容轨道**
 
-将 Page/Main/MainContainer 与 MainSection 规则调整为：
+将 Page、Main 与 MainSection 规则调整为。PatternFly Page 直接渲染 `.pf-v5-c-page__main` 作为 Grid 的 `main` 区域；使用 `min-height: 0` 允许该 Grid item 收缩，保留 PatternFly 在 Main 上提供的纵向滚动语义，不覆盖其 `grid-area`、`display` 或 `overflow`：
 
 ```css
-.authink-account .pf-v5-c-page,
-.authink-account .pf-v5-c-page__main {
+.authink-account .pf-v5-c-page {
   min-height: 100dvh;
   background: transparent;
 }
 
-.authink-account .pf-v5-c-page__main-container {
-  min-height: 100dvh;
+.authink-account .pf-v5-c-page__main {
+  min-height: 0;
   padding: clamp(72px, 9vw, 128px) clamp(24px, 7vw, 112px) 64px;
   background: var(--color-canvas);
 }
@@ -242,7 +241,7 @@ git commit -m "style: remove Account glass surfaces"
 在现有 `@media (max-width: 1024px)` 中加入：
 
 ```css
-.authink-account .pf-v5-c-page__main-container {
+.authink-account .pf-v5-c-page__main {
   padding: 72px 24px 48px;
 }
 ```
@@ -252,7 +251,7 @@ git commit -m "style: remove Account glass surfaces"
 用以下规则替换现有只修改 MainSection 横向 Padding 的规则：
 
 ```css
-.authink-account .pf-v5-c-page__main-container {
+.authink-account .pf-v5-c-page__main {
   padding: 48px 20px 40px;
 }
 

@@ -214,15 +214,20 @@ describe("AuthInk Account visual contract", () => {
         );
     });
 
-    it("defines the Account content track padding", () => {
-        const mainContainerRule = findTopLevelRule(
+    it("defines the Account content track on the real PatternFly main", () => {
+        const mainRule = findTopLevelRule(
             css,
-            ".authink-account .pf-v5-c-page__main-container"
+            ".authink-account .pf-v5-c-page__main"
         );
 
-        expect(mainContainerRule).toMatch(
+        expect(mainRule).toMatch(/(?:^|;)\s*min-height:\s*0\s*(?:;|$)/);
+        expect(mainRule).toMatch(
             /(?:^|;)\s*padding:\s*clamp\(72px,\s*9vw,\s*128px\)\s+clamp\(24px,\s*7vw,\s*112px\)\s+64px\s*(?:;|$)/
         );
+        expect(mainRule).toMatch(
+            /(?:^|;)\s*background:\s*var\(--color-canvas\)\s*(?:;|$)/
+        );
+        expect(css).not.toContain(".pf-v5-c-page__main-container");
     });
 
     it("defines the MainSection margin and width constraints", () => {

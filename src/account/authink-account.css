@@ -18,14 +18,13 @@
   font-family: var(--font-body);
 }
 
-.authink-account .pf-v5-c-page,
-.authink-account .pf-v5-c-page__main {
+.authink-account .pf-v5-c-page {
   min-height: 100dvh;
   background: transparent;
 }
 
-.authink-account .pf-v5-c-page__main-container {
-  min-height: 100dvh;
+.authink-account .pf-v5-c-page__main {
+  min-height: 0;
   padding: clamp(72px, 9vw, 128px) clamp(24px, 7vw, 112px) 64px;
   background: var(--color-canvas);
 }
