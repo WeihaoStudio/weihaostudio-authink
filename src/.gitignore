@@ -8,8 +8,12 @@
 # admin/KcAdminUi.tsx
 # admin/PageHeader.tsx
 # email/theme.properties
+# account/content/ContentComponent.tsx
+# account/content/fetchContent.ts
 # account/root/header.module.css
 # account/root/Header.tsx
+# account/root/PageNav.tsx
+# account/root/Root.tsx
 # email/html/email-verification.ftl
 # email/html/executeActions.ftl
 # email/html/identity-provider-link.ftl
@@ -839,8 +843,6 @@
 /account/assets/content.ts
 /account/assets/favicon.svg
 /account/assets/logo.svg
-/account/content/ContentComponent.tsx
-/account/content/fetchContent.ts
 /account/groups/Groups.tsx
 /account/i18n/i18n.ts
 /account/i18n/index.ts
@@ -893,8 +895,6 @@
 /account/resources/ResourceToolbar.tsx
 /account/resources/SharedWith.tsx
 /account/resources/ShareTheResource.tsx
-/account/root/PageNav.tsx
-/account/root/Root.tsx
 /account/utils/formatDate.ts
 /account/utils/joinPath.ts
 /account/utils/useAccountAlerts.ts

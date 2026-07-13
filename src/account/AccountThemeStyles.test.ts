@@ -247,6 +247,25 @@ describe("AuthInk Account visual contract", () => {
         ).toMatch(/(?:^|;)\s*margin-top:\s*44px\s*(?:;|$)/);
     });
 
+    it("centers Account loading states without using the full-page height for nested fallbacks", () => {
+        const loadingRule = findTopLevelRule(css, ".authink-account-loading");
+        const pageRule = findTopLevelRule(css, ".authink-account-loading--page");
+        const sectionRule = findTopLevelRule(css, ".authink-account-loading--section");
+        const inlineRule = findTopLevelRule(css, ".authink-account-loading--inline");
+
+        expect(loadingRule).toMatch(/(?:^|;)\s*display:\s*grid\s*(?:;|$)/);
+        expect(loadingRule).toMatch(/(?:^|;)\s*place-items:\s*center\s*(?:;|$)/);
+        expect(loadingRule).not.toMatch(/(?:^|;)\s*min-height:\s*100dvh\s*(?:;|$)/);
+
+        expect(pageRule).toMatch(/(?:^|;)\s*min-height:\s*100dvh\s*(?:;|$)/);
+        expect(sectionRule).toMatch(
+            /(?:^|;)\s*min-height:\s*min\(320px,\s*50dvh\)\s*(?:;|$)/
+        );
+        expect(inlineRule).toMatch(
+            /(?:^|;)\s*min-height:\s*var\(--control-height\)\s*(?:;|$)/
+        );
+    });
+
     it("does not move the Account theme toggle on hover", () => {
         const hoverRule = findTopLevelRule(css, ".authink-account-theme-toggle:hover");
 

@@ -18,6 +18,28 @@
     font-family: var(--font-body);
 }
 
+.authink-account-loading {
+    display: grid;
+    place-items: center;
+    color: var(--color-text);
+}
+
+.authink-account-loading--page {
+    min-height: 100dvh;
+    padding: var(--space-8);
+    background: var(--color-canvas);
+}
+
+.authink-account-loading--section {
+    min-height: min(320px, 50dvh);
+    padding: var(--space-8);
+}
+
+.authink-account-loading--inline {
+    min-height: var(--control-height);
+    padding: var(--space-3);
+}
+
 .authink-account .pf-v5-c-page {
     min-height: 100dvh;
     background: transparent;
