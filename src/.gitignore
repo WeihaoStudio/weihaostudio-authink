@@ -3,6 +3,7 @@
 # === Owned files start ===
 # account/colorScheme.ts
 # account/KcAccountUi.tsx
+# account/KcPage.tsx
 # admin/colorScheme.ts
 # admin/index.css
 # admin/KcAdminUi.tsx
@@ -826,7 +827,6 @@
 /account/i18n-type.ts
 /account/i18next.d.ts
 /account/KcContext.ts
-/account/KcPage.tsx
 /account/routes.tsx
 /account/account-security/AccountRow.tsx
 /account/account-security/DeviceActivity.tsx
