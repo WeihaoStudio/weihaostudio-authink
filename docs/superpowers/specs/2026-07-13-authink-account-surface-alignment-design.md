@@ -1,152 +1,152 @@
-# AuthInk Account Surface Alignment Design
+# AuthInk Account 表面与版式对齐设计
 
-**Date:** 2026-07-13  
-**Status:** Approved by the standing instruction to continue remaining themes in minimum-risk order  
-**Scope:** Account Theme presentation only
+**日期：** 2026-07-13
+**状态：** 已依据“按最小风险顺序继续完成剩余 Theme”的指令确认方向
+**范围：** 仅调整 Account Theme 的视觉呈现
 
-## 1. Problem
+## 1. 问题说明
 
-The current Account Theme uses the correct AuthInk token family and roughly matches the OpenDesign 256px sidebar direction, but it still reads as a translucent console rather than the restrained paper/surface interface shown in `account.html`.
+当前 Account Theme 已使用 AuthInk Token，桌面端侧栏也采用约 256px 的正确方向，但整体仍像半透明控制台，没有形成 OpenDesign `account.html` 所体现的克制纸面感和大留白工作区。
 
-The largest fidelity gaps are:
+主要差距：
 
-1. Masthead and cards apply `backdrop-filter` and translucent `color-mix` surfaces.
-2. Main content starts too close to the masthead and lacks the OpenDesign heading rhythm.
-3. Content width is governed by native PatternFly layout instead of an explicit 1080px reading measure.
-4. Selected navigation uses an elevated card treatment where OpenDesign uses a quieter selected surface.
-5. The theme toggle remains glassy even though Account should use solid surfaces.
+1. Masthead、卡片和主题切换按钮仍使用 `backdrop-filter` 与透明混合表面。
+2. 主内容距离 Masthead 太近，缺少 OpenDesign 的标题与内容节奏。
+3. 内容宽度依赖 PatternFly 默认布局，没有明确的 1080px 阅读轨道。
+4. 导航、表格和卡片虽已换色，但仍缺少一致的实体表面层级。
+5. OpenDesign 把品牌、caption 和底部说明放在左侧 Aside；当前实现仍把品牌放在全宽 Masthead。
 
-## 2. Goals
+## 2. 目标
 
-- Remove glass/translucent treatment from Account masthead, sidebar, cards, tables, and theme toggle.
-- Align the desktop workspace with OpenDesign's `max-width: 1080px`, generous top whitespace, and restrained surface hierarchy.
-- Preserve every native Account route, form action, API call, navigation item, keyboard interaction, and responsive behavior.
-- Keep the change CSS-first and independently reversible.
-- Validate on KC26 before considering KC21 promotion.
+- 移除 Account Masthead、侧栏、卡片、表格和主题切换按钮的玻璃与模糊效果。
+- 对齐 OpenDesign 的 `max-width: 1080px` 内容轨道、顶部大留白和标题/内容间距。
+- 保留所有原生 Account 路由、表单动作、API、菜单、键盘交互和响应式行为。
+- 将改动拆为独立、可回滚的低风险阶段。
+- 先在 KC26 验收，未通过前不推广到 KC21。
 
-## 3. Non-goals
+## 3. 非目标
 
-- Rebuilding Account navigation or route architecture.
-- Introducing Login wallpaper or Login form glass styling into Account.
-- Replacing PatternFly Account components with bespoke React components.
-- Changing account data, credentials, realm settings, or user state for visual acceptance.
-- Expanding this phase into Admin or Email Theme work.
+- 本阶段不重写 Account Router 或根 Shell。
+- 不把 Login 壁纸或 Login 玻璃表单引入 Account。
+- 不用自定义 React 组件替换 PatternFly/Keycloak Account 业务组件。
+- 不为视觉验收修改账号、密码、Realm 或用户数据。
+- 不在同一阶段扩展 Admin 或 Email Theme。
 
-## 4. Considered approaches
+## 4. 方案比较
 
-### A. CSS-only surface and spacing alignment — selected
+### 方案 A：仅用 CSS 对齐表面和间距——第一阶段采用
 
-Keep the generated Keycloakify Account DOM and apply narrowly scoped rules beneath `.authink-account`.
+保留 Keycloakify Account 的现有 DOM，只在 `.authink-account` 作用域下调整样式。
 
-**Benefits**
+**优点**
 
-- Smallest rollback and compatibility surface.
-- Preserves native KC26/KC21 business behavior.
-- Can be verified through deterministic CSS contract tests and real browser geometry.
+- 回滚面和版本兼容风险最低。
+- 不影响 KC26/KC21 原生业务行为。
+- 可通过 CSS 契约测试和真实浏览器几何进行验证。
 
-**Trade-off**
+**限制**
 
-- Cannot reproduce every bespoke OpenDesign composition exactly because native route content remains authoritative.
+- 因原生路由 DOM 仍是权威结构，不能仅靠 CSS 完整复制 OpenDesign 的 Aside 构图。
 
-### B. Replace the Account shell
+### 方案 B：替换 Account 根 Shell
 
-Rebuild the masthead/sidebar/content shell around native route outlets.
+围绕原生 Route Outlet 重建 Masthead、Sidebar 和内容壳层。
 
-**Rejected for this phase:** higher focus, responsive, route, and version-compatibility risk.
+**本轮拒绝：** 会扩大焦点管理、响应式、路由和跨版本兼容风险。
 
-### C. Route-specific visual wrappers
+### 方案 C：轻量补充 Sidebar 展示结构——第二阶段候选
 
-Add custom wrapper markup around profile, security, devices, and applications pages.
+在 KC26 第一阶段验收后，仅在 `PageNav.tsx` 补充 Logo、caption 和 footer，并隐藏 Masthead 中重复的品牌视觉。
 
-**Deferred:** potentially improves fidelity, but multiplies regression points and should only follow evidence from the CSS-only KC26 acceptance.
+**约束：** 不修改动态菜单、Feature flag、导航、Referrer、Router 或 API；必须单独设计、测试和部署。
 
-## 5. Visual design
+## 5. 第一阶段视觉设计
 
 ### 5.1 Shell
 
-- Canvas remains `var(--color-canvas)`.
-- Sidebar remains 256px on desktop, uses opaque `var(--color-surface)`, and retains the subtle divider.
-- Masthead uses opaque `var(--color-surface)` with a subtle bottom border and no blur.
-- No wallpaper, pseudo-wallpaper, or backdrop filtering is used anywhere in Account.
+- Canvas 使用 `var(--color-canvas)`。
+- 桌面侧栏维持 256px，使用不透明 `var(--color-surface)` 和轻量分隔线。
+- Masthead 使用不透明 `var(--color-surface)` 与底部分隔线，不使用 Blur。
+- Account 中禁止壁纸、伪壁纸和 Backdrop Filter。
 
-### 5.2 Main workspace
+### 5.2 主工作区
 
-- Main content receives desktop padding equivalent to OpenDesign: top spacing in the 72–96px range, fluid horizontal spacing, and 64px bottom spacing.
-- The content measure is capped at 1080px.
-- Native page headings retain their semantic structure; CSS adjusts typography/spacing only.
-- Route contents remain left-aligned within the workspace rather than centered as a login card.
+- 桌面主内容使用接近 OpenDesign 的间距：顶部 `clamp(72px, 9vw, 128px)`，水平流式留白，底部 64px。
+- 内容宽度上限为 1080px，保持左对齐阅读轨道。
+- 保留原生标题语义，仅调整字体和间距。
+- 标题 Section 与业务 Section 之间保持稳定的 44px 节奏。
 
-### 5.3 Navigation
+### 5.3 导航
 
-- Hover uses `var(--color-surface-muted)`.
-- Current navigation uses a solid, quiet selected surface, AuthInk text color, and semibold weight.
-- Selection must not depend on glass, glow, or animated movement.
-- Responsive horizontal navigation remains native and horizontally scrollable.
+- Hover 使用 `var(--color-surface-muted)`。
+- Current 状态使用实体表面、AuthInk 文字颜色、Semibold 权重和既有卡片阴影。
+- 不使用玻璃、发光或上下移动动画。
+- 窄屏继续使用原生横向可滚动导航。
 
-### 5.4 Cards, tables, and controls
+### 5.4 卡片、表格和控件
 
-- Cards/modals use opaque `var(--color-surface)`, subtle border, `var(--radius-lg)`, and `var(--shadow-card)`.
-- Tables use the same opaque surface hierarchy; headers use `var(--color-surface-subtle)`.
-- Inputs and buttons retain the existing token mapping and native control semantics.
-- Theme toggle becomes an opaque compact control and must not move vertically on hover.
+- 卡片和 Modal 使用不透明 `var(--color-surface)`、细边框、`var(--radius-lg)` 和 `var(--shadow-card)`。
+- 表格使用相同实体层级，表头使用 `var(--color-surface-subtle)`。
+- 输入框和按钮保留现有 Token 映射及原生语义。
+- 主题切换按钮改为不透明紧凑控件，Hover 不发生位移。
 
-### 5.5 Light and dark themes
+### 5.5 日间和夜间主题
 
-- Both themes use the same structural rules and token names.
-- Dark theme must not reintroduce transparency to obtain contrast.
-- Contrast comes from canonical surface, border, and text tokens only.
+- 两个主题共用相同结构与 Token 名称。
+- 夜间主题不能通过透明度重新制造玻璃效果。
+- 对比度只依赖 canonical surface、border 和 text Token。
 
-## 6. Implementation boundaries
+## 6. 实现边界
 
-Expected implementation changes are limited to:
+第一阶段预计只修改：
 
 - `src/account/authink-account.css`
 - `src/account/AccountThemeStyles.test.ts`
 
-React files should remain unchanged unless real KC26 DOM evidence proves a CSS selector cannot safely express the approved layout. Any such need requires a separate review before editing JSX.
+除非真实 KC26 DOM 证明 CSS 无法安全实现，否则不修改 React 文件。任何 JSX 改动必须进入独立的第二阶段设计。
 
-## 7. Tests
+## 7. 测试要求
 
-CSS contract tests must fail before the implementation and then verify:
+CSS 契约测试必须先失败，再验证：
 
-1. No `backdrop-filter` or `-webkit-backdrop-filter` exists in Account CSS.
-2. Masthead, sidebar, cards, tables, and theme toggle use opaque canonical surfaces.
-3. Main workspace includes a 1080px maximum content width.
-4. Desktop spacing includes larger top whitespace.
-5. Current navigation remains solid and semibold.
-6. Responsive sidebar-to-horizontal-nav rules remain present.
-7. Account selectors remain scoped under `.authink-account` except the dedicated toggle class.
+1. Account CSS 不存在 `backdrop-filter` 或 `-webkit-backdrop-filter`。
+2. Masthead、Sidebar、卡片、表格和主题切换按钮使用不透明 canonical surface。
+3. 主工作区存在 1080px 内容宽度上限。
+4. 桌面端具有更大的顶部留白和 44px Section 节奏。
+5. Current 导航仍为实体表面和 Semibold。
+6. 响应式横向导航规则仍存在。
+7. Account 规则保持在 `.authink-account` 或专用 Toggle 类作用域内。
 
-Existing route, branding, theme-toggle, build, Storybook, and packaging tests must remain green.
+现有路由、品牌、主题切换、构建、Storybook 和打包测试必须继续通过。
 
-## 8. Acceptance and rollout
+## 8. 验收与发布
 
-### Local gate
+### 本地关卡
 
-- Targeted Account tests.
-- Full `pnpm test:run`.
-- `pnpm build-storybook`.
-- `pnpm build-keycloak-theme`.
-- `pnpm test:packaging`.
-- Independent Reviewer checks the diff against OpenDesign.
+- Account 定向测试。
+- 完整 `pnpm test:run`。
+- `pnpm build-storybook`。
+- `pnpm build-keycloak-theme`。
+- `pnpm test:packaging`。
+- 独立 Reviewer 对照 OpenDesign 审查 Diff。
 
-### KC26 gate
+### KC26 关卡
 
-- Back up the deployed JAR and record all realm theme fields.
-- Deploy only to `keycloak-test-server-1` first.
-- Use an existing authenticated session for a read-only walkthrough.
-- Verify at least personal info, account security/signing in, device activity, applications, light/dark toggle, keyboard focus, and responsive layout.
-- Do not reset credentials or mutate user/realm data for acceptance.
+- 备份当前 JAR，并记录全部 Realm Theme 字段。
+- 只部署到 `keycloak-test-server-1`。
+- 使用已有登录会话进行只读走查。
+- 至少检查个人资料、账号安全、设备活动、应用、日/夜切换、键盘焦点和响应式布局。
+- 不为验收重置凭据或修改用户/Realm 数据。
 
-### Promotion
+### 推广
 
-KC21 is not changed until KC26 evidence is accepted. Promotion reuses the exact verified JAR hash and creates a separate rollback backup.
+KC26 证据未确认前不修改 KC21。推广时必须复用同一个已验证 JAR Hash，并创建独立回滚备份。
 
-## 9. Rollback
+## 9. 回滚
 
-This phase is independently reversible by either:
+第一阶段可以独立回滚：
 
-1. reverting the Account alignment commit and rebuilding; or
-2. restoring the timestamped pre-deployment JAR on KC26.
+1. Revert Account CSS 对齐提交并重新构建；或
+2. 在 KC26 恢复部署前的时间戳 JAR。
 
-Realm theme fields should not change during this phase because the Account theme is already selected.
+Account Theme 已被选中，因此本阶段不应改变 Realm Theme 字段。
