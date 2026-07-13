@@ -12,6 +12,7 @@ import LoginResetPassword from "./LoginResetPassword";
 import LoginUpdatePassword from "./LoginUpdatePassword";
 import Info from "./Info";
 import ErrorPage from "./Error";
+import { LoginPageLoading } from "./LoginPageLoading";
 const UserProfileFormFields = lazy(
     () => import("keycloakify/login/UserProfileFormFields")
 );
@@ -24,7 +25,7 @@ export default function KcPage(props: { kcContext: KcContext }) {
     const { i18n } = useI18n({ kcContext });
 
     return (
-        <Suspense>
+        <Suspense fallback={<LoginPageLoading />}>
             {(() => {
                 switch (kcContext.pageId) {
                     case "login.ftl":

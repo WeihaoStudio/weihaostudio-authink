@@ -9,6 +9,7 @@
 # admin/KcAdminUi.tsx
 # admin/PageHeader.tsx
 # email/theme.properties
+# shared/SessionExpirationWarningOverlay.tsx
 # account/content/ContentComponent.tsx
 # account/content/fetchContent.ts
 # account/root/header.module.css
@@ -752,7 +753,6 @@
 /admin/user-federation/ldap/mappers/LdapMapperList.tsx
 
 # === @keycloakify/keycloak-ui-shared v260601.0.0 ===
-/shared/SessionExpirationWarningOverlay.tsx
 /shared/keycloak-ui-shared/index.ts
 /shared/keycloak-ui-shared/main.ts
 /shared/@patternfly/react-core/index.tsx

@@ -84,6 +84,15 @@
       font-size: var(--text-caption);
       font-family: var(--font-mono);
     }
+    .authink-page-loading {
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      background: var(--color-canvas, #f7f5f0);
+      color: var(--color-text, #24211e);
+    }
+
     .auth-browser {
       overflow: hidden;
       min-height: min(76vh, 780px);

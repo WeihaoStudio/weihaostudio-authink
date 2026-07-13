@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import inkRingUrl from "./assets/ink-ring.webp";
+import inkRingFallbackUrl from "./assets/ink-ring.png";
 import { getInkDryAlpha, getInkFrameState, INK_LOADING_GEOMETRY, smoothstep } from "./inkLoadingCore";
 import "./inkLoading.css";
 
@@ -26,18 +27,37 @@ const preparedCache = new Map<string, PreparedInk>();
 let imagePromise: Promise<HTMLImageElement> | undefined;
 let didWarn = false;
 
-function loadInkImage() {
+function loadImage(url: string, label: string) {
     if (typeof Image === "undefined") {
         return Promise.reject(new Error("InkLoading requires a browser image implementation"));
     }
-    imagePromise ??= new Promise((resolve, reject) => {
+    return new Promise<HTMLImageElement>((resolve, reject) => {
         const image = new Image();
         image.decoding = "async";
         image.onload = () => resolve(image);
-        image.onerror = () => reject(new Error("InkLoading WebP asset failed to load"));
-        image.src = inkRingUrl;
+        image.onerror = () => reject(new Error(`InkLoading ${label} asset failed to load`));
+        image.src = url;
     });
-    return imagePromise;
+}
+
+function loadInkImage() {
+    if (imagePromise !== undefined) {
+        return imagePromise;
+    }
+
+    const pendingImage = loadImage(inkRingUrl, "WebP").catch(() =>
+        loadImage(inkRingFallbackUrl, "PNG")
+    );
+
+    imagePromise = pendingImage;
+
+    void pendingImage.catch(() => {
+        if (imagePromise === pendingImage) {
+            imagePromise = undefined;
+        }
+    });
+
+    return pendingImage;
 }
 
 function resolveCssSize(value: number | string) {
@@ -223,7 +243,7 @@ export function InkLoading({
             data-testid={dataTestId}
         >
             {fallback || paused ? (
-                <img className="ink-loading__fallback" src={inkRingUrl} alt="" aria-hidden="true" />
+                <img className="ink-loading__fallback" src={inkRingFallbackUrl} alt="" aria-hidden="true" />
             ) : (
                 <canvas ref={canvasRef} className="ink-loading__canvas" aria-hidden="true" />
             )}

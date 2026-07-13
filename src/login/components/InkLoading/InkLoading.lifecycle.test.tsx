@@ -13,16 +13,22 @@ function installCanvas() {
     vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockImplementation(() => context as unknown as CanvasRenderingContext2D);
 }
 
-function installImage(mode: "load" | "error" = "load") {
+function installImage(outcomes: Array<"load" | "error"> = ["load"]) {
+    const requestedUrls: string[] = [];
+    let index = 0;
+
     class MockImage {
         decoding = "auto";
         onload: (() => void) | null = null;
         onerror: (() => void) | null = null;
-        set src(_value: string) {
-            queueMicrotask(() => mode === "load" ? this.onload?.() : this.onerror?.());
+        set src(value: string) {
+            requestedUrls.push(value);
+            const outcome = outcomes[index++] ?? outcomes.at(-1) ?? "error";
+            queueMicrotask(() => outcome === "load" ? this.onload?.() : this.onerror?.());
         }
     }
     vi.stubGlobal("Image", MockImage);
+    return requestedUrls;
 }
 
 describe("InkLoading lifecycle", () => {
@@ -66,12 +72,39 @@ describe("InkLoading lifecycle", () => {
         expect(window.requestAnimationFrame).toHaveBeenCalledTimes(1);
     });
 
-    it("falls back to the static WebP when the image cannot load", async () => {
-        installImage("error");
+    it("retries PNG after WebP fails and uses the PNG to draw the animation", async () => {
+        const requestedUrls = installImage(["error", "load"]);
+        const { InkLoading } = await import("./InkLoading");
+        render(<InkLoading />);
+
+        await waitFor(() => expect(context.drawImage).toHaveBeenCalled());
+        expect(requestedUrls).toHaveLength(2);
+        expect(requestedUrls[0]).toContain("ink-ring.webp");
+        expect(requestedUrls[1]).toContain("ink-ring.png");
+    });
+
+    it("falls back to static PNG and retries both assets after a terminal failure", async () => {
+        const requestedUrls = installImage(["error", "error", "error", "error"]);
         vi.spyOn(console, "warn").mockImplementation(() => undefined);
         const { InkLoading } = await import("./InkLoading");
-        const { container } = render(<InkLoading />);
-        await waitFor(() => expect(container.querySelector("img.ink-loading__fallback")).toBeInTheDocument());
-        expect(container.querySelector("canvas")).not.toBeInTheDocument();
+        const first = render(<InkLoading />);
+
+        await waitFor(() => expect(first.container.querySelector("img.ink-loading__fallback")).toBeInTheDocument());
+        expect(first.container.querySelector("img.ink-loading__fallback")).toHaveAttribute(
+            "src",
+            expect.stringContaining("ink-ring.png")
+        );
+        expect(requestedUrls).toHaveLength(2);
+        first.unmount();
+
+        const second = render(<InkLoading />);
+        await waitFor(() => expect(second.container.querySelector("img.ink-loading__fallback")).toBeInTheDocument());
+        expect(requestedUrls).toHaveLength(4);
+        expect(requestedUrls).toEqual([
+            expect.stringContaining("ink-ring.webp"),
+            expect.stringContaining("ink-ring.png"),
+            expect.stringContaining("ink-ring.webp"),
+            expect.stringContaining("ink-ring.png")
+        ]);
     });
 });
