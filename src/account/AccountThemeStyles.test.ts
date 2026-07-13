@@ -215,10 +215,7 @@ describe("AuthInk Account visual contract", () => {
     });
 
     it("defines the Account content track on the real PatternFly main", () => {
-        const mainRule = findTopLevelRule(
-            css,
-            ".authink-account .pf-v5-c-page__main"
-        );
+        const mainRule = findTopLevelRule(css, ".authink-account .pf-v5-c-page__main");
 
         expect(mainRule).toMatch(/(?:^|;)\s*min-height:\s*0\s*(?:;|$)/);
         expect(mainRule).toMatch(
