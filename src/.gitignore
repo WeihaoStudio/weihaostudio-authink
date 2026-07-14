@@ -27,6 +27,7 @@
 # email/text/executeActions.ftl
 # email/text/identity-provider-link.ftl
 # email/text/password-reset.ftl
+# shared/keycloak-ui-shared/context/KeycloakContext.tsx
 # === Owned files end =====
 
 # === @keycloakify/email-native v260007.0.0 ===
@@ -765,7 +766,6 @@
 /shared/keycloak-ui-shared/context/environment.ts
 /shared/keycloak-ui-shared/context/ErrorPage.tsx
 /shared/keycloak-ui-shared/context/HelpContext.tsx
-/shared/keycloak-ui-shared/context/KeycloakContext.tsx
 /shared/keycloak-ui-shared/continue-cancel/ContinueCancelModal.tsx
 /shared/keycloak-ui-shared/controls/FileUploadControl.tsx
 /shared/keycloak-ui-shared/controls/FormErrorText.tsx

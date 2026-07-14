@@ -58,6 +58,7 @@ function AccountInitError({ errorCode, onRetry }: { errorCode: string; onRetry: 
 export default function KcAccountUi() {
     const [isI18nInitialized, setI18nInitialized] = useReducer(() => true, false);
     const [initTimedOut, setInitTimedOut] = useState(false);
+    const [isKeycloakInitialized, setKeycloakInitialized] = useState(false);
     const [retryKey, setRetryKey] = useState(0);
 
     // i18n 初始化，5秒超时降级
@@ -76,18 +77,23 @@ export default function KcAccountUi() {
             .finally(() => clearTimeout(timeoutId));
     }, [retryKey]);
 
-    // 全局初始化超时：10秒后不管什么状态，只要还在加载就显示错误
+    // Keycloak bootstrap 10 秒未完成时退出无限 Loading。
     useEffect(() => {
+        if (!isI18nInitialized || isKeycloakInitialized) {
+            return;
+        }
+
         const timeoutId = setTimeout(() => {
             setInitTimedOut(true);
         }, 10000);
 
         return () => clearTimeout(timeoutId);
-    }, [retryKey]);
+    }, [isI18nInitialized, isKeycloakInitialized, retryKey]);
 
     // 重试处理
     const handleRetry = () => {
         setInitTimedOut(false);
+        setKeycloakInitialized(false);
         setRetryKey(prev => prev + 1);
     };
 
@@ -118,7 +124,13 @@ export default function KcAccountUi() {
     return (
         <div className="authink-account">
             <AccountThemeToggle {...themeState} />
-            <KeycloakProvider environment={environment}>
+            <KeycloakProvider
+                key={retryKey}
+                environment={environment}
+                loadingFallback={<AccountLoading variant="page" />}
+                onReady={() => setKeycloakInitialized(true)}
+                onError={() => setInitTimedOut(true)}
+            >
                 <Root />
                 <SessionExpirationWarningOverlay warnUserSecondsBeforeAutoLogout={45} />
             </KeycloakProvider>
