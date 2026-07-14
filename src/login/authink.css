@@ -559,9 +559,6 @@
   min-height: 100vh;
   background: var(--auth-light-background) center center / cover no-repeat;
 }
-.auth-browser--production[data-theme="dark"] .auth-shell {
-  background: var(--auth-dark-background) center center / cover no-repeat;
-}
 .auth-browser.auth-browser--production:not(.dark-demo) .visual {
   background: transparent;
 }
