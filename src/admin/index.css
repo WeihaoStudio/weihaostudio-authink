@@ -271,12 +271,15 @@ div.w-tc-editor { font-family: var(--font-mono); }
 }
 
 /* ── Theme toggle ──────────────────────────────────── */
+.authink-admin-theme-toggle-slot {
+  display: flex;
+  align-items: center;
+  margin-inline-end: var(--space-2);
+}
+
 .authink-admin-theme-toggle {
-  position: fixed;
-  top: var(--space-5);
-  right: var(--space-5);
-  z-index: 10;
   display: grid;
+  flex: 0 0 44px;
   width: 44px;
   height: 44px;
   place-items: center;

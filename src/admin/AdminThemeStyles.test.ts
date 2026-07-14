@@ -21,11 +21,13 @@ describe("AuthInk Admin visual contract", () => {
         expect(css).toMatch(/\.pf-v5-c-page__sidebar\s*\{[^}]*background:\s*var\(--color-surface\)/s);
     });
 
-    it("uses the approved 44px theme control", () => {
+    it("keeps the 44px theme control inside the masthead toolbar flow", () => {
         expect(css).toMatch(/\.authink-admin-theme-toggle\s*\{[^}]*width:\s*44px/s);
         expect(css).toMatch(/\.authink-admin-theme-toggle\s*\{[^}]*height:\s*44px/s);
-        expect(css).toMatch(/\.authink-admin-theme-toggle\s*\{[^}]*top:\s*var\(--space-5\)/s);
-        expect(css).toMatch(/\.authink-admin-theme-toggle\s*\{[^}]*right:\s*var\(--space-5\)/s);
+        expect(css).toMatch(/\.authink-admin-theme-toggle-slot\s*\{[^}]*display:\s*flex/s);
+        expect(css).not.toMatch(/\.authink-admin-theme-toggle\s*\{[^}]*position:\s*fixed/s);
+        expect(css).not.toMatch(/\.authink-admin-theme-toggle\s*\{[^}]*top:/s);
+        expect(css).not.toMatch(/\.authink-admin-theme-toggle\s*\{[^}]*right:/s);
     });
 
     it("maps desktop navigation and uses scrollable navigation on narrow shells", () => {
