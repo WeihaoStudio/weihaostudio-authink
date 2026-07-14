@@ -21,6 +21,12 @@ describe("AuthInk Admin visual contract", () => {
         expect(css).toMatch(/\.pf-v5-c-page__sidebar\s*\{[^}]*background:\s*var\(--color-surface\)/s);
     });
 
+    it("keeps Masthead controls readable on the light AuthInk surface", () => {
+        expect(css).toMatch(/\.pf-v5-c-masthead\s*\{[^}]*--pf-v5-c-button--m-plain--Color:\s*var\(--color-text\)/s);
+        expect(css).toMatch(/\.pf-v5-c-masthead \.pf-v5-c-button\.pf-m-plain,[\s\S]*?color:\s*var\(--color-text\)/s);
+        expect(css).toMatch(/\.pf-v5-c-masthead \.pf-v5-c-menu-toggle:hover\s*\{[^}]*background:\s*var\(--color-surface-muted\)/s);
+    });
+
     it("keeps the 44px theme control inside the masthead toolbar flow", () => {
         expect(css).toMatch(/\.authink-admin-theme-toggle\s*\{[^}]*width:\s*44px/s);
         expect(css).toMatch(/\.authink-admin-theme-toggle\s*\{[^}]*height:\s*44px/s);
@@ -28,6 +34,7 @@ describe("AuthInk Admin visual contract", () => {
         expect(css).not.toMatch(/\.authink-admin-theme-toggle\s*\{[^}]*position:\s*fixed/s);
         expect(css).not.toMatch(/\.authink-admin-theme-toggle\s*\{[^}]*top:/s);
         expect(css).not.toMatch(/\.authink-admin-theme-toggle\s*\{[^}]*right:/s);
+        expect(css).not.toMatch(/\.authink-admin-theme-toggle:hover\s*\{[^}]*translateY/s);
     });
 
     it("maps desktop navigation and uses scrollable navigation on narrow shells", () => {

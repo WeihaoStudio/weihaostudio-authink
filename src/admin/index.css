@@ -293,13 +293,11 @@ div.w-tc-editor { font-family: var(--font-mono); }
   font-size: var(--text-label);
   cursor: pointer;
   transition: background-color var(--duration-fast) var(--ease-standard),
-              color var(--duration-fast) var(--ease-standard),
-              transform var(--duration-fast) var(--ease-standard);
+              color var(--duration-fast) var(--ease-standard);
 }
 
 .authink-admin-theme-toggle:hover {
   background: var(--color-surface-muted);
-  transform: translateY(-1px);
 }
 
 .authink-admin-theme-toggle:focus-visible {
@@ -402,4 +400,34 @@ div.w-tc-editor { font-family: var(--font-mono); }
     transition-duration: 1ms !important;
     animation-duration: 1ms !important;
   }
+}
+
+/* ── Masthead contrast ───────────────────────────────
+ * PatternFly's dark masthead defaults survive a light AuthInk surface unless
+ * their component-level foreground tokens are explicitly reset. */
+.authink-admin .pf-v5-c-masthead {
+  --pf-v5-c-button--m-plain--Color: var(--color-text);
+  --pf-v5-c-menu-toggle--Color: var(--color-text);
+  --pf-v5-c-menu-toggle--m-plain--Color: var(--color-text);
+}
+
+.authink-admin .pf-v5-c-masthead .pf-v5-c-button.pf-m-plain,
+.authink-admin .pf-v5-c-masthead .pf-v5-c-menu-toggle,
+.authink-admin .pf-v5-c-masthead .pf-v5-c-menu-toggle__text,
+.authink-admin .pf-v5-c-masthead .pf-v5-c-menu-toggle__toggle-icon,
+.authink-admin .pf-v5-c-masthead .pf-v5-c-menu-toggle svg {
+  color: var(--color-text);
+  fill: currentColor;
+}
+
+.authink-admin .pf-v5-c-masthead .pf-v5-c-button.pf-m-plain:hover,
+.authink-admin .pf-v5-c-masthead .pf-v5-c-menu-toggle:hover {
+  background: var(--color-surface-muted);
+  color: var(--color-text);
+}
+
+.authink-admin .pf-v5-c-masthead .pf-v5-c-button.pf-m-plain:focus-visible,
+.authink-admin .pf-v5-c-masthead .pf-v5-c-menu-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
 }
